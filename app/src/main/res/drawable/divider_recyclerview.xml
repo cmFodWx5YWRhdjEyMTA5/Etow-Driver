@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ * Copyright Ⓒ 2018. All rights reserved
+  ~ * Author DangTin. Create on 2018/05/28
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <size android:height="@dimen/define_dimen_8" />
+    <solid android:color="@color/white" />
+</shape>

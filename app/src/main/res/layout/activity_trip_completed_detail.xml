@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ * Copyright Ⓒ 2018. All rights reserved
+  ~ * Author DangTin. Create on 2018/05/13
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:orientation="horizontal"
+                android:padding="@dimen/define_dimen_14">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/define_dimen_6"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trip_no"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00200230323"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trip_amount"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1234 AED"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_normal" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/define_dimen_14">
+
+                <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_and_time"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/text_size_small" />
+
+                <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monday 19 Sep 2018 17:46 PM"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_size_normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginBottom="@dimen/define_dimen_12"
+                    android:layout_marginTop="@dimen/define_dimen_12"
+                    android:background="@color/dividerColor" />
+
+                <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pick_up_location"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/text_size_small" />
+
+                <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123, First Time Street, Dubai, United Arap Emirated"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_size_normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginBottom="@dimen/define_dimen_12"
+                    android:layout_marginTop="@dimen/define_dimen_12"
+                    android:background="@color/dividerColor" />
+
+                <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/drop_off_location"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/text_size_small" />
+
+                <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123, Second Time Street, Dubai, United Arap Emirated"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_size_normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginBottom="@dimen/define_dimen_12"
+                    android:layout_marginTop="@dimen/define_dimen_12"
+                    android:background="@color/dividerColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/customer_name"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/define_dimen_10"
+                        android:text="DangtTin"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginBottom="@dimen/define_dimen_12"
+                    android:layout_marginTop="@dimen/define_dimen_12"
+                    android:background="@color/dividerColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/type_of_recovery"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/define_dimen_10"
+                        android:src="@drawable/ic_car_black" />
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/define_dimen_10"
+                        android:text="Normal"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginBottom="@dimen/define_dimen_12"
+                    android:layout_marginTop="@dimen/define_dimen_12"
+                    android:background="@color/dividerColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/driver"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/define_dimen_10"
+                        android:text="Hussain Ghufant"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginBottom="@dimen/define_dimen_12"
+                    android:layout_marginTop="@dimen/define_dimen_12"
+                    android:background="@color/dividerColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vehicle_number"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/define_dimen_10"
+                        android:text="84856596"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginBottom="@dimen/define_dimen_12"
+                    android:layout_marginTop="@dimen/define_dimen_12"
+                    android:background="@color/dividerColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment_type"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/define_dimen_10"
+                        android:background="@drawable/bg_white_corner_border_grey_radius_8"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/define_dimen_6"
+                        android:paddingEnd="@dimen/define_dimen_16"
+                        android:paddingStart="@dimen/define_dimen_16"
+                        android:paddingTop="@dimen/define_dimen_6">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_cash_black" />
+
+                        <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/define_dimen_6"
+                            android:gravity="center"
+                            android:text="@string/cash"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="@dimen/text_size_normal" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

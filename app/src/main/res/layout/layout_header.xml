@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ * Copyright Ⓒ 2018. All rights reserved
+  ~ * Author DangTin. Create on 2018/05/19
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_header_home"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:minHeight="?attr/actionBarSize">
+
+    <ImageView
+        android:id="@+id/img_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/define_dimen_12"
+        android:src="@drawable/ic_menu_black" />
+
+    <com.app.etow.ui.widget.textview.TahomaBoldTextView
+        android:id="@+id/tv_title_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_xxnormal" />
+
+    <RelativeLayout
+        android:id="@+id/layout_notification"
+        android:layout_width="@dimen/define_dimen_45"
+        android:layout_marginEnd="@dimen/define_dimen_10"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_sort"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_notification_black" />
+
+        <TextView
+            android:layout_width="@dimen/define_dimen_35"
+            android:layout_height="@dimen/define_dimen_35"
+            android:background="@drawable/shape_circle_red"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:padding="@dimen/define_dimen_6"
+            android:text="100"
+            android:textSize="@dimen/text_size_xsmall" />
+
+    </RelativeLayout>
+</RelativeLayout>

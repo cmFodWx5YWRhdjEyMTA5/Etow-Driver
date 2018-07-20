@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ * Copyright Ⓒ 2018. All rights reserved
+  ~ * Author DangTin. Create on 2018/05/13
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/layout_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_bottom"
+        android:background="@color/red"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/define_dimen_16"
+        android:orientation="horizontal">
+
+        <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:id="@+id/tv_online"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_green_corner_left_bottom"
+            android:gravity="center"
+            android:paddingBottom="@dimen/define_dimen_14"
+            android:paddingTop="@dimen/define_dimen_14"
+            android:text="@string/online"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_xnormal" />
+
+        <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:id="@+id/tv_offline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_grey_corner_right_bottom"
+            android:gravity="center"
+            android:paddingBottom="@dimen/define_dimen_14"
+            android:paddingTop="@dimen/define_dimen_14"
+            android:text="@string/offline"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/text_size_xnormal" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ * Copyright Ⓒ 2018. All rights reserved
+  ~ * Author DangTin. Create on 2018/05/13
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/define_dimen_14"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_call_us_black"/>
+
+        <com.app.etow.ui.widget.textview.TahomaBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/define_dimen_10"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_xnormal"
+            android:textColor="@color/textColorPrimary"
+            android:text="@string/call_us"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"
+            android:background="@color/dividerColor"/>
+
+        <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/or"
+            android:textSize="@dimen/text_size_normal"
+            android:layout_marginStart="@dimen/define_dimen_16"
+            android:layout_marginEnd="@dimen/define_dimen_16"
+            android:textColor="@color/textColorSecondary"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"
+            android:background="@color/dividerColor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_feedback_black"/>
+
+        <com.app.etow.ui.widget.textview.TahomaBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/define_dimen_10"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_xnormal"
+            android:textColor="@color/textColorPrimary"
+            android:text="@string/feedback"/>
+
+    </LinearLayout>
+
+</LinearLayout>

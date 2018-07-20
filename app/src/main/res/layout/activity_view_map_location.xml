@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ * Copyright Ⓒ 2018. All rights reserved
+  ~ * Author DangTin. Create on 2018/05/13
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/layout_header"
+        layout="@layout/layout_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_bottom"
+        android:layout_below="@+id/layout_header"
+        android:background="@color/redAccent"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/define_dimen_12">
+
+        <com.app.etow.ui.widget.textview.TahomaBoldTextView
+            android:id="@+id/tv_type_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_up_location_2"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/text_size_xnormal"
+            android:textStyle="bold" />
+
+        <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/define_dimen_10"
+            android:layout_marginBottom="@dimen/define_dimen_10"
+            android:gravity="center"
+            android:text="123, First Time Street, Dubai, United Arap Emirated"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/text_size_normal" />
+
+        <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:id="@+id/tv_time_to_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="123, First Time Street, Dubai, United Arap Emirated"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/text_size_normal" />
+
+        <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:id="@+id/tv_get_direction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/define_dimen_4"
+            android:layout_marginTop="@dimen/define_dimen_16"
+            android:background="@drawable/bg_black_corner"
+            android:gravity="center"
+            android:paddingBottom="@dimen/define_dimen_14"
+            android:paddingTop="@dimen/define_dimen_14"
+            android:text="@string/get_direction"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_normal" />
+
+    </LinearLayout>
+
+</RelativeLayout>

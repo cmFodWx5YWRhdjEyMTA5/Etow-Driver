@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ * Copyright Ⓒ 2018. All rights reserved
+  ~ * Author DangTin. Create on 2018/05/13
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <ImageView
+        android:layout_width="@dimen/define_dimen_100"
+        android:layout_height="@dimen/define_dimen_100"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/define_dimen_30"
+        android:src="@drawable/ic_etow_and_text_black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="@dimen/define_dimen_16">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:background="@drawable/bg_white_corner_border_grey_radius_8"
+            android:hint="@string/comments"
+            android:imeOptions="actionDone"
+            android:lines="10"
+            android:padding="@dimen/define_dimen_12"
+            android:textSize="@dimen/text_size_small" />
+
+        <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:id="@+id/tv_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/define_dimen_10"
+            android:layout_marginTop="@dimen/define_dimen_20"
+            android:background="@drawable/bg_black_corner"
+            android:gravity="center"
+            android:paddingBottom="@dimen/define_dimen_14"
+            android:paddingTop="@dimen/define_dimen_14"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_normal" />
+
+
+        <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/define_dimen_10"
+            android:layout_marginTop="@dimen/define_dimen_10"
+            android:gravity="center"
+            android:text="@string/get_in_touch_with_us_on"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/text_size_normal" />
+    </LinearLayout>
+</LinearLayout>

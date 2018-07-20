@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ * Copyright Ⓒ 2018. All rights reserved
+  ~ * Author DangTin. Create on 2018/05/13
+  -->
+
+<resources>
+    <color name="colorPrimary">#121315</color>
+    <color name="colorPrimaryDark">#121315</color>
+    <color name="colorAccent">#121315</color>
+
+    <color name="textColorPrimary">#121315</color>
+    <color name="textColorSecondary">#6D6E70</color>
+
+    <color name="dividerColor">#BDBDBD</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="purple">#9C27B0</color>
+    <color name="green">#4CAF50</color>
+    <color name="redAccent">#ffebee</color>
+    <color name="red">#EF9A9A</color>
+    <color name="pink">#F06292</color>
+    <color name="orange">#FF5722</color>
+    <color name="tran_parent">#66000000</color>
+
+    <color name="button_grey">#ECEDEE</color>
+    <color name="button_red">#EC1C24</color>
+    <color name="button_green">#39B44A</color>
+    <color name="color_header">#F4F4F4</color>
+    <color name="background_main">#F5F5F6</color>
+    <color name="background_trip_assigned">#A7A9AB</color>
+    <color name="text_trip_assigned">#6D6E70</color>
+</resources>

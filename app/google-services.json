@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "781626555052",
+    "firebase_url": "https://cookbook-91dc2.firebaseio.com",
+    "project_id": "cookbook-91dc2",
+    "storage_bucket": "cookbook-91dc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781626555052:android:cf6a19186d506c80",
+        "android_client_info": {
+          "package_name": "com.app.etow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781626555052-gat8lrngpdnvat0ejtrs1tlrpjhs9er5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD7mjRWbcKWgHkrDn-I62hrbKdoGJWfLg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
