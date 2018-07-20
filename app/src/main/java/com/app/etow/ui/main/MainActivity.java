@@ -213,7 +213,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                     tvEnglish.setBackgroundResource(R.drawable.bg_black_corner_left_bottom);
                     tvUrdu.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
                     tvEnglish.setTextColor(getResources().getColor(R.color.white));
-                    tvUrdu.setTextColor(getResources().getColor(R.color.textColorSecondary));
+                    tvUrdu.setTextColor(getResources().getColor(R.color.textColorAccent));
                 }
                 break;
 
@@ -222,7 +222,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                     isLanguageEnlish = false;
                     tvEnglish.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
                     tvUrdu.setBackgroundResource(R.drawable.bg_black_corner_right_bottom);
-                    tvEnglish.setTextColor(getResources().getColor(R.color.textColorSecondary));
+                    tvEnglish.setTextColor(getResources().getColor(R.color.textColorAccent));
                     tvUrdu.setTextColor(getResources().getColor(R.color.white));
                 }
                 break;

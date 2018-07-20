@@ -67,6 +67,7 @@
                 android:layout_height="wrap_content" />
 
             <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                android:id="@+id/tv_term_and_condition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/define_dimen_5"

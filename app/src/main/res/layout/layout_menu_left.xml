@@ -143,7 +143,7 @@
                 android:paddingBottom="@dimen/define_dimen_14"
                 android:paddingTop="@dimen/define_dimen_14"
                 android:text="@string/urdu"
-                android:textColor="@color/textColorSecondary"
+                android:textColor="@color/textColorAccent"
                 android:textSize="@dimen/text_size_xnormal" />
         </LinearLayout>
     </LinearLayout>

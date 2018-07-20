@@ -92,6 +92,11 @@
             android:name=".ui.scheduled_trip.detail.ScheduledTripDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".ui.auth.term_and_condition.TermAndConditionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

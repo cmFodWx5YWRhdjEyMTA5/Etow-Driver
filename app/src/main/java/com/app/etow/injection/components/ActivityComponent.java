@@ -7,6 +7,7 @@ package com.app.etow.injection.components;
 
 import com.app.etow.injection.modules.ActivityModule;
 import com.app.etow.ui.auth.SignInActivity;
+import com.app.etow.ui.auth.term_and_condition.TermAndConditionActivity;
 import com.app.etow.ui.direction_location.DirectionLocationActivity;
 import com.app.etow.ui.feedback.FeedbackActivity;
 import com.app.etow.ui.incoming_request.IncomingRequestActivity;
@@ -56,6 +57,8 @@ public interface ActivityComponent {
     void inject(ScheduledTripActivity scheduledTripActivity);
 
     void inject(ScheduledTripDetailActivity scheduledTripDetailActivity);
+
+    void inject(TermAndConditionActivity termAndConditionActivity);
 
     /*inject fragment*/
     void inject(HomeFragment myTaskFragment);

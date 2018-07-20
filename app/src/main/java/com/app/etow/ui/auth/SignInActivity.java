@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.app.etow.R;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.ui.auth.term_and_condition.TermAndConditionActivity;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.ui.main.MainActivity;
 
@@ -90,5 +91,10 @@ public class SignInActivity extends BaseMVPDialogActivity implements SignInMVPVi
             GlobalFuntion.startActivity(this, MainActivity.class);
             finish();
         }
+    }
+
+    @OnClick(R.id.tv_term_and_condition)
+    public void onClickTermAndCondition() {
+        GlobalFuntion.startActivity(this, TermAndConditionActivity.class);
     }
 }

@@ -10,7 +10,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:minHeight="?attr/actionBarSize">
+    android:paddingBottom="@dimen/define_dimen_10"
+    android:paddingTop="@dimen/define_dimen_10">
 
     <ImageView
         android:id="@+id/img_menu"
@@ -20,7 +21,7 @@
         android:layout_marginStart="@dimen/define_dimen_12"
         android:src="@drawable/ic_menu_black" />
 
-    <com.app.etow.ui.widget.textview.TahomaBoldTextView
+    <com.app.etow.ui.widget.textview.TahomaRegularTextView
         android:id="@+id/tv_title_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,16 +32,16 @@
     <RelativeLayout
         android:id="@+id/layout_notification"
         android:layout_width="@dimen/define_dimen_45"
-        android:layout_marginEnd="@dimen/define_dimen_10"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_height="wrap_content">
+        android:layout_marginEnd="@dimen/define_dimen_10">
 
         <ImageView
             android:id="@+id/img_sort"
             android:layout_width="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:src="@drawable/ic_notification_black" />
 
         <TextView
@@ -48,9 +49,9 @@
             android:layout_height="@dimen/define_dimen_35"
             android:background="@drawable/shape_circle_red"
             android:gravity="center"
-            android:textColor="@color/white"
             android:padding="@dimen/define_dimen_6"
             android:text="100"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_xsmall" />
 
     </RelativeLayout>

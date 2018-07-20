@@ -1,4 +1,4 @@
-package com.app.etow.ui.splash;
+package com.app.etow.ui.auth.term_and_condition;
 
 /*
  *  Copyright Ⓒ 2018. All rights reserved
@@ -6,22 +6,29 @@ package com.app.etow.ui.splash;
  */
 
 import android.os.Bundle;
-import android.os.Handler;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.app.etow.R;
 import com.app.etow.constant.GlobalFuntion;
-import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
-import com.app.etow.utils.Utils;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPView {
+public class TermAndConditionActivity extends BaseMVPDialogActivity implements TermAndConditionMVPView {
 
     @Inject
-    SplashPresenter presenter;
+    TermAndConditionPresenter presenter;
+
+    @BindView(R.id.img_back)
+    ImageView imgClose;
+
+    @BindView(R.id.tv_title_toolbar)
+    TextView tvTitleToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +38,8 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
         viewUnbind = ButterKnife.bind(this);
         presenter.initialView(this);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Utils.getTahomaRegularTypeFace(SplashActivity.this);
-
-                GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
-                finish();
-            }
-        }, 1000);
+        tvTitleToolbar.setText(getString(R.string.terms_and_conditions));
+        imgClose.setImageResource(R.drawable.ic_close_black);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
 
     @Override
     protected int addContextView() {
-        return R.layout.activity_splash;
+        return R.layout.activity_term_and_condition;
     }
 
     @Override
@@ -67,5 +66,10 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
     @Override
     public void onErrorCallApi(int code) {
         GlobalFuntion.showMessageError(this, code);
+    }
+
+    @OnClick(R.id.img_back)
+    public void onClickClose() {
+        onBackPressed();
     }
 }

@@ -22,7 +22,6 @@ import java.util.Calendar;
 
 public class Utils {
 
-    private static Typeface tahomaBoldTypeFace;
     private static Typeface tahomaRegularTypeFace;
 
     public static MaterialDialog createProgress(Context context, String title) {
@@ -56,14 +55,6 @@ public class Utils {
         } catch (Exception e) {
             return 0;
         }
-    }
-
-    public static Typeface getTahomaBoldTypeFace(Context context) {
-        if (tahomaBoldTypeFace == null) {
-            tahomaBoldTypeFace = Typeface.createFromAsset(context.getAssets(),
-                    "fonts/Tahoma-Bold.ttf");
-        }
-        return tahomaBoldTypeFace;
     }
 
     public static Typeface getTahomaRegularTypeFace(Context context) {

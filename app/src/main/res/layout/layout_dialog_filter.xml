@@ -17,7 +17,7 @@
         android:layout_height="0.1dp"
         android:background="@color/dividerColor" />
 
-    <com.app.etow.ui.widget.textview.TahomaBoldTextView
+    <com.app.etow.ui.widget.textview.TahomaRegularTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
