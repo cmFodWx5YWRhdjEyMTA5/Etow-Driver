@@ -5,31 +5,28 @@ package com.app.etow.data;
  *  Author DangTin. Create on 2018/05/13
  */
 
+import com.app.etow.models.response.ApiResponse;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import rx.Observable;
 
 @Singleton
 public class DataManager {
 
     private final NetworkManager mNetworkManager;
-    private final ParseManager mParseManager;
 
     @Inject
-    public DataManager(NetworkManager networkManager, ParseManager parseManager) {
+    public DataManager(NetworkManager networkManager) {
         this.mNetworkManager = networkManager;
-        this.mParseManager = parseManager;
     }
 
     public NetworkManager getNetworkManager() {
         return mNetworkManager;
     }
 
-    public ParseManager getParseManager() {
-        return mParseManager;
+    public Observable<ApiResponse> getUser(String email, String password) {
+        return getNetworkManager().getUser(email, password);
     }
-
-    /*public Observable<Food> getFood(String token, int page) {
-        return getNetworkManager().getFood(token, page)
-                .map(foodResponse -> getParseManager().parseFood(foodResponse));
-    }*/
 }

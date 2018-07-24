@@ -7,6 +7,9 @@ package com.app.etow.constant;
 
 public interface Constant {
 
+    String SUCCESS = "success";
+    String ERROR = "error";
+
     int FAIL_CONNECT_CODE = -1;
     int JSON_PARSER_CODE = -10;
     int OTHER_CODE = -20;
@@ -15,8 +18,8 @@ public interface Constant {
     String SERVER_ERROR = "Fail to connect to server";
 
     String HOST_SCHEMA = "http://";
-    String DOMAIN_NAME = "stg2.passp.asia";
-    String HOST = HOST_SCHEMA + DOMAIN_NAME + "/api/";
+    String DOMAIN_NAME = "suusoft.com/eTow/public";
+    String HOST = HOST_SCHEMA + DOMAIN_NAME + "/api/v1/";
 
     int TYPE_PICK_UP = 1;
     int TYPE_DROP_OFF = 2;

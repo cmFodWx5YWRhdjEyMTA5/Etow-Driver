@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 public class ApiResponse {
 
+    private String status;
+    private String message;
+
     @SerializedName("data")
     private JsonObject data;
 
@@ -56,5 +59,13 @@ public class ApiResponse {
             }
         }
         return listObj;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

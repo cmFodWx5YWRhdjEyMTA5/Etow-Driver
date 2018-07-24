@@ -5,12 +5,14 @@ package com.app.etow.ui.main;
  *  Author DangTin. Create on 2018/05/13
  */
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,6 +29,7 @@ import com.app.etow.ui.main.my_account.MyAccountActivity;
 import com.app.etow.ui.main.my_bookings.MyBookingsActivity;
 import com.app.etow.ui.main.term_and_condition.TermAndConditionFragment;
 import com.app.etow.ui.scheduled_trip.ScheduledTripActivity;
+import com.app.etow.utils.Utils;
 
 import javax.inject.Inject;
 
@@ -230,6 +233,17 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
             case R.id.layout_notification:
                 GlobalFuntion.startActivity(this, ScheduledTripActivity.class);
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 101) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Utils.callPhoneNumber(this, getString(R.string.phone_number_call_us));
+            } else {
+                Log.e("Permission", "Permission not Granted");
+            }
         }
     }
 }

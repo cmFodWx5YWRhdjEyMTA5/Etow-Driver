@@ -19,6 +19,15 @@ import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.ui.base.BaseMVPFragmentWithDialog;
 import com.app.etow.ui.incoming_request.IncomingRequestActivity;
 import com.app.etow.ui.main.MainActivity;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import javax.inject.Inject;
 
@@ -26,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPView {
+public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPView, OnMapReadyCallback {
 
     @Inject
     HomePresenter presenter;
@@ -38,6 +47,7 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
     TextView tvOffline;
 
     private boolean mIsOnline = true;
+    private GoogleMap mMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -53,6 +63,12 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
         viewUnbind = ButterKnife.bind(this, view);
         presenter.initialView(this);
         ((MainActivity) getActivity()).showAndHiddenItemToolbar("", true);
+
+        // init map
+        SupportMapFragment mMapFragment = new SupportMapFragment();
+        this.getChildFragmentManager().beginTransaction()
+                .add(R.id.fragment_view_map, mMapFragment).commit();
+        mMapFragment.getMapAsync(this);
     }
 
     @Override
@@ -80,10 +96,10 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
     public void onClickOnline() {
         if (!mIsOnline) {
             mIsOnline = true;
-            tvOnline.setBackgroundResource(R.drawable.bg_black_corner_left_bottom);
+            tvOnline.setBackgroundResource(R.drawable.bg_green_corner_left_bottom);
             tvOffline.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
             tvOnline.setTextColor(getResources().getColor(R.color.white));
-            tvOffline.setTextColor(getResources().getColor(R.color.textColorSecondary));
+            tvOffline.setTextColor(getResources().getColor(R.color.textColorAccent));
         }
     }
 
@@ -93,8 +109,24 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
             mIsOnline = false;
             tvOnline.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
             tvOffline.setBackgroundResource(R.drawable.bg_red_corner_right_bottom);
-            tvOnline.setTextColor(getResources().getColor(R.color.textColorSecondary));
+            tvOnline.setTextColor(getResources().getColor(R.color.textColorAccent));
             tvOffline.setTextColor(getResources().getColor(R.color.white));
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        // Add a marker in Sydney, Australia, and move the camera.
+        LatLng currentLocation = new LatLng(-34, 151);
+        // create marker
+        MarkerOptions marker = new MarkerOptions().position(currentLocation)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_black));
+        // adding marker
+        mMap.addMarker(marker);
+
+        CameraUpdate myLoc = CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+                .target(currentLocation).zoom(13).build());
+        mMap.moveCamera(myLoc);
     }
 }

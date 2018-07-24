@@ -26,7 +26,7 @@
         android:padding="@dimen/define_dimen_16">
 
         <EditText
-            android:id="@+id/edt_user_name"
+            android:id="@+id/edt_driver_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -71,6 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/define_dimen_5"
+                android:paddingTop="@dimen/define_dimen_5"
+                android:paddingBottom="@dimen/define_dimen_5"
                 android:text="@string/agree_terms_and_conditions"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/text_size_small" />

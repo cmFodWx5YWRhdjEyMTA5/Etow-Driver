@@ -7,6 +7,8 @@ package com.app.etow.ui.main.get_in_touch;
  * ******************************************************************************
  */
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.ui.base.BaseMVPFragmentWithDialog;
 import com.app.etow.ui.feedback.FeedbackActivity;
 import com.app.etow.ui.main.MainActivity;
+import com.app.etow.utils.Utils;
 
 import javax.inject.Inject;
 
@@ -64,5 +67,10 @@ public class GetInTouchFragment extends BaseMVPFragmentWithDialog implements Get
     @OnClick(R.id.img_feedback)
     public void onClickImageFeedback() {
         GlobalFuntion.startActivity(getActivity(), FeedbackActivity.class);
+    }
+
+    @OnClick(R.id.img_call_us)
+    public void onClickCallUs() {
+        Utils.callPhoneNumber(getActivity(), getString(R.string.phone_number_call_us));
     }
 }

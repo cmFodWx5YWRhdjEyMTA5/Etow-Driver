@@ -17,4 +17,8 @@ public class KeyAPI {
     public static final String VALUE_DEVICE_TYPE = "android";
     public static final String VALUE_HTTP_X_APP_ID = "6319d222";
     public static final String VALUE_HTTP_X_SECRET_KEY = "bd95eb1c323a50e1da1a724e71e5925aac8ae227";
+
+    // key param
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PASSWORD = "password";
 }

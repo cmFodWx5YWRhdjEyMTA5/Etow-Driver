@@ -6,6 +6,7 @@ package com.app.etow.data;
  */
 
 import com.app.etow.data.networking.ThinkFitService;
+import com.app.etow.models.response.ApiResponse;
 import com.app.etow.models.response.CategoryResponse;
 
 import javax.inject.Inject;
@@ -29,5 +30,9 @@ public class NetworkManager {
 
     public Observable<CategoryResponse> getListCategory() {
         return mThinkFitService.getListCategory();
+    }
+
+    public Observable<ApiResponse> getUser(String email, String password) {
+        return mThinkFitService.getUser(email, password);
     }
 }

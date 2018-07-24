@@ -82,9 +82,9 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    // Firebase
-    implementation 'com.google.firebase:firebase-core:12.0.0'
-
+    // Image circle
     implementation 'de.hdodenhof:circleimageview:2.0.0'
+    // Google Map
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
 }
-apply plugin: 'com.google.gms.google-services'

@@ -15,8 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/layout_bottom"
-        android:background="@color/red"
         android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/fragment_view_map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -51,7 +56,7 @@
             android:paddingBottom="@dimen/define_dimen_14"
             android:paddingTop="@dimen/define_dimen_14"
             android:text="@string/offline"
-            android:textColor="@color/textColorSecondary"
+            android:textColor="@color/textColorAccent"
             android:textSize="@dimen/text_size_xnormal" />
     </LinearLayout>
 

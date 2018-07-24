@@ -6,8 +6,11 @@ package com.app.etow.ui.auth;
  */
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.app.etow.R;
@@ -15,6 +18,7 @@ import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.ui.auth.term_and_condition.TermAndConditionActivity;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.ui.main.MainActivity;
+import com.app.etow.utils.StringUtil;
 
 import javax.inject.Inject;
 
@@ -30,8 +34,16 @@ public class SignInActivity extends BaseMVPDialogActivity implements SignInMVPVi
     @BindView(R.id.checkbox_terms_conditions)
     CheckBox chbTermsConditions;
 
+    @BindView(R.id.edt_driver_id)
+    EditText edtDriverId;
+
+    @BindView(R.id.edt_password)
+    EditText edtPassword;
+
     @BindView(R.id.tv_sign_in)
     TextView tvSignIn;
+
+    private boolean isEnableButtonSignIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +86,65 @@ public class SignInActivity extends BaseMVPDialogActivity implements SignInMVPVi
         chbTermsConditions.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) {
+                if (isChecked && !StringUtil.isEmpty(edtDriverId.getText().toString().trim()) &&
+                        !StringUtil.isEmpty(edtPassword.getText().toString().trim())) {
+                    isEnableButtonSignIn = true;
+                    tvSignIn.setBackgroundResource(R.drawable.bg_black_corner);
+                    tvSignIn.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    isEnableButtonSignIn = false;
+                    tvSignIn.setBackgroundResource(R.drawable.bg_grey_corner);
+                    tvSignIn.setTextColor(getResources().getColor(R.color.textColorSecondary));
+                }
+            }
+        });
+
+        edtDriverId.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!StringUtil.isEmpty(s.toString()) && chbTermsConditions.isChecked()
+                        && !StringUtil.isEmpty(edtPassword.getText().toString().trim())) {
+                    isEnableButtonSignIn = true;
                     tvSignIn.setBackgroundResource(R.drawable.bg_grey_corner);
                     tvSignIn.setTextColor(getResources().getColor(R.color.textColorSecondary));
                 } else {
+                    isEnableButtonSignIn = false;
+                    tvSignIn.setBackgroundResource(R.drawable.bg_black_corner);
+                    tvSignIn.setTextColor(getResources().getColor(R.color.white));
+                }
+            }
+        });
+
+        edtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!StringUtil.isEmpty(s.toString()) && chbTermsConditions.isChecked()
+                        && !StringUtil.isEmpty(edtDriverId.getText().toString().trim())) {
+                    isEnableButtonSignIn = true;
+                    tvSignIn.setBackgroundResource(R.drawable.bg_grey_corner);
+                    tvSignIn.setTextColor(getResources().getColor(R.color.textColorSecondary));
+                } else {
+                    isEnableButtonSignIn = false;
                     tvSignIn.setBackgroundResource(R.drawable.bg_black_corner);
                     tvSignIn.setTextColor(getResources().getColor(R.color.white));
                 }
@@ -87,14 +154,19 @@ public class SignInActivity extends BaseMVPDialogActivity implements SignInMVPVi
 
     @OnClick(R.id.tv_sign_in)
     public void onClickSignIn() {
-        if (chbTermsConditions.isChecked()) {
-            GlobalFuntion.startActivity(this, MainActivity.class);
-            finish();
+        if (isEnableButtonSignIn) {
+            presenter.login(edtDriverId.getText().toString().trim(), edtPassword.getText().toString().trim());
         }
     }
 
     @OnClick(R.id.tv_term_and_condition)
     public void onClickTermAndCondition() {
         GlobalFuntion.startActivity(this, TermAndConditionActivity.class);
+    }
+
+    @Override
+    public void updateStatusLogin() {
+        GlobalFuntion.startActivity(this, MainActivity.class);
+        finish();
     }
 }

@@ -7,6 +7,9 @@
 
 <resources>
     <string name="app_name">eTow</string>
+    <string name="google_key_map">AIzaSyAvg3xRgJAdHMJ_ckZ32oTzGRhr3th-hhI</string>
+    <string name="phone_number_call_us">01692229676</string>
+    <string name="feedback_email_us">info@etow.com</string>
 
     // Navigation
     <string name="drawer_open">Open</string>
@@ -51,7 +54,6 @@
     <string name="or">Or</string>
     <string name="comments">Comments</string>
     <string name="get_in_touch_with_us_on">Or get in touch with us on</string>
-    <string name="email_us">info@etow.com</string>
     <string name="send">Send</string>
 
     // My account

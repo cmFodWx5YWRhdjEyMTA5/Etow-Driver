@@ -60,6 +60,8 @@
             android:layout_marginBottom="@dimen/define_dimen_10"
             android:layout_marginTop="@dimen/define_dimen_10"
             android:gravity="center"
+            android:paddingTop="@dimen/define_dimen_5"
+            android:paddingBottom="@dimen/define_dimen_5"
             android:text="@string/get_in_touch_with_us_on"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/text_size_normal" />
