@@ -59,6 +59,8 @@
     // My account
     <string name="type_of_vehicle">Type of vehicle:</string>
     <string name="label_email">Email:</string>
+    <string name="type_vehicle_normal">Normal</string>
+    <string name="type_vehicle_flatbed">Flatbed</string>
 
     // My bookings
     <string name="completed">Completed</string>

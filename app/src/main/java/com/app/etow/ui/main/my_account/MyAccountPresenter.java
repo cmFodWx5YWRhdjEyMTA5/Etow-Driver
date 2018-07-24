@@ -7,7 +7,7 @@ package com.app.etow.ui.main.my_account;
  * ******************************************************************************
  */
 
-import com.app.etow.data.DataManager;
+import com.app.etow.data.NetworkManager;
 import com.app.etow.injection.PerActivity;
 import com.app.etow.ui.base.BasePresenter;
 
@@ -19,8 +19,8 @@ import retrofit2.Retrofit;
 public class MyAccountPresenter extends BasePresenter<MyAccountMVPView> {
 
     @Inject
-    public MyAccountPresenter(Retrofit mRetrofit, DataManager mDataManager) {
-        super(mRetrofit, mDataManager);
+    public MyAccountPresenter(Retrofit mRetrofit, NetworkManager networkManager) {
+        super(mRetrofit, networkManager);
     }
 
     @Override

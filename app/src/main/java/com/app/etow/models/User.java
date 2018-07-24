@@ -1,5 +1,6 @@
 package com.app.etow.models;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
@@ -10,7 +11,10 @@ public class User {
     private String email;
     private String phone;
     private String token;
+    private String avatar;
     private int type;
+    @SerializedName("type_vehicle")
+    private int typeVehicle;
     private int status;
 
     public int getId() {
@@ -53,6 +57,14 @@ public class User {
         this.token = token;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public int getType() {
         return type;
     }
@@ -61,11 +73,24 @@ public class User {
         this.type = type;
     }
 
+    public int getTypeVehicle() {
+        return typeVehicle;
+    }
+
+    public void setTypeVehicle(int typeVehicle) {
+        this.typeVehicle = typeVehicle;
+    }
+
     public int getStatus() {
         return status;
     }
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String toJSon(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

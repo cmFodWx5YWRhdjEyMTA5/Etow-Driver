@@ -32,7 +32,7 @@ public class NetworkManager {
         return mThinkFitService.getListCategory();
     }
 
-    public Observable<ApiResponse> getUser(String email, String password) {
-        return mThinkFitService.getUser(email, password);
+    public Observable<ApiResponse> login(String email, String password) {
+        return mThinkFitService.login(email, password);
     }
 }

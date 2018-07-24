@@ -86,6 +86,6 @@ public interface ThinkFitService {
                                         @Field("id") int id);
     @FormUrlEncoded
     @POST("user/login")
-    Observable<ApiResponse> getUser(@Field(KeyAPI.KEY_EMAIL) String email,
+    Observable<ApiResponse> login(@Field(KeyAPI.KEY_EMAIL) String email,
                                     @Field(KeyAPI.KEY_PASSWORD) String password);
 }

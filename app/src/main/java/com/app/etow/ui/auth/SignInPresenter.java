@@ -6,7 +6,8 @@ package com.app.etow.ui.auth;
  */
 
 import com.app.etow.constant.Constant;
-import com.app.etow.data.DataManager;
+import com.app.etow.data.NetworkManager;
+import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.response.ApiResponse;
 import com.app.etow.models.response.UserResponse;
 import com.app.etow.ui.base.BasePresenter;
@@ -21,8 +22,8 @@ import rx.schedulers.Schedulers;
 public class SignInPresenter extends BasePresenter<SignInMVPView> {
 
     @Inject
-    public SignInPresenter(Retrofit mRetrofit, DataManager mDataManager) {
-        super(mRetrofit, mDataManager);
+    public SignInPresenter(Retrofit mRetrofit, NetworkManager networkManager) {
+        super(mRetrofit, networkManager);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class SignInPresenter extends BasePresenter<SignInMVPView> {
             notifyNoNetwork();
         } else {
             getMvpView().showProgressDialog(true);
-            mDataManager.getUser(email, password)
+            mNetworkManager.login(email, password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<ApiResponse>() {
@@ -56,6 +57,9 @@ public class SignInPresenter extends BasePresenter<SignInMVPView> {
                                 if (Constant.SUCCESS.equalsIgnoreCase(apiResponse.getStatus())) {
                                     UserResponse userResponse = apiResponse.getDataObject(UserResponse.class);
                                     if (userResponse != null) {
+                                        DataStoreManager.setIsLogin(true);
+                                        DataStoreManager.setUserToken(userResponse.getUser().getToken());
+                                        DataStoreManager.setUser(userResponse.getUser());
                                         getMvpView().updateStatusLogin();
                                     } else {
                                         getMvpView().showAlert(apiResponse.getMessage());

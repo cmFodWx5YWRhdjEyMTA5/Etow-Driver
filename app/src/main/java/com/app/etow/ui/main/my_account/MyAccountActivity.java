@@ -7,12 +7,21 @@ package com.app.etow.ui.main.my_account;
  * ******************************************************************************
  */
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.etow.R;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.User;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
+import com.app.etow.utils.GlideUtils;
+import com.app.etow.utils.StringUtil;
 
 import javax.inject.Inject;
 
@@ -28,6 +37,21 @@ public class MyAccountActivity extends BaseMVPDialogActivity implements MyAccoun
     @BindView(R.id.tv_title_toolbar)
     TextView tvTitleToolbar;
 
+    @BindView(R.id.img_avatar)
+    ImageView imgAvatar;
+
+    @BindView(R.id.tv_driver_name)
+    TextView tvDriverName;
+
+    @BindView(R.id.tv_type_vehicle)
+    TextView tvTypeVehicle;
+
+    @BindView(R.id.img_type_vehicle)
+    ImageView imgTypeVehicle;
+
+    @BindView(R.id.tv_email)
+    TextView tvEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +61,7 @@ public class MyAccountActivity extends BaseMVPDialogActivity implements MyAccoun
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.my_account));
+        setUserInfor();
     }
 
     @Override
@@ -63,6 +88,27 @@ public class MyAccountActivity extends BaseMVPDialogActivity implements MyAccoun
     @Override
     public void onErrorCallApi(int code) {
         GlobalFuntion.showMessageError(this, code);
+    }
+
+    private void setUserInfor() {
+        User user = DataStoreManager.getUser();
+        if (!StringUtil.isEmpty(user.getAvatar())) {
+            GlideUtils.loadUrl(user.getAvatar(), imgAvatar);
+        } else {
+            imgAvatar.setImageResource(R.drawable.ic_user_default);
+        }
+        tvDriverName.setText(user.getFullName());
+        if (user.getTypeVehicle() == 1) {
+            imgTypeVehicle.setImageResource(R.drawable.ic_car_black);
+            tvTypeVehicle.setText(getString(R.string.type_vehicle_normal));
+        } else {
+            Drawable myIcon = getResources().getDrawable(R.drawable.ic_vehicle_flatbed_white);
+            ColorFilter filter = new LightingColorFilter(Color.BLACK, Color.BLACK);
+            myIcon.setColorFilter(filter);
+            imgTypeVehicle.setImageDrawable(myIcon);
+            tvTypeVehicle.setText(getString(R.string.type_vehicle_flatbed));
+        }
+        tvEmail.setText(user.getEmail());
     }
 
     @OnClick(R.id.img_back)

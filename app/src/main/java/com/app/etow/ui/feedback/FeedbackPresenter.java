@@ -5,7 +5,7 @@ package com.app.etow.ui.feedback;
  *  Author DangTin. Create on 2018/05/13
  */
 
-import com.app.etow.data.DataManager;
+import com.app.etow.data.NetworkManager;
 import com.app.etow.ui.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -15,8 +15,8 @@ import retrofit2.Retrofit;
 public class FeedbackPresenter extends BasePresenter<FeedbackMVPView> {
 
     @Inject
-    public FeedbackPresenter(Retrofit mRetrofit, DataManager mDataManager) {
-        super(mRetrofit, mDataManager);
+    public FeedbackPresenter(Retrofit mRetrofit, NetworkManager networkManager) {
+        super(mRetrofit, networkManager);
     }
 
     @Override

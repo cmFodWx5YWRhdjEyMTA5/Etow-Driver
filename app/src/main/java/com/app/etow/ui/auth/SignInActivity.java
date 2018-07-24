@@ -115,12 +115,12 @@ public class SignInActivity extends BaseMVPDialogActivity implements SignInMVPVi
                 if (!StringUtil.isEmpty(s.toString()) && chbTermsConditions.isChecked()
                         && !StringUtil.isEmpty(edtPassword.getText().toString().trim())) {
                     isEnableButtonSignIn = true;
-                    tvSignIn.setBackgroundResource(R.drawable.bg_grey_corner);
-                    tvSignIn.setTextColor(getResources().getColor(R.color.textColorSecondary));
-                } else {
-                    isEnableButtonSignIn = false;
                     tvSignIn.setBackgroundResource(R.drawable.bg_black_corner);
                     tvSignIn.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    isEnableButtonSignIn = false;
+                    tvSignIn.setBackgroundResource(R.drawable.bg_grey_corner);
+                    tvSignIn.setTextColor(getResources().getColor(R.color.textColorSecondary));
                 }
             }
         });
@@ -141,12 +141,12 @@ public class SignInActivity extends BaseMVPDialogActivity implements SignInMVPVi
                 if (!StringUtil.isEmpty(s.toString()) && chbTermsConditions.isChecked()
                         && !StringUtil.isEmpty(edtDriverId.getText().toString().trim())) {
                     isEnableButtonSignIn = true;
-                    tvSignIn.setBackgroundResource(R.drawable.bg_grey_corner);
-                    tvSignIn.setTextColor(getResources().getColor(R.color.textColorSecondary));
-                } else {
-                    isEnableButtonSignIn = false;
                     tvSignIn.setBackgroundResource(R.drawable.bg_black_corner);
                     tvSignIn.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    isEnableButtonSignIn = false;
+                    tvSignIn.setBackgroundResource(R.drawable.bg_grey_corner);
+                    tvSignIn.setTextColor(getResources().getColor(R.color.textColorSecondary));
                 }
             }
         });

@@ -7,9 +7,15 @@ package com.app.etow.data.prefs;
 
 import android.content.Context;
 
+import com.app.etow.models.User;
+import com.google.gson.Gson;
+
 public class DataStoreManager {
 
     public static final String PREF_FIRST_INSTALL_APP = "PREF_FIRST_INSTALL_APP";
+    public static final String PREF_TOKEN_USER = "PREF_TOKEN_USER";
+    public static final String PREF_IS_LOGIN = "PREF_IS_LOGIN";
+    public static final String PREF_USER_INFOR = "PREF_USER_INFOR";
 
     private static DataStoreManager instance;
     private MySharedPreferences sharedPreferences;
@@ -30,11 +36,50 @@ public class DataStoreManager {
         }
     }
 
+    // Check first install app
     public static void setFirstInstallApp(boolean status) {
         DataStoreManager.getInstance().sharedPreferences.putBooleanValue(PREF_FIRST_INSTALL_APP, status);
     }
 
     public static boolean getFirstInstallApp() {
         return DataStoreManager.getInstance().sharedPreferences.getBooleanValue(PREF_FIRST_INSTALL_APP);
+    }
+
+    // save token user
+    public static void setUserToken(String accessToken) {
+        DataStoreManager.getInstance().sharedPreferences.putStringValue(PREF_TOKEN_USER, accessToken);
+    }
+
+    public static String getUserToken() {
+        return DataStoreManager.getInstance().sharedPreferences.getStringValue(PREF_TOKEN_USER, "");
+    }
+
+    // check user login
+    public static void setIsLogin(boolean isLogin) {
+        DataStoreManager.getInstance().sharedPreferences.putBooleanValue(PREF_IS_LOGIN, isLogin);
+    }
+
+    public static boolean getIsLogin() {
+        return DataStoreManager.getInstance().sharedPreferences.getBooleanValue(PREF_IS_LOGIN);
+    }
+
+    // save user infor
+    public static void setUser(User user) {
+        if (user != null) {
+            String jsonUser = user.toJSon();
+            DataStoreManager.getInstance().sharedPreferences.putStringValue(PREF_USER_INFOR, jsonUser);
+        }
+    }
+
+    public static void removeUser() {
+        User user = new User();
+        String jsonUser = user.toJSon();
+        DataStoreManager.getInstance().sharedPreferences.putStringValue(PREF_USER_INFOR, jsonUser);
+    }
+
+    public static User getUser() {
+        String jsonUser = DataStoreManager.getInstance().sharedPreferences.getStringValue(PREF_USER_INFOR);
+        User user = new Gson().fromJson(jsonUser, User.class);
+        return user;
     }
 }

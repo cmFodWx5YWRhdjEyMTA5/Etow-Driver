@@ -39,6 +39,10 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
+    private static final int FRAGMENT_HOME = 1;
+    private static final int FRAGMENT_GET_IN_TOUCH = 2;
+    private static final int FRAGMENT_TERMS_AND_CONDITIONS = 3;
+
     @Inject
     MainPresenter presenter;
 
@@ -60,10 +64,11 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
     @BindView(R.id.tv_urdu)
     TextView tvUrdu;
 
-    boolean isLanguageEnlish = true;
-
     @BindView(R.id.layout_notification)
     RelativeLayout layoutNotification;
+
+    boolean isLanguageEnlish = true;
+    private int mCurrentFragment = FRAGMENT_HOME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,27 +188,34 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
             case R.id.tv_menu_home:
                 mDrawerLayout.closeDrawer(GravityCompat.START);
-                replaceFragment(new HomeFragment(), HomeFragment.class.getName());
+                if (mCurrentFragment != FRAGMENT_HOME) {
+                    replaceFragment(new HomeFragment(), HomeFragment.class.getName());
+                    mCurrentFragment = FRAGMENT_HOME;
+                }
                 break;
 
             case R.id.tv_menu_my_account:
-                mDrawerLayout.closeDrawer(GravityCompat.START);
                 GlobalFuntion.startActivity(this, MyAccountActivity.class);
                 break;
 
             case R.id.tv_menu_my_bookings:
-                mDrawerLayout.closeDrawer(GravityCompat.START);
                 GlobalFuntion.startActivity(this, MyBookingsActivity.class);
                 break;
 
             case R.id.tv_menu_get_in_touch:
                 mDrawerLayout.closeDrawer(GravityCompat.START);
-                replaceFragment(new GetInTouchFragment(), GetInTouchFragment.class.getName());
+                if (mCurrentFragment != FRAGMENT_GET_IN_TOUCH) {
+                    replaceFragment(new GetInTouchFragment(), GetInTouchFragment.class.getName());
+                    mCurrentFragment = FRAGMENT_GET_IN_TOUCH;
+                }
                 break;
 
             case R.id.tv_menu_term_and_condition:
                 mDrawerLayout.closeDrawer(GravityCompat.START);
-                replaceFragment(new TermAndConditionFragment(), TermAndConditionFragment.class.getName());
+                if (mCurrentFragment != FRAGMENT_TERMS_AND_CONDITIONS) {
+                    replaceFragment(new TermAndConditionFragment(), TermAndConditionFragment.class.getName());
+                    mCurrentFragment = FRAGMENT_TERMS_AND_CONDITIONS;
+                }
                 break;
 
             case R.id.tv_language:

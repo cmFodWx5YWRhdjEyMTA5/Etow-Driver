@@ -5,7 +5,7 @@ package com.app.etow.ui.scheduled_trip;
  *  Author DangTin. Create on 2018/05/13
  */
 
-import com.app.etow.data.DataManager;
+import com.app.etow.data.NetworkManager;
 import com.app.etow.models.Trip;
 import com.app.etow.ui.base.BasePresenter;
 
@@ -19,8 +19,8 @@ import retrofit2.Retrofit;
 public class ScheduledTripPresenter extends BasePresenter<ScheduledTripMVPView> {
 
     @Inject
-    public ScheduledTripPresenter(Retrofit mRetrofit, DataManager mDataManager) {
-        super(mRetrofit, mDataManager);
+    public ScheduledTripPresenter(Retrofit mRetrofit, NetworkManager networkManager) {
+        super(mRetrofit, networkManager);
     }
 
     @Override
