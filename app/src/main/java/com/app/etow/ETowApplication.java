@@ -12,6 +12,7 @@ import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.injection.components.ApplicationComponent;
 import com.app.etow.injection.components.DaggerApplicationComponent;
 import com.app.etow.injection.modules.ApplicationModule;
+import com.google.firebase.FirebaseApp;
 
 public class ETowApplication extends Application {
 
@@ -26,6 +27,7 @@ public class ETowApplication extends Application {
     public void onCreate() {
         super.onCreate();
         DataStoreManager.init(getApplicationContext());
+        FirebaseApp.initializeApp(this);
     }
 
     public ApplicationComponent getComponent() {

@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "781626555052",
-    "firebase_url": "https://cookbook-91dc2.firebaseio.com",
-    "project_id": "cookbook-91dc2",
-    "storage_bucket": "cookbook-91dc2.appspot.com"
+    "project_number": "722475383505",
+    "firebase_url": "https://etow-c6f66.firebaseio.com",
+    "project_id": "etow-c6f66",
+    "storage_bucket": "etow-c6f66.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:781626555052:android:cf6a19186d506c80",
+        "mobilesdk_app_id": "1:722475383505:android:6bf96cd28b95f043",
         "android_client_info": {
           "package_name": "com.app.etow"
         }
       },
       "oauth_client": [
         {
-          "client_id": "781626555052-gat8lrngpdnvat0ejtrs1tlrpjhs9er5.apps.googleusercontent.com",
+          "client_id": "722475383505-4la4t2gi40octf7pp1qjmrjlbs9oged9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.etow",
+            "certificate_hash": "598474e413616fc0ebb5471af8a6d886456c0b81"
+          }
+        },
+        {
+          "client_id": "722475383505-1gj0b8m8u519893eoodrjao3dbkqqc51.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCD7mjRWbcKWgHkrDn-I62hrbKdoGJWfLg"
+          "current_key": "AIzaSyDqW-cry0Bovc2UdNFASMFCtl_xvq8t5Pk"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722475383505-1gj0b8m8u519893eoodrjao3dbkqqc51.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

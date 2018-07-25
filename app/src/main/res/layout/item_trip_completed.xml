@@ -55,6 +55,7 @@
                     android:textSize="@dimen/text_size_small" />
 
                 <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                    android:id="@+id/tv_trip_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="00200230323"
@@ -103,6 +104,7 @@
                 android:textSize="@dimen/text_size_small" />
 
             <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                android:id="@+id/tv_address_pick_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="123, First Time Street, Dubai, United Arap Emirated"

@@ -88,4 +88,8 @@ public interface ThinkFitService {
     @POST("user/login")
     Observable<ApiResponse> login(@Field(KeyAPI.KEY_EMAIL) String email,
                                     @Field(KeyAPI.KEY_PASSWORD) String password);
+
+    @FormUrlEncoded
+    @POST("user/logout")
+    Observable<ApiSuccess> logout(@Field(KeyAPI.KEY_TOKEN) String token);
 }

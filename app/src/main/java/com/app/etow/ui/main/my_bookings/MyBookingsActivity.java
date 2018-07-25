@@ -76,13 +76,14 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
         tvTitleToolbar.setText(getString(R.string.my_bookings));
         imgFilter.setVisibility(View.VISIBLE);
 
-        tripCompletedAdapter = new TripCompletedAdapter(this);
+        tripCompletedAdapter = new TripCompletedAdapter(this, presenter.getListTripCompleted());
         tripCompletedAdapter.injectInto(rcvCompleted);
 
         tripUpcomingAdapter = new TripUpcomingAdapter(this);
         tripUpcomingAdapter.injectInto(rcvUpcoming);
 
-        presenter.getListTripCompleted();
+        presenter.initFirebase();
+        presenter.getTripCompleted();
         presenter.getListTripUpcoming();
     }
 
@@ -157,12 +158,8 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
     }
 
     @Override
-    public void loadListTripCompleted(List<Trip> listTripCompleted) {
-        listTripCompleted.add(new Trip());
-        listTripCompleted.add(new Trip());
-        listTripCompleted.add(new Trip());
-
-        tripCompletedAdapter.setListData(listTripCompleted);
+    public void loadListTripCompleted() {
+        tripCompletedAdapter.notifyDataSetChanged();
     }
 
     @Override

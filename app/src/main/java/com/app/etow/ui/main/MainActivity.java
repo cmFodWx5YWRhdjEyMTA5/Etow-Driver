@@ -22,6 +22,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.app.etow.R;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.ui.main.get_in_touch.GetInTouchFragment;
 import com.app.etow.ui.main.home.HomeFragment;
@@ -175,7 +177,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
     @OnClick({R.id.img_back, R.id.img_menu, R.id.tv_menu_home, R.id.tv_menu_my_account,
             R.id.tv_menu_my_bookings, R.id.tv_menu_get_in_touch, R.id.tv_menu_term_and_condition,
-            R.id.tv_language, R.id.tv_english, R.id.tv_urdu, R.id.layout_notification})
+            R.id.tv_logout, R.id.tv_language, R.id.tv_english, R.id.tv_urdu, R.id.layout_notification})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -218,6 +220,10 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                 }
                 break;
 
+            case R.id.tv_logout:
+                presenter.logout(DataStoreManager.getUserToken());
+                break;
+
             case R.id.tv_language:
                 // Not Todo
                 break;
@@ -257,5 +263,11 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                 Log.e("Permission", "Permission not Granted");
             }
         }
+    }
+
+    @Override
+    public void logout() {
+        GlobalFuntion.startActivity(this, SignInActivity.class);
+        finishAffinity();
     }
 }

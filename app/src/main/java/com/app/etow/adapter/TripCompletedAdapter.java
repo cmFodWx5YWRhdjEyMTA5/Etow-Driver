@@ -35,8 +35,9 @@ public class TripCompletedAdapter extends RecyclerView.Adapter<TripCompletedAdap
     private RecyclerView mRecyclerView;
 
     @Inject
-    public TripCompletedAdapter(@ActivityContext Context context) {
+    public TripCompletedAdapter(@ActivityContext Context context, List<Trip> list) {
         this.context = context;
+        this.listTripCompleted = list;
     }
 
     @Override
@@ -55,11 +56,6 @@ public class TripCompletedAdapter extends RecyclerView.Adapter<TripCompletedAdap
         return null == listTripCompleted ? 0 : listTripCompleted.size();
     }
 
-    public void setListData(List<Trip> list) {
-        this.listTripCompleted = list;
-        notifyDataSetChanged();
-    }
-
     public void injectInto(RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
@@ -76,6 +72,12 @@ public class TripCompletedAdapter extends RecyclerView.Adapter<TripCompletedAdap
 
     public static class TripCompletedViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder<Trip> {
 
+        @BindView(R.id.tv_trip_no)
+        TextView tvTripNo;
+
+        @BindView(R.id.tv_address_pick_up)
+        TextView tvAddressPickUp;
+
         @BindView(R.id.tv_view_details)
         TextView tvViewDetails;
 
@@ -91,6 +93,8 @@ public class TripCompletedAdapter extends RecyclerView.Adapter<TripCompletedAdap
         @Override
         public void bindData(Context context, Trip trip, int position) {
             if (trip != null) {
+                tvTripNo.setText(trip.getId() + "");
+                tvAddressPickUp.setText(trip.getPick_up());
                 tvViewDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

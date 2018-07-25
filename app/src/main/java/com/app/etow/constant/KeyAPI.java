@@ -21,4 +21,5 @@ public class KeyAPI {
     // key param
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
+    public static final String KEY_TOKEN = "token";
 }

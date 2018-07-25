@@ -7,6 +7,7 @@ package com.app.etow.data;
 
 import com.app.etow.data.networking.ThinkFitService;
 import com.app.etow.models.response.ApiResponse;
+import com.app.etow.models.response.ApiSuccess;
 import com.app.etow.models.response.CategoryResponse;
 
 import javax.inject.Inject;
@@ -34,5 +35,9 @@ public class NetworkManager {
 
     public Observable<ApiResponse> login(String email, String password) {
         return mThinkFitService.login(email, password);
+    }
+
+    public Observable<ApiSuccess> logout(String token) {
+        return mThinkFitService.logout(token);
     }
 }
