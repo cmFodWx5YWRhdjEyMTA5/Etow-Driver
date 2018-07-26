@@ -124,4 +124,5 @@
     <string name="open">Open</string>
     <string name="assigned">Assigned</string>
     <string name="confirm">Confirm</string>
+    <string name="unit_price">AED</string>
 </resources>

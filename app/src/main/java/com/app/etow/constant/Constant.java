@@ -24,12 +24,23 @@ public interface Constant {
     int TYPE_PICK_UP = 1;
     int TYPE_DROP_OFF = 2;
 
-    String TYPE_PAYMENT_CASH = "type_payment_cash";
-    String TYPE_PAYMENT_CARD = "type_payment_card";
+    String TYPE_PAYMENT_CASH = "cash";
+    String TYPE_PAYMENT_CARD = "card";
+
+    String TYPE_VEHICLE_NORMAL = "normal";
+    String TYPE_VEHICLE_FLATBED = "flatbed";
 
     // Key Intent
     String TITLE_TOOLBAR = "TITLE_TOOLBAR";
     String IS_SHOW_DISTANCE = "IS_SHOW_DISTANCE";
     String TYPE_LOCATION = "TYPE_LOCATION";
     String TYPE_PAYMENT = "TYPE_PAYMENT";
+
+    String TRIP_STATUS_NEW = "1"; // Khi user mới booking trip
+    String TRIP_STATUS_CANCEL = "2"; // Khi user cancel trip
+    String TRIP_STATUS_REJECT = "3"; // Khi driver reject trip
+    String TRIP_STATUS_ACCEPT = "4"; // Khi driver accept trip
+    String TRIP_STATUS_ARRIVED = "5"; // Khi driver đến pick up location
+    String TRIP_STATUS_JOURNEY_COMPLETED = "6"; // Khi driver đến drop off location
+    String TRIP_STATUS_COMPLETE = "7"; // Khi thanh toán xong
 }

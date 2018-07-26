@@ -15,8 +15,9 @@ import java.util.Date;
 
 public class DateTimeUtils {
 
-    private static final String HISTORY_DATE_FORMAT = "MMM dd,yyyy [hh:mm a]";
     private static final String DEFAULT_FORMAT_DATE = "MM/dd/yyyy";
+    private static final String DEFAULT_FORMAT_DATE_2 = "EEEE dd MMM yyyy";
+    private static final String DEFAULT_FORMAT_DATE_3 = "hh:mm a";
 
     private static final String TIME_FORMAT = "HH:mm a";
 
@@ -60,16 +61,6 @@ public class DateTimeUtils {
             throw new ParameterException("date can not be null");
         }
         return currentDate.getTime() > pivotDate;
-    }
-
-    public static String formatHistoryDate(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat(HISTORY_DATE_FORMAT);
-        return format.format(date);
-    }
-
-    public static String formatTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat(TIME_FORMAT);
-        return format.format(date);
     }
 
     public static int convertMonthToNumber(String monthName) {
@@ -143,5 +134,83 @@ public class DateTimeUtils {
                 break;
         }
         return month;
+    }
+
+    public static String convertTimeStampToDate(String strTimeStamp) {
+        String result = "";
+        if (strTimeStamp != null) {
+            try {
+                Float floatTimestamp = Float.parseFloat(strTimeStamp);
+                Long timestamp = (long) (floatTimestamp * 1000);
+                SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_FORMAT_DATE);
+                Date date = (new Date(timestamp));
+                result = sdf.format(date);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public static String convertDateToTimeStamp(String strDate) {
+        String result = "";
+        if (strDate != null) {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat(DEFAULT_FORMAT_DATE);
+                Date date = format.parse(strDate);
+                Long timestamp = date.getTime() / 1000;
+                result = String.valueOf(timestamp);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public static String convertDateTimeToTimeStamp(String strDate) {
+        String result = "";
+        if (strDate != null) {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat(DEFAULT_FORMAT_DATE);
+                Date date = format.parse(strDate);
+                Long timestamp = date.getTime() / 1000;
+                result = String.valueOf(timestamp);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public static String convertTimeStampToFormatDate2(String strTimeStamp) {
+        String result = "";
+        if (strTimeStamp != null) {
+            try {
+                Float floatTimestamp = Float.parseFloat(strTimeStamp);
+                Long timestamp = (long) (floatTimestamp * 1000);
+                SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_FORMAT_DATE_2);
+                Date date = (new Date(timestamp));
+                result = sdf.format(date);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public static String convertTimeStampToFormatDate3(String strTimeStamp) {
+        String result = "";
+        if (strTimeStamp != null) {
+            try {
+                Float floatTimestamp = Float.parseFloat(strTimeStamp);
+                Long timestamp = (long) (floatTimestamp * 1000);
+                SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_FORMAT_DATE_3);
+                Date date = (new Date(timestamp));
+                result = sdf.format(date);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 }

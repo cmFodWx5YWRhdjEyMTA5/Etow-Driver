@@ -11,15 +11,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.etow.R;
 import com.app.etow.adapter.base.BaseRecyclerViewAdapter;
 import com.app.etow.adapter.base.Releasable;
+import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.injection.ActivityContext;
 import com.app.etow.models.Trip;
 import com.app.etow.ui.trip_completed_detail.TripCompletedDetailActivity;
+import com.app.etow.utils.DateTimeUtils;
 
 import java.util.List;
 
@@ -72,11 +75,29 @@ public class TripCompletedAdapter extends RecyclerView.Adapter<TripCompletedAdap
 
     public static class TripCompletedViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder<Trip> {
 
+        @BindView(R.id.tv_date_trip)
+        TextView tvDateTrip;
+
+        @BindView(R.id.tv_time_trip)
+        TextView tvTimeTrip;
+
         @BindView(R.id.tv_trip_no)
         TextView tvTripNo;
 
+        @BindView(R.id.tv_price_trip)
+        TextView tvPriceTrip;
+
         @BindView(R.id.tv_address_pick_up)
         TextView tvAddressPickUp;
+
+        @BindView(R.id.tv_address_drop_off)
+        TextView tvAddressDropOff;
+
+        @BindView(R.id.tv_payment_type)
+        TextView tvPaymentType;
+
+        @BindView(R.id.img_payment_type)
+        ImageView imgPaymentType;
 
         @BindView(R.id.tv_view_details)
         TextView tvViewDetails;
@@ -93,8 +114,21 @@ public class TripCompletedAdapter extends RecyclerView.Adapter<TripCompletedAdap
         @Override
         public void bindData(Context context, Trip trip, int position) {
             if (trip != null) {
+                tvDateTrip.setText(DateTimeUtils.convertTimeStampToFormatDate2(trip.getPickup_date()));
+                tvTimeTrip.setText(DateTimeUtils.convertTimeStampToFormatDate3(trip.getPickup_date()));
                 tvTripNo.setText(trip.getId() + "");
+                tvPriceTrip.setText(trip.getPrice() + " " + context.getString(R.string.unit_price));
                 tvAddressPickUp.setText(trip.getPick_up());
+                tvAddressDropOff.setText(trip.getDrop_off());
+                if (Constant.TYPE_PAYMENT_CASH.equalsIgnoreCase(trip.getPayment_type())) {
+                    imgPaymentType.setImageResource(R.drawable.ic_cash_black);
+                    tvPaymentType.setText(context.getString(R.string.cash));
+                } else {
+                    imgPaymentType.setImageResource(R.drawable.ic_card_black);
+                    tvPaymentType.setText(context.getString(R.string.card));
+                }
+
+                // Set listener
                 tvViewDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
