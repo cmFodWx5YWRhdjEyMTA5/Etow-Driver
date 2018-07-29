@@ -38,12 +38,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/bg_green_corner_left_bottom"
+            android:background="@drawable/bg_grey_corner_left_bottom"
             android:gravity="center"
             android:paddingBottom="@dimen/define_dimen_14"
             android:paddingTop="@dimen/define_dimen_14"
             android:text="@string/online"
-            android:textColor="@color/white"
+            android:textColor="@color/textColorAccent"
             android:textSize="@dimen/text_size_xnormal" />
 
         <com.app.etow.ui.widget.textview.TahomaRegularTextView

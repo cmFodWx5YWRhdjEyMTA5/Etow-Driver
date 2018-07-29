@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.etow.R;
+import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.ui.base.BaseMVPFragmentWithDialog;
 import com.app.etow.ui.incoming_request.IncomingRequestActivity;
 import com.app.etow.ui.main.MainActivity;
@@ -69,6 +71,8 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
         this.getChildFragmentManager().beginTransaction()
                 .add(R.id.fragment_view_map, mMapFragment).commit();
         mMapFragment.getMapAsync(this);
+
+        initData();
     }
 
     @Override
@@ -117,16 +121,32 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        // Add a marker in Sydney, Australia, and move the camera.
-        LatLng currentLocation = new LatLng(-34, 151);
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(currentLocation)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_black));
-        // adding marker
-        mMap.addMarker(marker);
+        if (GlobalFuntion.LATITUDE > 0 && GlobalFuntion.LONGITUDE > 0) {
+            // Add a marker in Sydney, Australia, and move the camera.
+            LatLng currentLocation = new LatLng(GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
+            // create marker
+            MarkerOptions marker = new MarkerOptions().position(currentLocation)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_black));
+            // adding marker
+            mMap.addMarker(marker);
 
-        CameraUpdate myLoc = CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                .target(currentLocation).zoom(13).build());
-        mMap.moveCamera(myLoc);
+            CameraUpdate myLoc = CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+                    .target(currentLocation).zoom(13).build());
+            mMap.moveCamera(myLoc);
+        }
+    }
+
+    private void initData() {
+        if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())) {
+            tvOnline.setBackgroundResource(R.drawable.bg_green_corner_left_bottom);
+            tvOffline.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
+            tvOnline.setTextColor(getResources().getColor(R.color.white));
+            tvOffline.setTextColor(getResources().getColor(R.color.textColorAccent));
+        } else {
+            tvOnline.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
+            tvOffline.setBackgroundResource(R.drawable.bg_red_corner_right_bottom);
+            tvOnline.setTextColor(getResources().getColor(R.color.textColorAccent));
+            tvOffline.setTextColor(getResources().getColor(R.color.white));
+        }
     }
 }

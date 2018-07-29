@@ -25,7 +25,7 @@
             android:layout_width="@dimen/define_dimen_120"
             android:layout_height="@dimen/define_dimen_120"
             android:layout_marginTop="@dimen/define_dimen_10"
-            android:src="@drawable/ic_user_default" />
+            android:src="@drawable/ic_avatar_default" />
 
         <com.app.etow.ui.widget.textview.TahomaRegularTextView
             android:id="@+id/tv_driver_name"

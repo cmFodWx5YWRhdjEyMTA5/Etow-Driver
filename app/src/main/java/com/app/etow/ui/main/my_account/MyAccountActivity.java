@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.etow.R;
+import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.User;
@@ -95,10 +96,11 @@ public class MyAccountActivity extends BaseMVPDialogActivity implements MyAccoun
         if (!StringUtil.isEmpty(user.getAvatar())) {
             GlideUtils.loadUrl(user.getAvatar(), imgAvatar);
         } else {
-            imgAvatar.setImageResource(R.drawable.ic_user_default);
+            imgAvatar.setImageResource(R.drawable.ic_avatar_default);
         }
-        tvDriverName.setText(user.getFullName());
-        if (user.getTypeVehicle() == 1) {
+        tvDriverName.setText(user.getFull_name());
+        tvEmail.setText(user.getEmail());
+        if (Constant.TYPE_VEHICLE_NORMAL.equalsIgnoreCase(user.getDrivers().getVehicle_type())) {
             imgTypeVehicle.setImageResource(R.drawable.ic_car_black);
             tvTypeVehicle.setText(getString(R.string.type_vehicle_normal));
         } else {
@@ -108,7 +110,6 @@ public class MyAccountActivity extends BaseMVPDialogActivity implements MyAccoun
             imgTypeVehicle.setImageDrawable(myIcon);
             tvTypeVehicle.setText(getString(R.string.type_vehicle_flatbed));
         }
-        tvEmail.setText(user.getEmail());
     }
 
     @OnClick(R.id.img_back)

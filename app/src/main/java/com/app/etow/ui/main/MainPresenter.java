@@ -53,14 +53,10 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                         @Override
                         public void onNext(ApiSuccess apiSuccess) {
                             if (apiSuccess != null) {
-                                if (Constant.SUCCESS.equalsIgnoreCase(apiSuccess.getStatus())) {
-                                    DataStoreManager.setIsLogin(false);
-                                    DataStoreManager.setUserToken("");
-                                    DataStoreManager.removeUser();
-                                    getMvpView().logout();
-                                } else {
-                                    getMvpView().showAlert(apiSuccess.getMessage());
-                                }
+                                DataStoreManager.setIsLogin(false);
+                                DataStoreManager.setUserToken("");
+                                DataStoreManager.removeUser();
+                                getMvpView().logout();
                             }
                         }
                     });

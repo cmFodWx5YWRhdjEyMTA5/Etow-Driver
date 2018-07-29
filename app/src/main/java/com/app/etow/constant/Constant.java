@@ -8,11 +8,21 @@ package com.app.etow.constant;
 public interface Constant {
 
     String SUCCESS = "success";
-    String ERROR = "error";
 
     int FAIL_CONNECT_CODE = -1;
     int JSON_PARSER_CODE = -10;
     int OTHER_CODE = -20;
+
+    int CODE_HTTP_300 = 300;
+    int CODE_HTTP_401 = 401;
+    int CODE_HTTP_409 = 409;
+    int CODE_HTTP_410 = 410;
+    int CODE_HTTP_411 = 411;
+    int CODE_HTTP_412 = 412;
+    int CODE_HTTP_413 = 413;
+    int CODE_HTTP_421 = 421;
+    int CODE_HTTP_507 = 507;
+    int CODE_HTTP_510 = 510;
 
     String GENERIC_ERROR = "General error, please try again later";
     String SERVER_ERROR = "Fail to connect to server";
@@ -27,8 +37,11 @@ public interface Constant {
     String TYPE_PAYMENT_CASH = "cash";
     String TYPE_PAYMENT_CARD = "card";
 
-    String TYPE_VEHICLE_NORMAL = "normal";
+    String TYPE_VEHICLE_NORMAL = "nomarl";
     String TYPE_VEHICLE_FLATBED = "flatbed";
+
+    String IS_ONLINE = "1";
+    String IS_OFFLINE = "2";
 
     // Key Intent
     String TITLE_TOOLBAR = "TITLE_TOOLBAR";

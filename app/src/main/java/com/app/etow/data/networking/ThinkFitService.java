@@ -10,7 +10,6 @@ import com.app.etow.constant.Constant;
 import com.app.etow.constant.KeyAPI;
 import com.app.etow.models.response.ApiResponse;
 import com.app.etow.models.response.ApiSuccess;
-import com.app.etow.models.response.CategoryResponse;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -27,8 +26,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -77,17 +74,10 @@ public interface ThinkFitService {
         }
     }
 
-    @GET("keisuke/shops_list.json")
-    Observable<CategoryResponse> getListCategory();
-
-    @FormUrlEncoded
-    @POST("auth/fbconnect.json")
-    Observable<ApiSuccess> postLikeFood(@Header(KeyAPI.KEY_HTTP_X_API_TOKEN) String token,
-                                        @Field("id") int id);
     @FormUrlEncoded
     @POST("user/login")
     Observable<ApiResponse> login(@Field(KeyAPI.KEY_EMAIL) String email,
-                                    @Field(KeyAPI.KEY_PASSWORD) String password);
+                                  @Field(KeyAPI.KEY_PASSWORD) String password);
 
     @FormUrlEncoded
     @POST("user/logout")

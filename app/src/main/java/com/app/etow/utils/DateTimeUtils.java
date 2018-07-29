@@ -19,8 +19,6 @@ public class DateTimeUtils {
     private static final String DEFAULT_FORMAT_DATE_2 = "EEEE dd MMM yyyy";
     private static final String DEFAULT_FORMAT_DATE_3 = "hh:mm a";
 
-    private static final String TIME_FORMAT = "HH:mm a";
-
     public static boolean isDateBefore(Date currentDate, Date pivotDate) {
         if (currentDate == null || pivotDate == null) {
             throw new ParameterException("date can not be null");
@@ -153,21 +151,6 @@ public class DateTimeUtils {
     }
 
     public static String convertDateToTimeStamp(String strDate) {
-        String result = "";
-        if (strDate != null) {
-            try {
-                SimpleDateFormat format = new SimpleDateFormat(DEFAULT_FORMAT_DATE);
-                Date date = format.parse(strDate);
-                Long timestamp = date.getTime() / 1000;
-                result = String.valueOf(timestamp);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
-
-    public static String convertDateTimeToTimeStamp(String strDate) {
         String result = "";
         if (strDate != null) {
             try {

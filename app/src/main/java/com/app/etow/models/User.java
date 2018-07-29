@@ -6,16 +6,12 @@ import com.google.gson.annotations.SerializedName;
 public class User {
 
     private int id;
-    @SerializedName("full_name")
-    private String fullName;
+    private String full_name;
     private String email;
     private String phone;
     private String token;
     private String avatar;
-    private int type;
-    @SerializedName("type_vehicle")
-    private int typeVehicle;
-    private int status;
+    private DriverInfor drivers;
 
     public int getId() {
         return id;
@@ -25,12 +21,12 @@ public class User {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFull_name() {
+        return full_name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public String getEmail() {
@@ -65,28 +61,12 @@ public class User {
         this.avatar = avatar;
     }
 
-    public int getType() {
-        return type;
+    public DriverInfor getDrivers() {
+        return drivers;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getTypeVehicle() {
-        return typeVehicle;
-    }
-
-    public void setTypeVehicle(int typeVehicle) {
-        this.typeVehicle = typeVehicle;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public void setDrivers(DriverInfor drivers) {
+        this.drivers = drivers;
     }
 
     public String toJSon(){

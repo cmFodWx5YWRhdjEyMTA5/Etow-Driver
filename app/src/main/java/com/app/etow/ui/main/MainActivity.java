@@ -5,7 +5,9 @@ package com.app.etow.ui.main;
  *  Author DangTin. Create on 2018/05/13
  */
 
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -96,6 +98,13 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
     @Override
     protected int addContextView() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        GlobalFuntion.getCurrentLocation(this, mLocationManager);
     }
 
     @Override

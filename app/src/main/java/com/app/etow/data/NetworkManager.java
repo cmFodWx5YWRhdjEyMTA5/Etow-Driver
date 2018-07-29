@@ -8,7 +8,6 @@ package com.app.etow.data;
 import com.app.etow.data.networking.ThinkFitService;
 import com.app.etow.models.response.ApiResponse;
 import com.app.etow.models.response.ApiSuccess;
-import com.app.etow.models.response.CategoryResponse;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -23,14 +22,6 @@ public class NetworkManager {
     @Inject
     public NetworkManager(ThinkFitService thinkFitService) {
         this.mThinkFitService = thinkFitService;
-    }
-
-    /*public Observable<FoodResponse> getFood(String token, int page) {
-        return mThinkFitService.getFood(token, page);
-    }*/
-
-    public Observable<CategoryResponse> getListCategory() {
-        return mThinkFitService.getListCategory();
     }
 
     public Observable<ApiResponse> login(String email, String password) {

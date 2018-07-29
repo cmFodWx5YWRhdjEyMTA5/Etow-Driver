@@ -8,8 +8,8 @@ package com.app.etow.ui.auth;
 import com.app.etow.constant.Constant;
 import com.app.etow.data.NetworkManager;
 import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.User;
 import com.app.etow.models.response.ApiResponse;
-import com.app.etow.models.response.UserResponse;
 import com.app.etow.ui.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -55,17 +55,13 @@ public class SignInPresenter extends BasePresenter<SignInMVPView> {
                         public void onNext(ApiResponse apiResponse) {
                             if (apiResponse != null) {
                                 if (Constant.SUCCESS.equalsIgnoreCase(apiResponse.getStatus())) {
-                                    UserResponse userResponse = apiResponse.getDataObject(UserResponse.class);
-                                    if (userResponse != null) {
+                                    User user = apiResponse.getDataObject(User.class);
+                                    if (user != null) {
                                         DataStoreManager.setIsLogin(true);
-                                        DataStoreManager.setUserToken(userResponse.getUser().getToken());
-                                        DataStoreManager.setUser(userResponse.getUser());
+                                        DataStoreManager.setUserToken(user.getToken());
+                                        DataStoreManager.setUser(user);
                                         getMvpView().updateStatusLogin();
-                                    } else {
-                                        getMvpView().showAlert(apiResponse.getMessage());
                                     }
-                                } else {
-                                    getMvpView().showAlert(apiResponse.getMessage());
                                 }
                             }
                         }
