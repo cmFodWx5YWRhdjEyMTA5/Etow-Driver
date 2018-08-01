@@ -5,7 +5,7 @@ package com.app.etow.data;
  *  Author DangTin. Create on 2018/05/13
  */
 
-import com.app.etow.data.networking.ThinkFitService;
+import com.app.etow.data.networking.EtowService;
 import com.app.etow.models.response.ApiResponse;
 import com.app.etow.models.response.ApiSuccess;
 
@@ -17,18 +17,22 @@ import rx.Observable;
 @Singleton
 public class NetworkManager {
 
-    private final ThinkFitService mThinkFitService;
+    private final EtowService mEtowService;
 
     @Inject
-    public NetworkManager(ThinkFitService thinkFitService) {
-        this.mThinkFitService = thinkFitService;
+    public NetworkManager(EtowService etowService) {
+        this.mEtowService = etowService;
     }
 
     public Observable<ApiResponse> login(String email, String password) {
-        return mThinkFitService.login(email, password);
+        return mEtowService.login(email, password);
     }
 
     public Observable<ApiSuccess> logout(String token) {
-        return mThinkFitService.logout(token);
+        return mEtowService.logout(token);
+    }
+
+    public Observable<ApiSuccess> sendFeedback(String comment) {
+        return mEtowService.sendFeedback(comment);
     }
 }

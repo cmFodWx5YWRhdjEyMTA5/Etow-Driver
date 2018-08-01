@@ -29,7 +29,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import rx.Observable;
 
-public interface ThinkFitService {
+public interface EtowService {
 
     class Creator {
         public static Retrofit newRetrofitInstance() {
@@ -82,4 +82,8 @@ public interface ThinkFitService {
     @FormUrlEncoded
     @POST("user/logout")
     Observable<ApiSuccess> logout(@Field(KeyAPI.KEY_TOKEN) String token);
+
+    @FormUrlEncoded
+    @POST("feedback/send")
+    Observable<ApiSuccess> sendFeedback(@Field(KeyAPI.KEY_COMMENT) String comment);
 }

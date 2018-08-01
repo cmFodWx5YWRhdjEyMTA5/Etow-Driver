@@ -127,6 +127,7 @@
     <string name="unit_price">AED</string>
     <string name="unble_trace_location">Unble to trace your location</string>
     <string name="message_turn_on_gps">Please turn on your GPS</string>
+    <string name="please_enter_comment">Please enter comments</string>
 
     // msg request api
     <string name="msg_missing_params">Missing params.</string>

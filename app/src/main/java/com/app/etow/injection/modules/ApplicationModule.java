@@ -9,7 +9,7 @@ import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.app.etow.data.networking.ThinkFitService;
+import com.app.etow.data.networking.EtowService;
 import com.app.etow.injection.ApplicationContext;
 
 import javax.inject.Singleton;
@@ -45,13 +45,13 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    ThinkFitService networkService(Retrofit retrofit){
-        return retrofit.create(ThinkFitService.class);
+    EtowService networkService(Retrofit retrofit){
+        return retrofit.create(EtowService.class);
     }
 
     @Provides
     @Singleton
     Retrofit provideRetrofitInstance() {
-        return ThinkFitService.Creator.newRetrofitInstance();
+        return EtowService.Creator.newRetrofitInstance();
     }
 }
