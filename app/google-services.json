@@ -49,6 +49,50 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722475383505:android:ee9a9b21cea262af",
+        "android_client_info": {
+          "package_name": "com.user.etow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722475383505-54r2mj5pecemvjdi4e95dvk1ag1cb59l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.user.etow",
+            "certificate_hash": "72b49b1b23c85306efba990337e7a4745ccb2a5e"
+          }
+        },
+        {
+          "client_id": "722475383505-1gj0b8m8u519893eoodrjao3dbkqqc51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqW-cry0Bovc2UdNFASMFCtl_xvq8t5Pk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722475383505-1gj0b8m8u519893eoodrjao3dbkqqc51.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"
