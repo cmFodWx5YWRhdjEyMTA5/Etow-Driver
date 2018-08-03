@@ -21,17 +21,17 @@
             android:padding="@dimen/define_dimen_6">
 
             <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Monday 19 Sep 2018"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_normal" />
 
             <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="12:30 PM"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_normal" />
         </RelativeLayout>
@@ -58,7 +58,6 @@
                 android:id="@+id/tv_pick_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="123, First Time Street, Dubai, United Arap Emirated"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/text_size_normal" />
         </LinearLayout>
@@ -85,7 +84,6 @@
                 android:id="@+id/tv_drop_off"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="123, Second Time Street, Dubai, United Arap Emirated"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/text_size_normal" />
         </LinearLayout>

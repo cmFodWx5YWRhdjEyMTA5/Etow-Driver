@@ -59,6 +59,9 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
     @BindView(R.id.tv_title_toolbar)
     TextView tvTitleToolbar;
 
+    @BindView(R.id.tv_count_trip_schedule)
+    TextView tvCountTripSchedule;
+
     @BindView(R.id.tv_title_header)
     TextView tvTitleHeader;
 
@@ -85,6 +88,9 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         // set menu
         imgBack.setImageResource(R.drawable.ic_close_black);
         tvTitleToolbar.setText(getString(R.string.menu));
+
+        presenter.initFirebase();
+        presenter.getScheduleTrip();
 
         setListenerDrawer();
         replaceFragment(new HomeFragment(), HomeFragment.class.getName());
@@ -278,5 +284,10 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
     public void logout() {
         GlobalFuntion.startActivity(this, SignInActivity.class);
         finishAffinity();
+    }
+
+    @Override
+    public void loadListTripSchedule(int count) {
+        tvCountTripSchedule.setText(count + "");
     }
 }

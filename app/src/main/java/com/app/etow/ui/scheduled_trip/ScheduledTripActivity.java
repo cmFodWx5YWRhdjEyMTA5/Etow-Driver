@@ -14,10 +14,7 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.adapter.ScheduledTripAdapter;
 import com.app.etow.constant.GlobalFuntion;
-import com.app.etow.models.Trip;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,7 +36,11 @@ public class ScheduledTripActivity extends BaseMVPDialogActivity implements Sche
     @BindView(R.id.rcv_scheduled_trip)
     RecyclerView rcvScheduledTrip;
 
+    @BindView(R.id.rcv_scheduled_trip_new)
+    RecyclerView rcvScheduledTripNew;
+
     private ScheduledTripAdapter scheduledTripAdapter;
+    private ScheduledTripAdapter scheduledTripNewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +54,13 @@ public class ScheduledTripActivity extends BaseMVPDialogActivity implements Sche
         imgFilter.setVisibility(View.VISIBLE);
         imgFilter.setImageResource(R.drawable.ic_refresh_red);
 
-        scheduledTripAdapter = new ScheduledTripAdapter(this);
+        scheduledTripAdapter = new ScheduledTripAdapter(this, presenter.getListTripSchedule());
         scheduledTripAdapter.injectInto(rcvScheduledTrip);
+        scheduledTripNewAdapter = new ScheduledTripAdapter(this, presenter.getListTripScheduleNew());
+        scheduledTripNewAdapter.injectInto(rcvScheduledTripNew);
 
-        presenter.getListScheduledTrip();
+        presenter.initFirebase();
+        presenter.getTripSchedule(scheduledTripAdapter);
     }
 
     @Override
@@ -72,9 +76,11 @@ public class ScheduledTripActivity extends BaseMVPDialogActivity implements Sche
     @Override
     protected void onDestroy() {
         presenter.destroyView();
-
         if (scheduledTripAdapter != null) {
             scheduledTripAdapter.release();
+        }
+        if (scheduledTripNewAdapter != null) {
+            scheduledTripNewAdapter.release();
         }
         super.onDestroy();
     }
@@ -97,16 +103,10 @@ public class ScheduledTripActivity extends BaseMVPDialogActivity implements Sche
 
     @OnClick(R.id.img_filter)
     public void onClickFilter() {
-
-    }
-
-    @Override
-    public void loadScheduledTrips(List<Trip> listScheduledTrip) {
-        listScheduledTrip.add(new Trip(false));
-        listScheduledTrip.add(new Trip(true));
-        listScheduledTrip.add(new Trip(false));
-        listScheduledTrip.add(new Trip(true));
-
-        scheduledTripAdapter.setListData(listScheduledTrip);
+        rcvScheduledTripNew.setVisibility(View.VISIBLE);
+        rcvScheduledTrip.setVisibility(View.GONE);
+        presenter.getListTripScheduleNew().clear();
+        presenter.getTripScheduleNew(scheduledTripNewAdapter);
+        imgFilter.setEnabled(false);
     }
 }

@@ -13,11 +13,25 @@
 
     <include layout="@layout/layout_toolbar" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcv_scheduled_trip"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/define_dimen_10"
-        android:layout_marginEnd="@dimen/define_dimen_10"
-        android:layout_marginStart="@dimen/define_dimen_10" />
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_scheduled_trip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/define_dimen_10"
+            android:layout_marginEnd="@dimen/define_dimen_10"
+            android:layout_marginStart="@dimen/define_dimen_10" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_scheduled_trip_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/define_dimen_10"
+            android:layout_marginEnd="@dimen/define_dimen_10"
+            android:layout_marginStart="@dimen/define_dimen_10" />
+    </RelativeLayout>
 </LinearLayout>

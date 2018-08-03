@@ -8,8 +8,16 @@ package com.app.etow.ui.main;
 import com.app.etow.constant.Constant;
 import com.app.etow.data.NetworkManager;
 import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.Trip;
 import com.app.etow.models.response.ApiSuccess;
 import com.app.etow.ui.base.BasePresenter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -19,6 +27,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class MainPresenter extends BasePresenter<MainMVPView> {
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+    private String mReference;
+    private ArrayList<Trip> listTripSchedule = new ArrayList<>();
 
     @Inject
     public MainPresenter(Retrofit mRetrofit, NetworkManager networkManager) {
@@ -61,5 +74,52 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                         }
                     });
         }
+    }
+
+    public void initFirebase() {
+        mReference = "/trip_schedule";
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference(mReference);
+    }
+
+    public void getScheduleTrip() {
+        mDatabaseReference.orderByChild("status").equalTo(Constant.TRIP_STATUS_NEW)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        listTripSchedule.add(trip);
+                        getMvpView().loadListTripSchedule(listTripSchedule.size());
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        if (listTripSchedule != null && listTripSchedule.size() > 0) {
+                            for (int i = 0; i < listTripSchedule.size(); i++) {
+                                if (trip.getId() == listTripSchedule.get(i).getId()) {
+                                    listTripSchedule.remove(i);
+                                    break;
+                                }
+                            }
+                        }
+                        getMvpView().loadListTripSchedule(listTripSchedule.size());
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

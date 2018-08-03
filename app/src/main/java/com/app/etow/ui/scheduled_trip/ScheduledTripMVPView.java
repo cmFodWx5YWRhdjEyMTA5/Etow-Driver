@@ -12,5 +12,4 @@ import java.util.List;
 
 interface ScheduledTripMVPView extends BaseScreenMvpView {
 
-    void loadScheduledTrips(List<Trip> listScheduledTrip);
 }

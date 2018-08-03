@@ -11,16 +11,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.etow.R;
 import com.app.etow.adapter.base.BaseRecyclerViewAdapter;
 import com.app.etow.adapter.base.Releasable;
+import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.injection.ActivityContext;
 import com.app.etow.models.Trip;
 import com.app.etow.ui.scheduled_trip.detail.ScheduledTripDetailActivity;
+import com.app.etow.utils.DateTimeUtils;
 
 import java.util.List;
 
@@ -36,8 +39,9 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
     private RecyclerView mRecyclerView;
 
     @Inject
-    public ScheduledTripAdapter(@ActivityContext Context context) {
+    public ScheduledTripAdapter(@ActivityContext Context context, List<Trip> list) {
         this.context = context;
+        this.listScheduledTrip = list;
     }
 
     @Override
@@ -54,11 +58,6 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
     @Override
     public int getItemCount() {
         return null == listScheduledTrip ? 0 : listScheduledTrip.size();
-    }
-
-    public void setListData(List<Trip> list) {
-        this.listScheduledTrip = list;
-        notifyDataSetChanged();
     }
 
     public void injectInto(RecyclerView recyclerView) {
@@ -80,6 +79,12 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
         @BindView(R.id.layout_title)
         RelativeLayout layoutTitle;
 
+        @BindView(R.id.tv_date)
+        TextView tvDate;
+
+        @BindView(R.id.tv_time)
+        TextView tvTime;
+
         @BindView(R.id.tv_title_pick_up)
         TextView tvTitlePickUp;
 
@@ -98,6 +103,9 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
         @BindView(R.id.tv_status)
         TextView tvStatus;
 
+        @BindView(R.id.layout_delete)
+        LinearLayout layoutDelete;
+
         public ScheduledTripViewHolder(View itemView) {
             super(itemView);
         }
@@ -110,7 +118,7 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
         @Override
         public void bindData(Context context, Trip trip, int position) {
             if (trip != null) {
-                if (trip.isAssigned()) {
+                if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
                     layoutTitle.setBackgroundResource(R.color.background_trip_assigned);
                     tvTitlePickUp.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
                     tvPickUp.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
@@ -122,7 +130,7 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
                     tvStatus.setTextColor(context.getResources().getColor(R.color.background_trip_assigned));
 
                     tvStatus.setText(context.getString(R.string.assigned));
-                } else {
+                } else if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())){
                     layoutTitle.setBackgroundResource(R.color.black);
                     tvTitlePickUp.setTextColor(context.getResources().getColor(R.color.textColorSecondary));
                     tvPickUp.setTextColor(context.getResources().getColor(R.color.textColorPrimary));
@@ -141,6 +149,17 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
                         }
                     });
                 }
+                tvDate.setText(DateTimeUtils.convertTimeStampToFormatDate2(trip.getPickup_date()));
+                tvTime.setText(DateTimeUtils.convertTimeStampToFormatDate3(trip.getPickup_date()));
+                tvPickUp.setText(trip.getPick_up());
+                tvDropOff.setText(trip.getDrop_off());
+
+                layoutDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Todo update trip to reject
+                    }
+                });
             }
         }
     }

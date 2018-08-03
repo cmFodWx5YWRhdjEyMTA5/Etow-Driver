@@ -45,12 +45,13 @@
             android:src="@drawable/ic_notification_black" />
 
         <TextView
+            android:id="@+id/tv_count_trip_schedule"
             android:layout_width="@dimen/define_dimen_35"
             android:layout_height="@dimen/define_dimen_35"
             android:background="@drawable/shape_circle_red"
             android:gravity="center"
             android:padding="@dimen/define_dimen_6"
-            android:text="100"
+            android:text="0"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_xsmall" />
 

@@ -83,7 +83,7 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
         tripUpcomingAdapter.injectInto(rcvUpcoming);
 
         presenter.initFirebase();
-        presenter.getTripCompleted();
+        presenter.getTripCompleted(tripCompletedAdapter);
         presenter.getListTripUpcoming();
     }
 
@@ -155,11 +155,6 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
             rcvCompleted.setVisibility(View.GONE);
             rcvUpcoming.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void loadListTripCompleted() {
-        tripCompletedAdapter.notifyDataSetChanged();
     }
 
     @Override

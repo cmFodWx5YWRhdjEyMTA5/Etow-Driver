@@ -12,13 +12,8 @@ public class Trip {
     private String status;
     private String payment_type;
     private String vehicle_type;
-    private boolean isAssigned;
 
     public Trip() {
-    }
-
-    public Trip(boolean isAssigned) {
-        this.isAssigned = isAssigned;
     }
 
     public int getId() {
@@ -83,13 +78,5 @@ public class Trip {
 
     public void setVehicle_type(String vehicle_type) {
         this.vehicle_type = vehicle_type;
-    }
-
-    public boolean isAssigned() {
-        return isAssigned;
-    }
-
-    public void setAssigned(boolean assigned) {
-        isAssigned = assigned;
     }
 }

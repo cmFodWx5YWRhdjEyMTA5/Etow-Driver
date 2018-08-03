@@ -7,6 +7,7 @@ package com.app.etow.ui.main.my_bookings;
  * ******************************************************************************
  */
 
+import com.app.etow.adapter.TripCompletedAdapter;
 import com.app.etow.constant.Constant;
 import com.app.etow.data.NetworkManager;
 import com.app.etow.injection.PerActivity;
@@ -59,16 +60,14 @@ public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
         mDatabaseReference = mFirebaseDatabase.getReference(mReference);
     }
 
-    public void getTripCompleted() {
-        getMvpView().showProgressDialog(true);
+    public void getTripCompleted(TripCompletedAdapter tripCompletedAdapter) {
         mDatabaseReference.orderByChild("status").equalTo(Constant.TRIP_STATUS_COMPLETE)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        getMvpView().showProgressDialog(false);
                         Trip trip = dataSnapshot.getValue(Trip.class);
                         listTripCompleted.add(trip);
-                        getMvpView().loadListTripCompleted();
+                        tripCompletedAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -82,7 +81,7 @@ public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
                                 }
                             }
                         }
-                        getMvpView().loadListTripCompleted();
+                        tripCompletedAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -96,7 +95,7 @@ public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
                                 }
                             }
                         }
-                        getMvpView().loadListTripCompleted();
+                        tripCompletedAdapter.notifyDataSetChanged();
                     }
 
                     @Override
