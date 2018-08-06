@@ -19,9 +19,13 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/layout_bottom"
         android:layout_below="@+id/layout_header"
-        android:background="@color/redAccent"
         android:orientation="vertical">
 
+        <fragment
+            android:id="@+id/fragment_view_map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,12 +47,12 @@
             android:textStyle="bold" />
 
         <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:id="@+id/tv_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/define_dimen_10"
             android:layout_marginBottom="@dimen/define_dimen_10"
             android:gravity="center"
-            android:text="123, First Time Street, Dubai, United Arap Emirated"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/text_size_normal" />
 
@@ -57,7 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="123, First Time Street, Dubai, United Arap Emirated"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/text_size_normal" />
 

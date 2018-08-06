@@ -22,6 +22,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -39,10 +40,12 @@ android {
 // Required because retrolambda is on maven central
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
@@ -85,10 +88,11 @@ dependencies {
     // Image circle
     implementation 'de.hdodenhof:circleimageview:2.0.0'
     // Google Map
-    implementation 'com.google.android.gms:play-services-maps:15.0.1'
-    implementation 'com.google.android.gms:play-services-location:15.0.1'
-
+    // implementation 'com.google.android.gms:play-services-maps:9.4.0'
+    // implementation 'com.google.android.gms:play-services-location:9.4.0'
     // Firebase
-    implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation 'com.google.firebase:firebase-database:9.6.1'
+    // Draw google map
+    implementation 'com.github.ar-android:DrawRouteMaps:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

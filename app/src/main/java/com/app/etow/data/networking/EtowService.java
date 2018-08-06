@@ -8,6 +8,7 @@ package com.app.etow.data.networking;
 import com.app.etow.BuildConfig;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.KeyAPI;
+import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.response.ApiResponse;
 import com.app.etow.models.response.ApiSuccess;
 import com.google.gson.ExclusionStrategy;
@@ -40,9 +41,7 @@ public interface EtowService {
             okBuilder.addInterceptor(chain -> {
                 Request original = chain.request();
                 Request.Builder builder = original.newBuilder();
-                builder.header(KeyAPI.KEY_DEVICE_TYPE, KeyAPI.VALUE_DEVICE_TYPE)
-                        .header(KeyAPI.KEY_HTTP_X_APP_ID, KeyAPI.VALUE_HTTP_X_APP_ID)
-                        .header(KeyAPI.KEY_HTTP_X_SECRET_KEY, KeyAPI.VALUE_HTTP_X_SECRET_KEY)
+                builder.header(KeyAPI.KEY_AUTHORIZATION, DataStoreManager.getUserToken())
                         .method(original.method(), original.body());
                 return chain.proceed(builder.build());
             });
@@ -86,4 +85,8 @@ public interface EtowService {
     @FormUrlEncoded
     @POST("feedback/send")
     Observable<ApiSuccess> sendFeedback(@Field(KeyAPI.KEY_COMMENT) String comment);
+
+    @FormUrlEncoded
+    @POST("user/update-profile")
+    Observable<ApiResponse> updateProfile(@Field(KeyAPI.KEY_IS_ONLINE) String isOnline);
 }

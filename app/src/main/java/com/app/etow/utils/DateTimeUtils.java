@@ -18,6 +18,7 @@ public class DateTimeUtils {
     private static final String DEFAULT_FORMAT_DATE = "MM/dd/yyyy";
     private static final String DEFAULT_FORMAT_DATE_2 = "EEEE dd MMM yyyy";
     private static final String DEFAULT_FORMAT_DATE_3 = "hh:mm a";
+    private static final String DEFAULT_FORMAT_DATE_4 = "yyyy-MM-dd HH:mm:ss"; //2018-08-04 10:10:32
 
     public static boolean isDateBefore(Date currentDate, Date pivotDate) {
         if (currentDate == null || pivotDate == null) {
@@ -78,6 +79,12 @@ public class DateTimeUtils {
         return df.format(c.getTime());
     }
 
+    public static String getCurrentTimeStamp() {
+        Long tsLong = System.currentTimeMillis() / 1000;
+        String result = tsLong.toString();
+        return result;
+    }
+
     public static String getTimeCurrent() {
         int hours = new Time(System.currentTimeMillis()).getHours();
         int minutes = new Time(System.currentTimeMillis()).getMinutes();
@@ -134,27 +141,11 @@ public class DateTimeUtils {
         return month;
     }
 
-    public static String convertTimeStampToDate(String strTimeStamp) {
-        String result = "";
-        if (strTimeStamp != null) {
-            try {
-                Float floatTimestamp = Float.parseFloat(strTimeStamp);
-                Long timestamp = (long) (floatTimestamp * 1000);
-                SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_FORMAT_DATE);
-                Date date = (new Date(timestamp));
-                result = sdf.format(date);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
-
     public static String convertDateToTimeStamp(String strDate) {
         String result = "";
         if (strDate != null) {
             try {
-                SimpleDateFormat format = new SimpleDateFormat(DEFAULT_FORMAT_DATE);
+                SimpleDateFormat format = new SimpleDateFormat(DEFAULT_FORMAT_DATE_4);
                 Date date = format.parse(strDate);
                 Long timestamp = date.getTime() / 1000;
                 result = String.valueOf(timestamp);

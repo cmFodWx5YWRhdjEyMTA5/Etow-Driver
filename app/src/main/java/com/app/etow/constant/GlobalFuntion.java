@@ -31,8 +31,10 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.app.etow.R;
 import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.ViewMap;
 import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.view_map_location.ViewMapLocationActivity;
+import com.google.android.gms.maps.model.LatLng;
 
 public class GlobalFuntion {
 
@@ -144,12 +146,9 @@ public class GlobalFuntion {
         dialog.show();
     }
 
-    public static void goToViewMapLocationActivity(Context context, String titleToolbar,
-                                                   boolean isShowDistance, int typeLocation) {
+    public static void goToViewMapLocationActivity(Context context, ViewMap viewMap) {
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.TITLE_TOOLBAR, titleToolbar);
-        bundle.putBoolean(Constant.IS_SHOW_DISTANCE, isShowDistance);
-        bundle.putInt(Constant.TYPE_LOCATION, typeLocation);
+        bundle.putSerializable(Constant.OBJECT_VIEW_MAP, viewMap);
         startActivity(context, ViewMapLocationActivity.class, bundle);
     }
 

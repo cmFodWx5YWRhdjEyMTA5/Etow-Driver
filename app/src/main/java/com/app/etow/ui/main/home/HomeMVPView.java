@@ -11,4 +11,5 @@ import com.app.etow.ui.base.BaseScreenMvpView;
 
 interface HomeMVPView extends BaseScreenMvpView {
 
+    void loadStatusDriver();
 }

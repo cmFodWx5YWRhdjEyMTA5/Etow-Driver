@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.ui.trip_summary.cash.TripSummaryCashActivity;
 
@@ -91,8 +92,9 @@ public class DirectionLocationActivity extends BaseMVPDialogActivity implements 
     @OnClick(R.id.tv_action)
     public void onClickAction() {
         if (Constant.TYPE_PICK_UP == mTypeLocation) {
-            GlobalFuntion.goToViewMapLocationActivity(this, "",
-                    true, Constant.TYPE_DROP_OFF);
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF,
+                    "", "", "");
+            GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
         } else {
             GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
         }

@@ -35,4 +35,8 @@ public class NetworkManager {
     public Observable<ApiSuccess> sendFeedback(String comment) {
         return mEtowService.sendFeedback(comment);
     }
+
+    public Observable<ApiResponse> updateProfile(String isOnline) {
+        return mEtowService.updateProfile(isOnline);
+    }
 }

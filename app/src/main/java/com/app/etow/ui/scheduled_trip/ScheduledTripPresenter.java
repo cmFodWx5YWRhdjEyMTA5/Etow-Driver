@@ -41,13 +41,14 @@ public class ScheduledTripPresenter extends BasePresenter<ScheduledTripMVPView> 
     }
 
     public void initFirebase() {
-        mReference = "/trip_schedule";
+        mReference = "/trip";
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference(mReference);
     }
 
     public void getTripSchedule(ScheduledTripAdapter scheduledTripAdapter) {
-        mDatabaseReference.addChildEventListener(new ChildEventListener() {
+        mDatabaseReference.orderByChild("is_schedule").equalTo(Constant.IS_SCHEDULE)
+                .addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Trip trip = dataSnapshot.getValue(Trip.class);
@@ -96,7 +97,7 @@ public class ScheduledTripPresenter extends BasePresenter<ScheduledTripMVPView> 
     }
 
     public void getTripScheduleNew(ScheduledTripAdapter scheduledTripNewAdapter) {
-        mDatabaseReference.orderByChild("status").equalTo(Constant.TRIP_STATUS_NEW)
+        mDatabaseReference.orderByChild("status_schedule").equalTo(Constant.SCHEDULE_TRIP_STATUS_NEW)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {

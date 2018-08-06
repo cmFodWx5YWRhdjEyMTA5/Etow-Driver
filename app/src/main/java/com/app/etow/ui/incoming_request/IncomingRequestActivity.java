@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 
 import javax.inject.Inject;
@@ -78,14 +79,16 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
 
     @OnClick(R.id.layout_view_map_pick_up)
     public void onClickViewMapPickUp() {
-        GlobalFuntion.goToViewMapLocationActivity(this, getString(R.string.incoming_request),
-                false, Constant.TYPE_PICK_UP);
+        ViewMap viewMap = new ViewMap(getString(R.string.incoming_request), false,
+                Constant.TYPE_PICK_UP, "", "", "");
+        GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
     @OnClick(R.id.layout_view_map_drop_off)
     public void onClickViewMapDropOff() {
-        GlobalFuntion.goToViewMapLocationActivity(this, getString(R.string.incoming_request),
-                false, Constant.TYPE_DROP_OFF);
+        ViewMap viewMap = new ViewMap(getString(R.string.incoming_request), false,
+                Constant.TYPE_DROP_OFF, "", "", "");
+        GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
     @OnClick(R.id.tv_reject)
@@ -95,8 +98,9 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
 
     @OnClick(R.id.tv_accept)
     public void onClickAccept() {
-        GlobalFuntion.goToViewMapLocationActivity(this, "",
-                true, Constant.TYPE_PICK_UP);
+        ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP,
+                "", "", "");
+        GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
     public void showDialogReject() {

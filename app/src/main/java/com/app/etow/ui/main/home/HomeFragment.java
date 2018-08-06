@@ -48,7 +48,6 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
     @BindView(R.id.tv_offline)
     TextView tvOffline;
 
-    private boolean mIsOnline = true;
     private GoogleMap mMap;
 
     @Override
@@ -72,7 +71,7 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
                 .add(R.id.fragment_view_map, mMapFragment).commit();
         mMapFragment.getMapAsync(this);
 
-        initData();
+        loadStatusDriver();
     }
 
     @Override
@@ -98,23 +97,15 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
 
     @OnClick(R.id.tv_online)
     public void onClickOnline() {
-        if (!mIsOnline) {
-            mIsOnline = true;
-            tvOnline.setBackgroundResource(R.drawable.bg_green_corner_left_bottom);
-            tvOffline.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
-            tvOnline.setTextColor(getResources().getColor(R.color.white));
-            tvOffline.setTextColor(getResources().getColor(R.color.textColorAccent));
+        if (!Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())) {
+            presenter.updateStatusDriver(Constant.IS_ONLINE);
         }
     }
 
     @OnClick(R.id.tv_offline)
     public void onClickOffline() {
-        if (mIsOnline) {
-            mIsOnline = false;
-            tvOnline.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
-            tvOffline.setBackgroundResource(R.drawable.bg_red_corner_right_bottom);
-            tvOnline.setTextColor(getResources().getColor(R.color.textColorAccent));
-            tvOffline.setTextColor(getResources().getColor(R.color.white));
+        if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())) {
+            presenter.updateStatusDriver(Constant.IS_OFFLINE);
         }
     }
 
@@ -136,7 +127,8 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
         }
     }
 
-    private void initData() {
+    @Override
+    public void loadStatusDriver() {
         if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())) {
             tvOnline.setBackgroundResource(R.drawable.bg_green_corner_left_bottom);
             tvOffline.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
