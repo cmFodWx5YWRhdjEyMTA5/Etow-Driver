@@ -40,10 +40,10 @@
                     android:textSize="@dimen/text_size_small" />
 
                 <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                    android:id="@+id/tv_customer_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/define_dimen_10"
-                    android:text="Mohamet Sala"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/text_size_normal" />
             </LinearLayout>
@@ -69,10 +69,10 @@
                     android:textSize="@dimen/text_size_small" />
 
                 <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                    android:id="@+id/tv_date_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/define_dimen_10"
-                    android:text="18:30 PM 19-May-2018"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/text_size_normal" />
             </LinearLayout>
@@ -104,9 +104,9 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:id="@+id/tv_pick_up"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="123, First Time Street, Dubai, United Arap Emirated"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/text_size_normal" />
                 </LinearLayout>
@@ -184,9 +184,9 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:id="@+id/tv_drop_off"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="123, Second Time Street, Dubai, United Arap Emirated"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/text_size_normal" />
                 </LinearLayout>
@@ -271,15 +271,15 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/img_vehicle_type"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_car_black" />
+                            android:layout_height="wrap_content" />
 
                         <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                            android:id="@+id/tv_vehicle_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/define_dimen_10"
-                            android:text="Normal"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="@dimen/text_size_normal" />
                     </LinearLayout>
@@ -307,16 +307,16 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/img_payment_type"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_cash_black" />
+                            android:layout_height="wrap_content" />
 
                         <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                            android:id="@+id/tv_payment_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/define_dimen_6"
                             android:gravity="center"
-                            android:text="@string/cash"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="@dimen/text_size_normal" />
                     </LinearLayout>
@@ -344,9 +344,9 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3456 AED"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/text_size_xnormal" />
                 </LinearLayout>

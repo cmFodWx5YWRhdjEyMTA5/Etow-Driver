@@ -2,7 +2,9 @@ package com.app.etow.models;
 
 import com.google.gson.Gson;
 
-public class DriverInfor {
+import java.io.Serializable;
+
+public class DriverInfor implements Serializable {
 
     private String vehicle_type;
     private String vehicle_number;

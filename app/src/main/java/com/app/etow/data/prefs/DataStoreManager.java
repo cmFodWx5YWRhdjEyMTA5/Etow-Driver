@@ -7,7 +7,7 @@ package com.app.etow.data.prefs;
 
 import android.content.Context;
 
-import com.app.etow.models.User;
+import com.app.etow.models.Driver;
 import com.google.gson.Gson;
 
 public class DataStoreManager {
@@ -63,23 +63,23 @@ public class DataStoreManager {
         return DataStoreManager.getInstance().sharedPreferences.getBooleanValue(PREF_IS_LOGIN);
     }
 
-    // save user infor
-    public static void setUser(User user) {
-        if (user != null) {
-            String jsonUser = user.toJSon();
+    // save driver infor
+    public static void setUser(Driver driver) {
+        if (driver != null) {
+            String jsonUser = driver.toJSon();
             DataStoreManager.getInstance().sharedPreferences.putStringValue(PREF_USER_INFOR, jsonUser);
         }
     }
 
     public static void removeUser() {
-        User user = new User();
-        String jsonUser = user.toJSon();
+        Driver driver = new Driver();
+        String jsonUser = driver.toJSon();
         DataStoreManager.getInstance().sharedPreferences.putStringValue(PREF_USER_INFOR, jsonUser);
     }
 
-    public static User getUser() {
+    public static Driver getUser() {
         String jsonUser = DataStoreManager.getInstance().sharedPreferences.getStringValue(PREF_USER_INFOR);
-        User user = new Gson().fromJson(jsonUser, User.class);
-        return user;
+        Driver driver = new Gson().fromJson(jsonUser, Driver.class);
+        return driver;
     }
 }

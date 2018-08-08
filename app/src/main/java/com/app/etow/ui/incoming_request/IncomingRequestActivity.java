@@ -7,7 +7,10 @@ package com.app.etow.ui.incoming_request;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -19,8 +22,10 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
+import com.app.etow.utils.DateTimeUtils;
 
 import javax.inject.Inject;
 
@@ -39,6 +44,35 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
     @BindView(R.id.tv_title_toolbar)
     TextView tvTitleToolbar;
 
+    @BindView(R.id.tv_customer_name)
+    TextView tvCustomerName;
+
+    @BindView(R.id.tv_date_time)
+    TextView tvDateTime;
+
+    @BindView(R.id.tv_pick_up)
+    TextView tvPickUp;
+
+    @BindView(R.id.tv_drop_off)
+    TextView tvDropOff;
+
+    @BindView(R.id.img_vehicle_type)
+    ImageView imgVehicleType;
+
+    @BindView(R.id.tv_vehicle_type)
+    TextView tvVehicleType;
+
+    @BindView(R.id.img_payment_type)
+    ImageView imgPaymentType;
+
+    @BindView(R.id.tv_payment_type)
+    TextView tvPaymentType;
+
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+
+    private Trip mTripIncoming;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +83,16 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
 
         imgBack.setVisibility(View.GONE);
         tvTitleToolbar.setText(getString(R.string.incoming_request));
+
+        getDataIntent();
+        initData();
+    }
+
+    private void getDataIntent() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mTripIncoming = (Trip) bundle.get(Constant.OBJECT_TRIP);
+        }
     }
 
     @Override
@@ -75,6 +119,33 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
     @Override
     public void onErrorCallApi(int code) {
         GlobalFuntion.showMessageError(this, code);
+    }
+
+    private void initData() {
+        if (mTripIncoming != null) {
+            tvCustomerName.setText(mTripIncoming.getUser().getFull_name());
+            tvDateTime.setText(DateTimeUtils.convertTimeStampToDateFormat5(mTripIncoming.getPickup_date()));
+            tvPickUp.setText(mTripIncoming.getPick_up());
+            tvDropOff.setText(mTripIncoming.getDrop_off());
+            if (Constant.TYPE_VEHICLE_NORMAL.equalsIgnoreCase(mTripIncoming.getVehicle_type())) {
+                imgVehicleType.setImageResource(R.drawable.ic_car_black);
+                tvVehicleType.setText(getString(R.string.type_vehicle_normal));
+            } else {
+                Drawable myIcon = getResources().getDrawable(R.drawable.ic_vehicle_flatbed_white);
+                ColorFilter filter = new LightingColorFilter(Color.BLACK, Color.BLACK);
+                myIcon.setColorFilter(filter);
+                imgVehicleType.setImageDrawable(myIcon);
+                tvVehicleType.setText(getString(R.string.type_vehicle_flatbed));
+            }
+            if (Constant.TYPE_PAYMENT_CASH.equalsIgnoreCase(mTripIncoming.getPayment_type())) {
+                imgPaymentType.setImageResource(R.drawable.ic_cash_black);
+                tvPaymentType.setText(getString(R.string.cash));
+            } else {
+                imgPaymentType.setImageResource(R.drawable.ic_card_black);
+                tvPaymentType.setText(getString(R.string.card));
+            }
+            tvPrice.setText(mTripIncoming.getPrice() + " " + getString(R.string.unit_price));
+        }
     }
 
     @OnClick(R.id.layout_view_map_pick_up)

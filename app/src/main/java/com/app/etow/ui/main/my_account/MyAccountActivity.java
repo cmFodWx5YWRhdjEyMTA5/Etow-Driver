@@ -19,7 +19,7 @@ import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.data.prefs.DataStoreManager;
-import com.app.etow.models.User;
+import com.app.etow.models.Driver;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.utils.GlideUtils;
 import com.app.etow.utils.StringUtil;
@@ -92,15 +92,15 @@ public class MyAccountActivity extends BaseMVPDialogActivity implements MyAccoun
     }
 
     private void setUserInfor() {
-        User user = DataStoreManager.getUser();
-        if (!StringUtil.isEmpty(user.getAvatar())) {
-            GlideUtils.loadUrl(user.getAvatar(), imgAvatar);
+        Driver driver = DataStoreManager.getUser();
+        if (!StringUtil.isEmpty(driver.getAvatar())) {
+            GlideUtils.loadUrl(driver.getAvatar(), imgAvatar);
         } else {
             imgAvatar.setImageResource(R.drawable.ic_avatar_default);
         }
-        tvDriverName.setText(user.getFull_name());
-        tvEmail.setText(user.getEmail());
-        if (Constant.TYPE_VEHICLE_NORMAL.equalsIgnoreCase(user.getDrivers().getVehicle_type())) {
+        tvDriverName.setText(driver.getFull_name());
+        tvEmail.setText(driver.getEmail());
+        if (Constant.TYPE_VEHICLE_NORMAL.equalsIgnoreCase(driver.getDrivers().getVehicle_type())) {
             imgTypeVehicle.setImageResource(R.drawable.ic_car_black);
             tvTypeVehicle.setText(getString(R.string.type_vehicle_normal));
         } else {

@@ -37,7 +37,7 @@ public interface Constant {
     String TYPE_PAYMENT_CASH = "cash";
     String TYPE_PAYMENT_CARD = "card";
 
-    String TYPE_VEHICLE_NORMAL = "nomarl";
+    String TYPE_VEHICLE_NORMAL = "normal";
     String TYPE_VEHICLE_FLATBED = "flatbed";
 
     String IS_ONLINE = "1";
@@ -46,6 +46,8 @@ public interface Constant {
     String IS_SCHEDULE = "1";
     String SCHEDULE_TRIP_STATUS_NEW = "1_1";
     String SCHEDULE_TRIP_STATUS_ACCEPT = "4_1";
+
+    String NORMAL_TRIP_STATUS_NEW = "1_0";
 
     // Key Intent
     String TYPE_LOCATION = "TYPE_LOCATION";

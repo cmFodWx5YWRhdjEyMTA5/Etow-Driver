@@ -7,9 +7,12 @@ package com.app.etow.ui.main.home;
  * ******************************************************************************
  */
 
+import com.app.etow.models.Trip;
 import com.app.etow.ui.base.BaseScreenMvpView;
 
 interface HomeMVPView extends BaseScreenMvpView {
 
     void loadStatusDriver();
+
+    void showIncomingRequest(Trip trip);
 }

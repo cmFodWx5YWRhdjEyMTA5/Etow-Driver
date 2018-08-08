@@ -127,7 +127,7 @@ public class ScheduledTripDetailActivity extends BaseMVPDialogActivity implement
     private void initData() {
         tvTime.setText(DateTimeUtils.convertTimeStampToFormatDate3(mTripSchedule.getPickup_date()));
         tvDate.setText(DateTimeUtils.convertTimeStampToFormatDate2(mTripSchedule.getPickup_date()));
-        tvCustomerName.setText(mTripSchedule.getCustomer().getFull_name());
+        tvCustomerName.setText(mTripSchedule.getUser().getFull_name());
         tvPickUp.setText(mTripSchedule.getPick_up());
         tvDropOff.setText(mTripSchedule.getDrop_off());
         if (Constant.TYPE_VEHICLE_NORMAL.equalsIgnoreCase(mTripSchedule.getVehicle_type())) {

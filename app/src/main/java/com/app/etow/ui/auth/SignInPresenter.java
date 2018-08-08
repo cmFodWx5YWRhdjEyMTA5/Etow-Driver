@@ -8,7 +8,7 @@ package com.app.etow.ui.auth;
 import com.app.etow.constant.Constant;
 import com.app.etow.data.NetworkManager;
 import com.app.etow.data.prefs.DataStoreManager;
-import com.app.etow.models.User;
+import com.app.etow.models.Driver;
 import com.app.etow.models.response.ApiResponse;
 import com.app.etow.ui.base.BasePresenter;
 
@@ -55,11 +55,11 @@ public class SignInPresenter extends BasePresenter<SignInMVPView> {
                         public void onNext(ApiResponse apiResponse) {
                             if (apiResponse != null) {
                                 if (Constant.SUCCESS.equalsIgnoreCase(apiResponse.getStatus())) {
-                                    User user = apiResponse.getDataObject(User.class);
-                                    if (user != null) {
+                                    Driver driver = apiResponse.getDataObject(Driver.class);
+                                    if (driver != null) {
                                         DataStoreManager.setIsLogin(true);
-                                        DataStoreManager.setUserToken(user.getToken());
-                                        DataStoreManager.setUser(user);
+                                        DataStoreManager.setUserToken(driver.getToken());
+                                        DataStoreManager.setUser(driver);
                                         getMvpView().updateStatusLogin();
                                     }
                                 }

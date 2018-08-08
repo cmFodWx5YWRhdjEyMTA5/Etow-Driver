@@ -14,9 +14,16 @@ public class Trip implements Serializable{
     private String dropoff_longitude;
     private String price;
     private String status;
-    private String payment_type;
     private String vehicle_type;
-    private User customer;
+    private String payment_type;
+    private String payment_status;
+    private Driver driver;
+    private User user;
+    private String is_schedule;
+    private String status_schedule;
+    private String current_latitude;
+    private String current_longitude;
+    private String note;
     private String created_at;
 
     public Trip() {
@@ -102,14 +109,6 @@ public class Trip implements Serializable{
         this.status = status;
     }
 
-    public String getPayment_type() {
-        return payment_type;
-    }
-
-    public void setPayment_type(String payment_type) {
-        this.payment_type = payment_type;
-    }
-
     public String getVehicle_type() {
         return vehicle_type;
     }
@@ -118,12 +117,76 @@ public class Trip implements Serializable{
         this.vehicle_type = vehicle_type;
     }
 
-    public User getCustomer() {
-        return customer;
+    public String getPayment_type() {
+        return payment_type;
     }
 
-    public void setCustomer(User customer) {
-        this.customer = customer;
+    public void setPayment_type(String payment_type) {
+        this.payment_type = payment_type;
+    }
+
+    public String getPayment_status() {
+        return payment_status;
+    }
+
+    public void setPayment_status(String payment_status) {
+        this.payment_status = payment_status;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getIs_schedule() {
+        return is_schedule;
+    }
+
+    public void setIs_schedule(String is_schedule) {
+        this.is_schedule = is_schedule;
+    }
+
+    public String getStatus_schedule() {
+        return status_schedule;
+    }
+
+    public void setStatus_schedule(String status_schedule) {
+        this.status_schedule = status_schedule;
+    }
+
+    public String getCurrent_latitude() {
+        return current_latitude;
+    }
+
+    public void setCurrent_latitude(String current_latitude) {
+        this.current_latitude = current_latitude;
+    }
+
+    public String getCurrent_longitude() {
+        return current_longitude;
+    }
+
+    public void setCurrent_longitude(String current_longitude) {
+        this.current_longitude = current_longitude;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getCreated_at() {

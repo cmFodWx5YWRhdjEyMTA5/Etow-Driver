@@ -77,13 +77,13 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
     }
 
     public void initFirebase() {
-        mReference = "/trip_schedule";
+        mReference = "/trip";
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference(mReference);
     }
 
     public void getScheduleTrip() {
-        mDatabaseReference.orderByChild("status").equalTo(Constant.TRIP_STATUS_NEW)
+        mDatabaseReference.orderByChild("status_schedule").equalTo(Constant.SCHEDULE_TRIP_STATUS_NEW)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {

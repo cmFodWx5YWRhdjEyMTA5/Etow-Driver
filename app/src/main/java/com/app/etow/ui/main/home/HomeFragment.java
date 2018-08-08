@@ -18,6 +18,7 @@ import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.Trip;
 import com.app.etow.ui.base.BaseMVPFragmentWithDialog;
 import com.app.etow.ui.incoming_request.IncomingRequestActivity;
 import com.app.etow.ui.main.MainActivity;
@@ -72,6 +73,8 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
         mMapFragment.getMapAsync(this);
 
         loadStatusDriver();
+        presenter.initFirebase();
+        presenter.getTripIncoming();
     }
 
     @Override
@@ -88,11 +91,6 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
     @Override
     public void onErrorCallApi(int code) {
         GlobalFuntion.showMessageError(getActivity(), code);
-    }
-
-    @OnClick(R.id.layout_main)
-    public void onClickLayoutMain() {
-        GlobalFuntion.startActivity(getActivity(), IncomingRequestActivity.class);
     }
 
     @OnClick(R.id.tv_online)
@@ -139,6 +137,15 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
             tvOffline.setBackgroundResource(R.drawable.bg_red_corner_right_bottom);
             tvOnline.setTextColor(getResources().getColor(R.color.textColorAccent));
             tvOffline.setTextColor(getResources().getColor(R.color.white));
+        }
+    }
+
+    @Override
+    public void showIncomingRequest(Trip trip) {
+        if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constant.OBJECT_TRIP, trip);
+            GlobalFuntion.startActivity(getActivity(), IncomingRequestActivity.class, bundle);
         }
     }
 }

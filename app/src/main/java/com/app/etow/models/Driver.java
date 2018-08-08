@@ -1,10 +1,11 @@
 package com.app.etow.models;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class Driver implements Serializable {
 
     private int id;
     private String full_name;
@@ -12,6 +13,7 @@ public class User implements Serializable {
     private String phone;
     private String token;
     private String avatar;
+    private DriverInfor drivers;
 
     public int getId() {
         return id;
@@ -61,7 +63,15 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    public String toJSon() {
+    public DriverInfor getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(DriverInfor drivers) {
+        this.drivers = drivers;
+    }
+
+    public String toJSon(){
         Gson gson = new Gson();
         return gson.toJson(this);
     }
