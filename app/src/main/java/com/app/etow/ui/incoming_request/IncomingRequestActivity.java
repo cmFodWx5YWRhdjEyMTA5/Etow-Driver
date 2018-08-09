@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
@@ -84,15 +85,7 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
         imgBack.setVisibility(View.GONE);
         tvTitleToolbar.setText(getString(R.string.incoming_request));
 
-        getDataIntent();
-        initData();
-    }
-
-    private void getDataIntent() {
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            mTripIncoming = (Trip) bundle.get(Constant.OBJECT_TRIP);
-        }
+        presenter.getTripDetail(this, DataStoreManager.getPrefIdTripProcess());
     }
 
     @Override
@@ -145,20 +138,33 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
                 tvPaymentType.setText(getString(R.string.card));
             }
             tvPrice.setText(mTripIncoming.getPrice() + " " + getString(R.string.unit_price));
+
+            if (Constant.TRIP_STATUS_ACCEPT.equals(mTripIncoming.getStatus())) {
+                ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP,
+                        mTripIncoming);
+                GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+                finish();
+            }
         }
+    }
+
+    @Override
+    public void getTripDetail(Trip trip) {
+        mTripIncoming = trip;
+        initData();
     }
 
     @OnClick(R.id.layout_view_map_pick_up)
     public void onClickViewMapPickUp() {
         ViewMap viewMap = new ViewMap(getString(R.string.incoming_request), false,
-                Constant.TYPE_PICK_UP, "", "", "");
+                Constant.TYPE_PICK_UP, mTripIncoming);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
     @OnClick(R.id.layout_view_map_drop_off)
     public void onClickViewMapDropOff() {
         ViewMap viewMap = new ViewMap(getString(R.string.incoming_request), false,
-                Constant.TYPE_DROP_OFF, "", "", "");
+                Constant.TYPE_DROP_OFF, mTripIncoming);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
@@ -169,9 +175,7 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
 
     @OnClick(R.id.tv_accept)
     public void onClickAccept() {
-        ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP,
-                "", "", "");
-        GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+        presenter.updateTrip(mTripIncoming.getId(), Constant.TRIP_STATUS_ACCEPT);
     }
 
     public void showDialogReject() {

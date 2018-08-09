@@ -39,4 +39,8 @@ public class NetworkManager {
     public Observable<ApiResponse> updateProfile(String isOnline) {
         return mEtowService.updateProfile(isOnline);
     }
+
+    public Observable<ApiSuccess> updateTrip(int tripId, String status) {
+        return mEtowService.updateTrip(tripId, status);
+    }
 }

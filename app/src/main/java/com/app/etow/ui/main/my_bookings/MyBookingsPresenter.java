@@ -7,6 +7,9 @@ package com.app.etow.ui.main.my_bookings;
  * ******************************************************************************
  */
 
+import android.content.Context;
+
+import com.app.etow.ETowApplication;
 import com.app.etow.adapter.TripCompletedAdapter;
 import com.app.etow.constant.Constant;
 import com.app.etow.data.NetworkManager;
@@ -16,8 +19,6 @@ import com.app.etow.ui.base.BasePresenter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,6 @@ import retrofit2.Retrofit;
 @PerActivity
 public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
 
-    FirebaseDatabase mFirebaseDatabase;
-    DatabaseReference mDatabaseReference;
-    String mReference;
     ArrayList<Trip> listTripCompleted = new ArrayList<>();
 
     @Inject
@@ -54,14 +52,8 @@ public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
         getMvpView().loadListTripUpcoming(list);
     }
 
-    public void initFirebase() {
-        mReference = "/trip";
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference(mReference);
-    }
-
-    public void getTripCompleted(TripCompletedAdapter tripCompletedAdapter) {
-        mDatabaseReference.orderByChild("status").equalTo(Constant.TRIP_STATUS_COMPLETE)
+    public void getTripCompleted(Context context, TripCompletedAdapter tripCompletedAdapter) {
+        ETowApplication.get(context).getDatabaseReference().orderByChild("status").equalTo(Constant.TRIP_STATUS_COMPLETE)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {

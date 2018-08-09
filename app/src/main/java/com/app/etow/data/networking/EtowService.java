@@ -28,6 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import rx.Observable;
 
 public interface EtowService {
@@ -89,4 +90,9 @@ public interface EtowService {
     @FormUrlEncoded
     @POST("user/update-profile")
     Observable<ApiResponse> updateProfile(@Field(KeyAPI.KEY_IS_ONLINE) String isOnline);
+
+    @FormUrlEncoded
+    @PUT("trip/update")
+    Observable<ApiSuccess> updateTrip(@Field(KeyAPI.KEY_TRIP_ID) int tripId,
+                                      @Field(KeyAPI.KEY_STATUS) String status);
 }

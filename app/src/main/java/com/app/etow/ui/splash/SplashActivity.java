@@ -14,10 +14,14 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 
 import com.app.etow.R;
+import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.Trip;
+import com.app.etow.models.ViewMap;
 import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
+import com.app.etow.ui.incoming_request.IncomingRequestActivity;
 import com.app.etow.ui.main.MainActivity;
 import com.app.etow.utils.Utils;
 
@@ -76,16 +80,21 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!DataStoreManager.getFirstInstallApp()) {
-                    DataStoreManager.setFirstInstallApp(true);
-                    DataStoreManager.removeUser();
-
-                    GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
+                int tripProcessId = DataStoreManager.getPrefIdTripProcess();
+                if (tripProcessId != 0) {
+                    presenter.getTripDetail(SplashActivity.this, tripProcessId);
                 } else {
-                    if (DataStoreManager.getIsLogin()) {
-                        GlobalFuntion.startActivity(SplashActivity.this, MainActivity.class);
-                    } else {
+                    if (!DataStoreManager.getFirstInstallApp()) {
+                        DataStoreManager.setFirstInstallApp(true);
+                        DataStoreManager.removeUser();
+
                         GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
+                    } else {
+                        if (DataStoreManager.getIsLogin()) {
+                            GlobalFuntion.startActivity(SplashActivity.this, MainActivity.class);
+                        } else {
+                            GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
+                        }
                     }
                 }
                 finish();
@@ -111,6 +120,19 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
+        }
+    }
+
+    @Override
+    public void getTripDetail(Trip trip) {
+        if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())) {
+            GlobalFuntion.startActivity(SplashActivity.this, IncomingRequestActivity.class);
+        } else  if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, trip);
+            GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+        } else  if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
+            GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
         }
     }
 }

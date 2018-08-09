@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 
@@ -84,14 +85,14 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
     @OnClick(R.id.layout_view_map_pick_up)
     public void onClickViewMapPickUp() {
         ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
-                Constant.TYPE_PICK_UP, "", "", "");
+                Constant.TYPE_PICK_UP, new Trip());
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
     @OnClick(R.id.layout_view_map_drop_off)
     public void onClickViewMapDropOff() {
         ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
-                Constant.TYPE_DROP_OFF, "", "", "");
+                Constant.TYPE_DROP_OFF, new Trip());
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 

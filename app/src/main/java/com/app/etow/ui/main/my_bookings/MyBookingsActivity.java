@@ -82,8 +82,7 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
         tripUpcomingAdapter = new TripUpcomingAdapter(this);
         tripUpcomingAdapter.injectInto(rcvUpcoming);
 
-        presenter.initFirebase();
-        presenter.getTripCompleted(tripCompletedAdapter);
+        presenter.getTripCompleted(this, tripCompletedAdapter);
         presenter.getListTripUpcoming();
     }
 

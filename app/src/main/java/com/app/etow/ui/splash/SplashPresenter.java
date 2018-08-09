@@ -5,8 +5,15 @@ package com.app.etow.ui.splash;
  *  Author DangTin. Create on 2018/05/13
  */
 
+import android.content.Context;
+
+import com.app.etow.ETowApplication;
 import com.app.etow.data.NetworkManager;
+import com.app.etow.models.Trip;
 import com.app.etow.ui.base.BasePresenter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 import javax.inject.Inject;
 
@@ -22,5 +29,39 @@ public class SplashPresenter extends BasePresenter<SplashMVPView> {
     @Override
     public void initialView(SplashMVPView mvpView) {
         super.initialView(mvpView);
+    }
+
+    public void getTripDetail(Context context, int tripId) {
+        getMvpView().showProgressDialog(true);
+        ETowApplication.get(context).getDatabaseReference().orderByChild("id").equalTo(tripId)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        getMvpView().showProgressDialog(false);
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        getMvpView().getTripDetail(trip);
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        if (getMvpView() != null) getMvpView().getTripDetail(trip);
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

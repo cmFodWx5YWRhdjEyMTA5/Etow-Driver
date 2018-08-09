@@ -11,15 +11,9 @@ import com.app.etow.constant.Constant;
 import com.app.etow.data.NetworkManager;
 import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.injection.PerActivity;
-import com.app.etow.models.Trip;
 import com.app.etow.models.Driver;
 import com.app.etow.models.response.ApiResponse;
 import com.app.etow.ui.base.BasePresenter;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Inject;
 
@@ -30,10 +24,6 @@ import rx.schedulers.Schedulers;
 
 @PerActivity
 public class HomePresenter extends BasePresenter<HomeMVPView> {
-
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference;
-    private String mReference;
 
     @Inject
     public HomePresenter(Retrofit mRetrofit, NetworkManager networkManager) {
@@ -84,42 +74,5 @@ public class HomePresenter extends BasePresenter<HomeMVPView> {
                         }
                     });
         }
-    }
-
-    public void initFirebase() {
-        mReference = "/trip";
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference(mReference);
-    }
-
-    public void getTripIncoming() {
-        mDatabaseReference.orderByChild("status_schedule").equalTo(Constant.NORMAL_TRIP_STATUS_NEW)
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Trip trip = dataSnapshot.getValue(Trip.class);
-                        getMvpView().showIncomingRequest(trip);
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
     }
 }

@@ -16,6 +16,7 @@ public class DataStoreManager {
     public static final String PREF_TOKEN_USER = "PREF_TOKEN_USER";
     public static final String PREF_IS_LOGIN = "PREF_IS_LOGIN";
     public static final String PREF_USER_INFOR = "PREF_USER_INFOR";
+    public static final String PREF_ID_TRIP_PROCESS = "PREF_ID_TRIP_PROCESS";
 
     private static DataStoreManager instance;
     private MySharedPreferences sharedPreferences;
@@ -81,5 +82,14 @@ public class DataStoreManager {
         String jsonUser = DataStoreManager.getInstance().sharedPreferences.getStringValue(PREF_USER_INFOR);
         Driver driver = new Gson().fromJson(jsonUser, Driver.class);
         return driver;
+    }
+
+    // check trip process
+    public static void setPrefIdTripProcess(int id) {
+        DataStoreManager.getInstance().sharedPreferences.putIntValue(PREF_ID_TRIP_PROCESS, id);
+    }
+
+    public static int getPrefIdTripProcess() {
+        return DataStoreManager.getInstance().sharedPreferences.getIntValue(PREF_ID_TRIP_PROCESS);
     }
 }

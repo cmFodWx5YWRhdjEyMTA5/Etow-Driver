@@ -16,4 +16,6 @@ public class KeyAPI {
     public static final String KEY_TOKEN = "token";
     public static final String KEY_COMMENT = "comment";
     public static final String KEY_IS_ONLINE = "is_online";
+    public static final String KEY_TRIP_ID = "trip_id";
+    public static final String KEY_STATUS = "status";
 }

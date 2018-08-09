@@ -109,8 +109,10 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
 
         if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
             tvTypeLocation.setText(getString(R.string.pick_up_location_2));
+            tvLocation.setText(mViewMap.getTrip().getPick_up());
         } else {
             tvTypeLocation.setText(getString(R.string.drop_off_location_2));
+            tvLocation.setText(mViewMap.getTrip().getDrop_off());
         }
 
         if (mViewMap.isShowDistance()) {
@@ -119,14 +121,14 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
 
             String timeToLocation = "";
             if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
-                timeToLocation = "<font color=#9E9E9D>" + getString(R.string.estimated_time_pick_up_location)
+                timeToLocation = "<font color=#6D6E70>" + getString(R.string.estimated_time_pick_up_location)
                         + "</font> <b><font color=#121315>"
-                        + 13 + "</font></b> <font color=#9E9E9D>"
+                        + 13 + "</font></b> <font color=#6D6E70>"
                         + getString(R.string.min) + "</font>";
             } else {
-                timeToLocation = "<font color=#9E9E9D>" + getString(R.string.estimated_time_drop_off_location)
+                timeToLocation = "<font color=#6D6E70>" + getString(R.string.estimated_time_drop_off_location)
                         + "</font> <b><font color=#121315>"
-                        + 13 + "</font></b> <font color=#9E9E9D>"
+                        + 13 + "</font></b> <font color=#6D6E70>"
                         + getString(R.string.min) + "</font>";
             }
             tvTimeToLocation.setText(Html.fromHtml(timeToLocation));
@@ -134,7 +136,6 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
             tvTimeToLocation.setVisibility(View.GONE);
             tvGetDirection.setVisibility(View.GONE);
         }
-        tvLocation.setText(mViewMap.getLocation());
         LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         GlobalFuntion.getCurrentLocation(this, mLocationManager);
     }
@@ -164,15 +165,23 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
     public void onClickGetDirection() {
         Bundle bundle = new Bundle();
         bundle.putInt(Constant.TYPE_LOCATION, mViewMap.getTypeLocation());
+        bundle.putSerializable(Constant.OBJECT_TRIP, mViewMap.getTrip());
         GlobalFuntion.startActivity(this, DirectionLocationActivity.class, bundle);
+        finish();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng origin = new LatLng(GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
-        LatLng destination = new LatLng(Double.parseDouble(mViewMap.getLatitude()),
-                Double.parseDouble(mViewMap.getLongitude()));
+        LatLng destination = null;
+        if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
+            destination = new LatLng(Double.parseDouble(mViewMap.getTrip().getPickup_latitude()),
+                    Double.parseDouble(mViewMap.getTrip().getPickup_longitude()));
+        } else {
+            destination = new LatLng(Double.parseDouble(mViewMap.getTrip().getDropoff_latitude()),
+                    Double.parseDouble(mViewMap.getTrip().getDropoff_longitude()));
+        }
         DrawRouteMaps.getInstance(this)
                 .draw(origin, destination, mMap);
         DrawMarker.getInstance(this).draw(mMap, origin, R.drawable.ic_location_black, "");

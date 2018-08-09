@@ -59,8 +59,7 @@ public class ScheduledTripActivity extends BaseMVPDialogActivity implements Sche
         scheduledTripNewAdapter = new ScheduledTripAdapter(this, presenter.getListTripScheduleNew());
         scheduledTripNewAdapter.injectInto(rcvScheduledTripNew);
 
-        presenter.initFirebase();
-        presenter.getTripSchedule(scheduledTripAdapter);
+        presenter.getTripSchedule(this, scheduledTripAdapter);
     }
 
     @Override
@@ -106,7 +105,7 @@ public class ScheduledTripActivity extends BaseMVPDialogActivity implements Sche
         rcvScheduledTripNew.setVisibility(View.VISIBLE);
         rcvScheduledTrip.setVisibility(View.GONE);
         presenter.getListTripScheduleNew().clear();
-        presenter.getTripScheduleNew(scheduledTripNewAdapter);
+        presenter.getTripScheduleNew(this, scheduledTripNewAdapter);
         imgFilter.setEnabled(false);
     }
 }

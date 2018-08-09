@@ -5,6 +5,9 @@ package com.app.etow.ui.scheduled_trip;
  *  Author DangTin. Create on 2018/05/13
  */
 
+import android.content.Context;
+
+import com.app.etow.ETowApplication;
 import com.app.etow.adapter.ScheduledTripAdapter;
 import com.app.etow.constant.Constant;
 import com.app.etow.data.NetworkManager;
@@ -13,8 +16,6 @@ import com.app.etow.ui.base.BasePresenter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -24,9 +25,6 @@ import retrofit2.Retrofit;
 
 public class ScheduledTripPresenter extends BasePresenter<ScheduledTripMVPView> {
 
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference;
-    private String mReference;
     private ArrayList<Trip> listTripSchedule = new ArrayList<>();
     private ArrayList<Trip> listTripScheduleNew = new ArrayList<>();
 
@@ -40,14 +38,8 @@ public class ScheduledTripPresenter extends BasePresenter<ScheduledTripMVPView> 
         super.initialView(mvpView);
     }
 
-    public void initFirebase() {
-        mReference = "/trip";
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference(mReference);
-    }
-
-    public void getTripSchedule(ScheduledTripAdapter scheduledTripAdapter) {
-        mDatabaseReference.orderByChild("is_schedule").equalTo(Constant.IS_SCHEDULE)
+    public void getTripSchedule(Context context, ScheduledTripAdapter scheduledTripAdapter) {
+        ETowApplication.get(context).getDatabaseReference().orderByChild("is_schedule").equalTo(Constant.IS_SCHEDULE)
                 .addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -96,8 +88,9 @@ public class ScheduledTripPresenter extends BasePresenter<ScheduledTripMVPView> 
         });
     }
 
-    public void getTripScheduleNew(ScheduledTripAdapter scheduledTripNewAdapter) {
-        mDatabaseReference.orderByChild("status_schedule").equalTo(Constant.SCHEDULE_TRIP_STATUS_NEW)
+    public void getTripScheduleNew(Context context, ScheduledTripAdapter scheduledTripNewAdapter) {
+        ETowApplication.get(context).getDatabaseReference().orderByChild("status_schedule")
+                .equalTo(Constant.SCHEDULE_TRIP_STATUS_NEW)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {

@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.ui.trip_summary.cash.TripSummaryCashActivity;
@@ -33,6 +35,7 @@ public class DirectionLocationActivity extends BaseMVPDialogActivity implements 
     TextView tvAction;
 
     private int mTypeLocation;
+    private Trip mTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class DirectionLocationActivity extends BaseMVPDialogActivity implements 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mTypeLocation = bundle.getInt(Constant.TYPE_LOCATION);
+            mTrip = (Trip) bundle.get(Constant.OBJECT_TRIP);
         }
     }
 
@@ -92,11 +96,21 @@ public class DirectionLocationActivity extends BaseMVPDialogActivity implements 
     @OnClick(R.id.tv_action)
     public void onClickAction() {
         if (Constant.TYPE_PICK_UP == mTypeLocation) {
-            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF,
-                    "", "", "");
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED);
+        } else {
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_JOURNEY_COMPLETED);
+        }
+    }
+
+    @Override
+    public void updateStatusTrip() {
+        if (Constant.TYPE_PICK_UP == mTypeLocation) {
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED);
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, mTrip);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
         } else {
             GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
         }
+        finish();
     }
 }

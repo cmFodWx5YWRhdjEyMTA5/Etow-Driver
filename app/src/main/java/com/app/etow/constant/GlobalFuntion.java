@@ -34,7 +34,6 @@ import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.view_map_location.ViewMapLocationActivity;
-import com.google.android.gms.maps.model.LatLng;
 
 public class GlobalFuntion {
 

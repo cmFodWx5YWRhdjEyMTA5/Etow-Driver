@@ -54,6 +54,7 @@ public interface Constant {
     String TYPE_PAYMENT = "TYPE_PAYMENT";
     String OBJECT_TRIP = "OBJECT_TRIP";
     String OBJECT_VIEW_MAP = "OBJECT_VIEW_MAP";
+    String TRIP_ID = "TRIP_ID";
 
     String TRIP_STATUS_NEW = "1"; // Khi user mới booking trip
     String TRIP_STATUS_CANCEL = "2"; // Khi user cancel trip
@@ -61,5 +62,6 @@ public interface Constant {
     String TRIP_STATUS_ACCEPT = "4"; // Khi driver accept trip
     String TRIP_STATUS_ARRIVED = "5"; // Khi driver đến pick up location
     String TRIP_STATUS_JOURNEY_COMPLETED = "6"; // Khi driver đến drop off location
-    String TRIP_STATUS_COMPLETE = "7"; // Khi thanh toán xong
+    String TRIP_STATUS_ON_GOING = "7"; // Khi driver dang di đến drop off location
+    String TRIP_STATUS_COMPLETE = "8"; // Khi thanh toán xong
 }

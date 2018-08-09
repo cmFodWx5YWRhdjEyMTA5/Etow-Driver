@@ -21,7 +21,6 @@ import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.utils.DateTimeUtils;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -181,16 +180,14 @@ public class ScheduledTripDetailActivity extends BaseMVPDialogActivity implement
     @OnClick(R.id.layout_view_map_pick_up)
     public void onClickLayoutViewMapPickup() {
         ViewMap viewMap = new ViewMap(getString(R.string.scheduled_trips), false,
-                Constant.TYPE_PICK_UP, mTripSchedule.getPick_up(), mTripSchedule.getPickup_latitude(),
-                mTripSchedule.getPickup_longitude());
+                Constant.TYPE_PICK_UP, mTripSchedule);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
     @OnClick(R.id.layout_view_map_drop_off)
     public void onClickLayoutViewMapDropOff() {
         ViewMap viewMap = new ViewMap(getString(R.string.scheduled_trips), false,
-                Constant.TYPE_DROP_OFF, mTripSchedule.getDrop_off(), mTripSchedule.getDropoff_latitude(),
-                mTripSchedule.getDropoff_longitude());
+                Constant.TYPE_DROP_OFF, mTripSchedule);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 

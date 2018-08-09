@@ -23,10 +23,12 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.app.etow.R;
+import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
+import com.app.etow.ui.incoming_request.IncomingRequestActivity;
 import com.app.etow.ui.main.get_in_touch.GetInTouchFragment;
 import com.app.etow.ui.main.home.HomeFragment;
 import com.app.etow.ui.main.my_account.MyAccountActivity;
@@ -89,8 +91,8 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         imgBack.setImageResource(R.drawable.ic_close_black);
         tvTitleToolbar.setText(getString(R.string.menu));
 
-        presenter.initFirebase();
-        presenter.getScheduleTrip();
+        presenter.getScheduleTrip(this);
+        presenter.getTripIncoming(this);
 
         setListenerDrawer();
         replaceFragment(new HomeFragment(), HomeFragment.class.getName());
@@ -289,5 +291,13 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
     @Override
     public void loadListTripSchedule(int count) {
         tvCountTripSchedule.setText(count + "");
+    }
+
+    @Override
+    public void getTripIncoming(int tripId) {
+        if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())) {
+            DataStoreManager.setPrefIdTripProcess(tripId);
+            GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
+        }
     }
 }
