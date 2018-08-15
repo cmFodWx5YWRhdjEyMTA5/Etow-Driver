@@ -61,7 +61,7 @@ public interface Constant {
     String TRIP_STATUS_REJECT = "3"; // Khi driver reject trip
     String TRIP_STATUS_ACCEPT = "4"; // Khi driver accept trip
     String TRIP_STATUS_ARRIVED = "5"; // Khi driver đến pick up location
-    String TRIP_STATUS_JOURNEY_COMPLETED = "6"; // Khi driver đến drop off location
-    String TRIP_STATUS_ON_GOING = "7"; // Khi driver dang di đến drop off location
+    String TRIP_STATUS_ON_GOING = "6"; // Khi driver dang di đến drop off location
+    String TRIP_STATUS_JOURNEY_COMPLETED = "7"; // Khi driver đến drop off location
     String TRIP_STATUS_COMPLETE = "8"; // Khi thanh toán xong
 }

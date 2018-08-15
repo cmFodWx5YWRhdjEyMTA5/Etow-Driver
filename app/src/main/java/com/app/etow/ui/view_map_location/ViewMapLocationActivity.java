@@ -20,8 +20,11 @@ import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
+import com.app.etow.ui.trip_summary.cash.TripSummaryCashActivity;
 import com.app.etow.utils.StringUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -91,7 +94,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
                 .add(R.id.fragment_view_map, mMapFragment).commit();
         mMapFragment.getMapAsync(this);
 
-        initData();
+        presenter.getTripDetail(this, mViewMap.getTrip().getId());
     }
 
     private void getDataIntent() {
@@ -203,24 +206,17 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
             layoutGetDirection.setVisibility(View.GONE);
             layoutDirectionLocation.setVisibility(View.VISIBLE);
-        } else {
 
-        }
-    }
-
-    private void initUIDrectionLocation() {
-        if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
             tvTitleDirection.setText(getString(R.string.pick_up_location_2));
             tvActionUpdate.setText(getString(R.string.arrived_for_pick_up));
         } else {
-            tvTitleDirection.setText(getString(R.string.drop_off_location_2));
-            tvActionUpdate.setText(getString(R.string.journey_completed));
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ON_GOING, "");
         }
     }
 
-    /*@OnClick(R.id.tv_action_update)
+    @OnClick(R.id.tv_action_update)
     public void onClickActionUpdate() {
-        if (Constant.TYPE_PICK_UP == mTypeLocation) {
+        if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
             presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED, "");
         } else {
             presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_JOURNEY_COMPLETED, "");
@@ -228,16 +224,25 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
     }
 
     @Override
-    public void updateStatusTrip() {
-        if (Constant.TYPE_PICK_UP == mTypeLocation) {
-            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED, "");
-            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, mTrip);
-            GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
-        } else {
+    public void updateStatusTrip(Trip trip) {
+        mViewMap.setTrip(trip);
+        if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
+            initData();
+        } else if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
+            layoutDirectionLocation.setVisibility(View.GONE);
+            layoutGetDirection.setVisibility(View.VISIBLE);
+            mViewMap.setTypeLocation(Constant.TYPE_DROP_OFF);
+            initData();
+        } else if (Constant.TRIP_STATUS_ON_GOING.equals(trip.getStatus())) {
+            layoutGetDirection.setVisibility(View.GONE);
+            layoutDirectionLocation.setVisibility(View.VISIBLE);
+
+            tvTitleDirection.setText(getString(R.string.drop_off_location_2));
+            tvActionUpdate.setText(getString(R.string.journey_completed));
+        } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
             GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
         }
-        finish();
-    }*/
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

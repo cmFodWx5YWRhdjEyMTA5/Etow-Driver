@@ -39,14 +39,12 @@ public class SplashPresenter extends BasePresenter<SplashMVPView> {
     }
 
     public void getTripDetail(Context context, int tripId) {
-        getMvpView().showProgressDialog(true);
         ETowApplication.get(context).getDatabaseReference().orderByChild("id").equalTo(tripId)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        getMvpView().showProgressDialog(false);
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        getMvpView().getTripDetail(trip);
+                        if (getMvpView() != null) getMvpView().getTripDetail(trip);
                     }
 
                     @Override

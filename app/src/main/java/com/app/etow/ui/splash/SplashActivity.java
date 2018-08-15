@@ -98,8 +98,8 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
                             GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
                         }
                     }
+                    finish();
                 }
-                finish();
             }
         }, 1000);
     }
@@ -129,12 +129,17 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
     public void getTripDetail(Trip trip) {
         if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())) {
             GlobalFuntion.startActivity(SplashActivity.this, IncomingRequestActivity.class);
-        } else  if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
             ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, trip);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
-        } else  if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
             ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+        } else if (Constant.TRIP_STATUS_ON_GOING.equals(trip.getStatus())) {
+            //Todo
+        } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
+            //Todo
         }
+        finish();
     }
 }

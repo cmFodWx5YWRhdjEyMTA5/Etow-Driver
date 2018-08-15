@@ -104,6 +104,11 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if (GlobalFuntion.LATITUDE > 0 && GlobalFuntion.LONGITUDE > 0) {

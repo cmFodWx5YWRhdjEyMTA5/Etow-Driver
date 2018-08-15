@@ -41,9 +41,11 @@ public class IncomingRequestPresenter extends BasePresenter<IncomingRequestMVPVi
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        getMvpView().showProgressDialog(false);
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (getMvpView() != null) getMvpView().getTripDetail(trip);
+                        if (getMvpView() != null) {
+                            getMvpView().showProgressDialog(false);
+                            getMvpView().getTripDetail(trip);
+                        }
                     }
 
                     @Override

@@ -10,4 +10,5 @@ import com.app.etow.ui.base.BaseScreenMvpView;
 
 interface ViewMapLocationMVPView extends BaseScreenMvpView {
 
+    void updateStatusTrip(Trip trip);
 }
