@@ -43,7 +43,7 @@ public class IncomingRequestPresenter extends BasePresenter<IncomingRequestMVPVi
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         getMvpView().showProgressDialog(false);
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        getMvpView().getTripDetail(trip);
+                        if (getMvpView() != null) getMvpView().getTripDetail(trip);
                     }
 
                     @Override
@@ -69,12 +69,12 @@ public class IncomingRequestPresenter extends BasePresenter<IncomingRequestMVPVi
                 });
     }
 
-    public void updateTrip(int tripId, String status) {
+    public void updateTrip(int tripId, String status, String note) {
         if (!isConnectToInternet()) {
             notifyNoNetwork();
         } else {
             getMvpView().showProgressDialog(true);
-            mNetworkManager.updateTrip(tripId, status)
+            mNetworkManager.updateTrip(tripId, status, note)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<ApiSuccess>() {

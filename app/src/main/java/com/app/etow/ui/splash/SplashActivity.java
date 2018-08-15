@@ -47,6 +47,8 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
         Utils.getTahomaRegularTypeFace(SplashActivity.this);
         // request open gps
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        // Get setting app
+        presenter.getSetting();
     }
 
     @Override

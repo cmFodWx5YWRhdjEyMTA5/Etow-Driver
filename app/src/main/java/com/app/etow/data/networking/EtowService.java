@@ -27,6 +27,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import rx.Observable;
@@ -94,5 +95,9 @@ public interface EtowService {
     @FormUrlEncoded
     @PUT("trip/update")
     Observable<ApiSuccess> updateTrip(@Field(KeyAPI.KEY_TRIP_ID) int tripId,
-                                      @Field(KeyAPI.KEY_STATUS) String status);
+                                      @Field(KeyAPI.KEY_STATUS) String status,
+                                      @Field(KeyAPI.KEY_NOTE) String note);
+
+    @GET("trip/get-setting-time")
+    Observable<ApiResponse> getSetting();
 }

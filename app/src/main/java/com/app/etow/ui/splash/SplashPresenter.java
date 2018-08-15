@@ -8,8 +8,12 @@ package com.app.etow.ui.splash;
 import android.content.Context;
 
 import com.app.etow.ETowApplication;
+import com.app.etow.constant.Constant;
+import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.data.NetworkManager;
+import com.app.etow.models.Setting;
 import com.app.etow.models.Trip;
+import com.app.etow.models.response.ApiResponse;
 import com.app.etow.ui.base.BasePresenter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import javax.inject.Inject;
 
 import retrofit2.Retrofit;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class SplashPresenter extends BasePresenter<SplashMVPView> {
 
@@ -63,5 +70,38 @@ public class SplashPresenter extends BasePresenter<SplashMVPView> {
 
                     }
                 });
+    }
+
+    public void getSetting() {
+        if (!isConnectToInternet()) {
+            notifyNoNetwork();
+        } else {
+            mNetworkManager.getSetting()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ApiResponse>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            getMvpView().onErrorCallApi(getErrorFromHttp(e).getCode());
+                        }
+
+                        @Override
+                        public void onNext(ApiResponse apiResponse) {
+                            if (apiResponse != null) {
+                                if (Constant.SUCCESS.equalsIgnoreCase(apiResponse.getStatus())) {
+                                    Setting setting = apiResponse.getDataObject(Setting.class);
+                                    if (setting != null) {
+                                        GlobalFuntion.mSetting = setting;
+                                    }
+                                }
+                            }
+                        }
+                    });
+        }
     }
 }

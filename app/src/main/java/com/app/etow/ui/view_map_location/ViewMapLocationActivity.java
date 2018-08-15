@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,6 @@ import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
-import com.app.etow.ui.direction_location.DirectionLocationActivity;
 import com.app.etow.utils.StringUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,6 +48,9 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
     @BindView(R.id.tv_title_toolbar)
     TextView tvTitleToolbar;
 
+    @BindView(R.id.layout_get_direction)
+    LinearLayout layoutGetDirection;
+
     @BindView(R.id.tv_type_location)
     TextView tvTypeLocation;
 
@@ -59,6 +62,15 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
 
     @BindView(R.id.tv_get_direction)
     TextView tvGetDirection;
+
+    @BindView(R.id.layout_direction_location)
+    LinearLayout layoutDirectionLocation;
+
+    @BindView(R.id.tv_title_direction)
+    TextView tvTitleDirection;
+
+    @BindView(R.id.tv_action_update)
+    TextView tvActionUpdate;
 
     private GoogleMap mMap;
     private ViewMap mViewMap;
@@ -99,6 +111,13 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         return R.layout.activity_view_map_location;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        GlobalFuntion.getCurrentLocation(this, mLocationManager);
+    }
+
     private void initData() {
         if (!StringUtil.isEmpty(mViewMap.getTitleToolbar())) {
             layoutHeader.setVisibility(View.VISIBLE);
@@ -121,15 +140,33 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
 
             String timeToLocation = "";
             if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
+                int distance = GlobalFuntion.getDistanceFromLocation(GlobalFuntion.LATITUDE,
+                        GlobalFuntion.LATITUDE,
+                        Double.parseDouble(mViewMap.getTrip().getPickup_latitude()),
+                        Double.parseDouble(mViewMap.getTrip().getPickup_longitude()));
+                int timePickup = 0;
+                if (GlobalFuntion.mSetting != null) {
+                    timePickup = distance * Integer.parseInt(GlobalFuntion.mSetting.getTimeDistance());
+                }
+                if (timePickup < 1) timePickup = 1;
                 timeToLocation = "<font color=#6D6E70>" + getString(R.string.estimated_time_pick_up_location)
                         + "</font> <b><font color=#121315>"
-                        + 13 + "</font></b> <font color=#6D6E70>"
-                        + getString(R.string.min) + "</font>";
+                        + timePickup + "</font></b> <font color=#6D6E70>"
+                        + getString(R.string.label_minute) + "</font>";
             } else {
+                int distance = GlobalFuntion.getDistanceFromLocation(GlobalFuntion.LATITUDE,
+                        GlobalFuntion.LATITUDE,
+                        Double.parseDouble(mViewMap.getTrip().getDropoff_latitude()),
+                        Double.parseDouble(mViewMap.getTrip().getDropoff_longitude()));
+                int timeDropOff = 0;
+                if (GlobalFuntion.mSetting != null) {
+                    timeDropOff = distance * Integer.parseInt(GlobalFuntion.mSetting.getTimeDistance());
+                }
+                if (timeDropOff < 1) timeDropOff = 1;
                 timeToLocation = "<font color=#6D6E70>" + getString(R.string.estimated_time_drop_off_location)
                         + "</font> <b><font color=#121315>"
-                        + 13 + "</font></b> <font color=#6D6E70>"
-                        + getString(R.string.min) + "</font>";
+                        + timeDropOff + "</font></b> <font color=#6D6E70>"
+                        + getString(R.string.label_minute) + "</font>";
             }
             tvTimeToLocation.setText(Html.fromHtml(timeToLocation));
         } else {
@@ -163,12 +200,44 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
 
     @OnClick(R.id.tv_get_direction)
     public void onClickGetDirection() {
-        Bundle bundle = new Bundle();
-        bundle.putInt(Constant.TYPE_LOCATION, mViewMap.getTypeLocation());
-        bundle.putSerializable(Constant.OBJECT_TRIP, mViewMap.getTrip());
-        GlobalFuntion.startActivity(this, DirectionLocationActivity.class, bundle);
-        finish();
+        if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
+            layoutGetDirection.setVisibility(View.GONE);
+            layoutDirectionLocation.setVisibility(View.VISIBLE);
+        } else {
+
+        }
     }
+
+    private void initUIDrectionLocation() {
+        if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
+            tvTitleDirection.setText(getString(R.string.pick_up_location_2));
+            tvActionUpdate.setText(getString(R.string.arrived_for_pick_up));
+        } else {
+            tvTitleDirection.setText(getString(R.string.drop_off_location_2));
+            tvActionUpdate.setText(getString(R.string.journey_completed));
+        }
+    }
+
+    /*@OnClick(R.id.tv_action_update)
+    public void onClickActionUpdate() {
+        if (Constant.TYPE_PICK_UP == mTypeLocation) {
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED, "");
+        } else {
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_JOURNEY_COMPLETED, "");
+        }
+    }
+
+    @Override
+    public void updateStatusTrip() {
+        if (Constant.TYPE_PICK_UP == mTypeLocation) {
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED, "");
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, mTrip);
+            GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+        } else {
+            GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
+        }
+        finish();
+    }*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

@@ -82,7 +82,7 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
                         listTripSchedule.add(trip);
-                        getMvpView().loadListTripSchedule(listTripSchedule.size());
+                        if (getMvpView() != null) getMvpView().loadListTripSchedule(listTripSchedule.size());
                     }
 
                     @Override
@@ -122,7 +122,7 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        getMvpView().getTripIncoming(trip.getId());
+                        if (getMvpView() != null) getMvpView().getTripIncoming(trip.getId());
                     }
 
                     @Override

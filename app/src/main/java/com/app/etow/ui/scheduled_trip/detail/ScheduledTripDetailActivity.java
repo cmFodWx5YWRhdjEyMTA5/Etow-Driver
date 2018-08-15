@@ -149,6 +149,7 @@ public class ScheduledTripDetailActivity extends BaseMVPDialogActivity implement
         tvPrice.setText(mTripSchedule.getPrice() + " " + getString(R.string.unit_price));
 
         long timeExpired = 10 * 60;
+        if (GlobalFuntion.mSetting != null) timeExpired = (Integer.parseInt(GlobalFuntion.mSetting.getTimeRequestSchedule())) * 60;
         long timeCountDown = (timeExpired - (Long.parseLong(DateTimeUtils.getCurrentTimeStamp()) -
                 Long.parseLong(DateTimeUtils.convertDateToTimeStamp(mTripSchedule.getCreated_at())))) * 1000;
         if (timeCountDown > 0) {

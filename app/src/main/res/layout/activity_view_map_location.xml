@@ -34,50 +34,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/define_dimen_12">
+        android:orientation="vertical">
 
-        <com.app.etow.ui.widget.textview.TahomaRegularTextView
-            android:id="@+id/tv_type_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pick_up_location_2"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="@dimen/text_size_xnormal"
-            android:textStyle="bold" />
+        <include
+            android:id="@+id/layout_get_direction"
+            layout="@layout/layout_get_direction" />
 
-        <com.app.etow.ui.widget.textview.TahomaRegularTextView
-            android:id="@+id/tv_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/define_dimen_10"
-            android:layout_marginBottom="@dimen/define_dimen_10"
-            android:gravity="center"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/text_size_normal" />
-
-        <com.app.etow.ui.widget.textview.TahomaRegularTextView
-            android:id="@+id/tv_time_to_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/text_size_normal" />
-
-        <com.app.etow.ui.widget.textview.TahomaRegularTextView
-            android:id="@+id/tv_get_direction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/define_dimen_4"
-            android:layout_marginTop="@dimen/define_dimen_16"
-            android:background="@drawable/bg_black_corner"
-            android:gravity="center"
-            android:paddingBottom="@dimen/define_dimen_14"
-            android:paddingTop="@dimen/define_dimen_14"
-            android:text="@string/get_direction"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_normal" />
-
+        <include
+            android:id="@+id/layout_direction_location"
+            android:visibility="gone"
+            layout="@layout/layout_direction_location" />
     </LinearLayout>
 
 </RelativeLayout>

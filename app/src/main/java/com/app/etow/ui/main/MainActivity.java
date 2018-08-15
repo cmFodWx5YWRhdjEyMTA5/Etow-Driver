@@ -242,7 +242,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                 break;
 
             case R.id.tv_language:
-                // Not Todo
+                // Not do anything
                 break;
 
             case R.id.tv_english:

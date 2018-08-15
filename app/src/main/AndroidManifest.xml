@@ -80,11 +80,6 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".ui.direction_location.DirectionLocationActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-
-        <activity
             android:name=".ui.trip_summary.cash.TripSummaryCashActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

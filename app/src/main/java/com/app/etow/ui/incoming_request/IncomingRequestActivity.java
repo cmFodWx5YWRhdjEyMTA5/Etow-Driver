@@ -12,6 +12,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,7 +27,11 @@ import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
+import com.app.etow.ui.main.MainActivity;
 import com.app.etow.utils.DateTimeUtils;
+
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -72,7 +77,11 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
     @BindView(R.id.tv_price)
     TextView tvPrice;
 
+    @BindView(R.id.tv_time_countdown)
+    TextView tvTimeCountdown;
+
     private Trip mTripIncoming;
+    private CountDownTimer mCountDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +109,9 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
 
     @Override
     protected void onDestroy() {
-        presenter.destroyView();
         super.onDestroy();
+        presenter.destroyView();
+        if (mCountDownTimer != null) mCountDownTimer.cancel();
     }
 
     @Override
@@ -139,11 +149,28 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
             }
             tvPrice.setText(mTripIncoming.getPrice() + " " + getString(R.string.unit_price));
 
-            if (Constant.TRIP_STATUS_ACCEPT.equals(mTripIncoming.getStatus())) {
-                ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP,
-                        mTripIncoming);
-                GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
-                finish();
+            long timeExpired = 10 * 60;
+            if (GlobalFuntion.mSetting != null) timeExpired = (Integer.parseInt(GlobalFuntion.mSetting.getTimeRequestSchedule())) * 60;
+            long timeCountDown = (timeExpired - (Long.parseLong(DateTimeUtils.getCurrentTimeStamp()) -
+                    Long.parseLong(DateTimeUtils.convertDateToTimeStamp(mTripIncoming.getCreated_at())))) * 1000;
+            if (timeCountDown > 0) {
+                // Set Event
+                mCountDownTimer = new CountDownTimer(timeCountDown, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+
+                        String textTime = String.format(Locale.getDefault(), "%02d:%02d",
+                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60,
+                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60);
+                        tvTimeCountdown.setText(textTime);
+                    }
+
+                    public void onFinish() {
+                        cancel();
+                        tvTimeCountdown.setText("00:00");
+                    }
+
+                }.start();
             }
         }
     }
@@ -151,7 +178,17 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
     @Override
     public void getTripDetail(Trip trip) {
         mTripIncoming = trip;
-        initData();
+        if (Constant.TRIP_STATUS_NEW.equals(mTripIncoming.getStatus())) {
+            initData();
+        } else if (Constant.TRIP_STATUS_CANCEL.equals(mTripIncoming.getStatus())) {
+            DataStoreManager.setPrefIdTripProcess(0);
+            GlobalFuntion.startActivity(this, MainActivity.class);
+            finishAffinity();
+        } else if (Constant.TRIP_STATUS_ACCEPT.equals(mTripIncoming.getStatus())) {
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, mTripIncoming);
+            GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+            finish();
+        }
     }
 
     @OnClick(R.id.layout_view_map_pick_up)
@@ -175,7 +212,7 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
 
     @OnClick(R.id.tv_accept)
     public void onClickAccept() {
-        presenter.updateTrip(mTripIncoming.getId(), Constant.TRIP_STATUS_ACCEPT);
+        presenter.updateTrip(mTripIncoming.getId(), Constant.TRIP_STATUS_ACCEPT, "");
     }
 
     public void showDialogReject() {

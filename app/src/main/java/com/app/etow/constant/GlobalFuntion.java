@@ -31,6 +31,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.app.etow.R;
 import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.Setting;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.view_map_location.ViewMapLocationActivity;
@@ -39,6 +40,7 @@ public class GlobalFuntion {
 
     public static double LATITUDE = 0.0;
     public static double LONGITUDE = 0.0;
+    public static Setting mSetting;
 
     public static void startActivity(Context context, Class<?> clz) {
         Intent intent = new Intent(context, clz);
@@ -204,5 +206,13 @@ public class GlobalFuntion {
                 .negativeText(activity.getString(R.string.action_cancel))
                 .cancelable(false)
                 .show();
+    }
+
+    public static int getDistanceFromLocation(Double pickupLatitude, Double pickupLongitude,
+                                              Double dropoffLatitude, Double dropoffLongitude) {
+        float[] result = new float[3];
+        Location.distanceBetween(pickupLatitude, pickupLongitude, dropoffLatitude, dropoffLongitude, result);
+        int distance = (int) (result[0] / 1000);
+        return distance;
     }
 }
