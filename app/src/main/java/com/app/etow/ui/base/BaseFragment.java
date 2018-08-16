@@ -66,15 +66,14 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ETowApplication.get(getActivity()).getComponent().inject(this);
-        activityScopeComponent = activityScopeComponentCache.restoreComponent(savedInstanceState);
+        // activityScopeComponent = activityScopeComponentCache.restoreComponent(savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (activityScopeComponentCache != null) {
-            componentStateKey = activityScopeComponentCache
-                    .saveComponentInstance(activityScopeComponent, outState);
+            componentStateKey = activityScopeComponentCache.saveComponentInstance(activityScopeComponent, outState);
         }
         isDestroyBySystem = true;
     }

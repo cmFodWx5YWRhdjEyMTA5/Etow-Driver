@@ -92,8 +92,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
 
         // init map
         SupportMapFragment mMapFragment = new SupportMapFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_view_map, mMapFragment).commit();
+        mMapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_view_map));
         mMapFragment.getMapAsync(this);
 
         presenter.getTripDetail(this, mViewMap.getTrip().getId());

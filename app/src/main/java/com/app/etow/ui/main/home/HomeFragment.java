@@ -50,8 +50,7 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
     private GoogleMap mMap;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -64,10 +63,9 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
         presenter.initialView(this);
         ((MainActivity) getActivity()).showAndHiddenItemToolbar("", true);
 
-        // init map
         SupportMapFragment mMapFragment = new SupportMapFragment();
-        this.getChildFragmentManager().beginTransaction()
-                .add(R.id.fragment_view_map, mMapFragment).commit();
+        // this.getChildFragmentManager().beginTransaction().replace(R.id.fragment_view_map, mMapFragment).commit();
+        mMapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragment_view_map));
         mMapFragment.getMapAsync(this);
 
         loadStatusDriver();
