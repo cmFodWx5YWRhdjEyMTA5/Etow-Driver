@@ -50,11 +50,9 @@ public interface Constant {
     String NORMAL_TRIP_STATUS_NEW = "1_0";
 
     // Key Intent
-    String TYPE_LOCATION = "TYPE_LOCATION";
-    String TYPE_PAYMENT = "TYPE_PAYMENT";
     String OBJECT_TRIP = "OBJECT_TRIP";
     String OBJECT_VIEW_MAP = "OBJECT_VIEW_MAP";
-    String TRIP_ID = "TRIP_ID";
+    String IS_TRIP_GOING = "IS_TRIP_GOING";
 
     String TRIP_STATUS_NEW = "1"; // Khi user mới booking trip
     String TRIP_STATUS_CANCEL = "2"; // Khi user cancel trip

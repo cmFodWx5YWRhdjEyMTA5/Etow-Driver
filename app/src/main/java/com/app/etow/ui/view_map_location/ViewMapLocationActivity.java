@@ -24,6 +24,7 @@ import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
+import com.app.etow.ui.trip_summary.card.TripSummaryCardActivity;
 import com.app.etow.ui.trip_summary.cash.TripSummaryCashActivity;
 import com.app.etow.utils.StringUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -77,6 +78,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
 
     private GoogleMap mMap;
     private ViewMap mViewMap;
+    private boolean mIsTripGoing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +103,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mViewMap = (ViewMap) bundle.get(Constant.OBJECT_VIEW_MAP);
+            mIsTripGoing = bundle.getBoolean(Constant.IS_TRIP_GOING, false);
         }
     }
 
@@ -135,6 +138,13 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         } else {
             tvTypeLocation.setText(getString(R.string.drop_off_location_2));
             tvLocation.setText(mViewMap.getTrip().getDrop_off());
+            if (mIsTripGoing) {
+                layoutGetDirection.setVisibility(View.GONE);
+                layoutDirectionLocation.setVisibility(View.VISIBLE);
+
+                tvTitleDirection.setText(getString(R.string.drop_off_location_2));
+                tvActionUpdate.setText(getString(R.string.journey_completed));
+            }
         }
 
         if (mViewMap.isShowDistance()) {
@@ -176,8 +186,6 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
             tvTimeToLocation.setVisibility(View.GONE);
             tvGetDirection.setVisibility(View.GONE);
         }
-        LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        GlobalFuntion.getCurrentLocation(this, mLocationManager);
     }
 
     @Override
@@ -240,7 +248,11 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
             tvTitleDirection.setText(getString(R.string.drop_off_location_2));
             tvActionUpdate.setText(getString(R.string.journey_completed));
         } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
-            GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
+            if (Constant.TYPE_PAYMENT_CASH.equals(trip.getPayment_type())) {
+                GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
+            } else {
+                GlobalFuntion.startActivity(this, TripSummaryCardActivity.class);
+            }
         }
     }
 

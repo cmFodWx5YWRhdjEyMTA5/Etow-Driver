@@ -23,6 +23,9 @@ import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.ui.incoming_request.IncomingRequestActivity;
 import com.app.etow.ui.main.MainActivity;
+import com.app.etow.ui.trip_summary.card.TripSummaryCardActivity;
+import com.app.etow.ui.trip_summary.cash.TripSummaryCashActivity;
+import com.app.etow.ui.view_map_location.ViewMapLocationActivity;
 import com.app.etow.utils.Utils;
 
 import javax.inject.Inject;
@@ -136,9 +139,17 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
             ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
         } else if (Constant.TRIP_STATUS_ON_GOING.equals(trip.getStatus())) {
-            //Todo
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constant.OBJECT_VIEW_MAP, viewMap);
+            bundle.putBoolean(Constant.IS_TRIP_GOING, true);
+            GlobalFuntion.startActivity(this, ViewMapLocationActivity.class, bundle);
         } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
-            //Todo
+            if (Constant.TYPE_PAYMENT_CASH.equals(trip.getPayment_type())) {
+                GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
+            } else {
+                GlobalFuntion.startActivity(this, TripSummaryCardActivity.class);
+            }
         }
         finish();
     }
