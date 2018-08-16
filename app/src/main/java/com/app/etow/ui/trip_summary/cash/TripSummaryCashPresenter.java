@@ -41,13 +41,13 @@ public class TripSummaryCashPresenter extends BasePresenter<TripSummaryCashMVPVi
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (getMvpView() != null) getMvpView().updateStatusTrip(trip);
+                        if (getMvpView() != null && trip != null) getMvpView().updateStatusTrip(trip);
                     }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (getMvpView() != null) getMvpView().updateStatusTrip(trip);
+                        if (getMvpView() != null && trip != null) getMvpView().updateStatusTrip(trip);
                     }
 
                     @Override

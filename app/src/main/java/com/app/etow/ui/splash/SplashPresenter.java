@@ -44,13 +44,13 @@ public class SplashPresenter extends BasePresenter<SplashMVPView> {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (getMvpView() != null) getMvpView().getTripDetail(trip);
+                        if (getMvpView() != null && trip != null) getMvpView().getTripDetail(trip);
                     }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (getMvpView() != null) getMvpView().getTripDetail(trip);
+                        if (getMvpView() != null && trip != null) getMvpView().getTripDetail(trip);
                     }
 
                     @Override

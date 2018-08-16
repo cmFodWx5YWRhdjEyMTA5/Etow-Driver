@@ -64,7 +64,6 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
         ((MainActivity) getActivity()).showAndHiddenItemToolbar("", true);
 
         SupportMapFragment mMapFragment = new SupportMapFragment();
-        // this.getChildFragmentManager().beginTransaction().replace(R.id.fragment_view_map, mMapFragment).commit();
         mMapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragment_view_map));
         mMapFragment.getMapAsync(this);
 
