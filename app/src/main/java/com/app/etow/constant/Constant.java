@@ -62,4 +62,8 @@ public interface Constant {
     String TRIP_STATUS_ON_GOING = "6"; // Khi driver dang di đến drop off location
     String TRIP_STATUS_JOURNEY_COMPLETED = "7"; // Khi driver đến drop off location
     String TRIP_STATUS_COMPLETE = "8"; // Khi thanh toán xong
+
+    String PAYMENT_STATUS_PAYMENT_SUCCESS = "success"; // Thanh toán thanh cong
+    String PAYMENT_STATUS_PAYMENT_PENDING = "pending"; // Thanh toán thanh cong
+    String PAYMENT_STATUS_PAYMENT_FAIL = "fail"; // Thanh toán that bai
 }

@@ -118,6 +118,13 @@ public class TripSummaryCashActivity extends BaseMVPDialogActivity implements Tr
     @Override
     public void updateStatusTrip(Trip trip) {
         mTrip = trip;
+        if (Constant.PAYMENT_STATUS_PAYMENT_SUCCESS.equals(trip.getPayment_status())) {
+            mCheckedCash = true;
+            layoutCheck.setBackgroundResource(R.drawable.shape_circle_black);
+            imgCheck.setImageResource(R.drawable.ic_check_white);
+            tvDone.setBackgroundResource(R.drawable.bg_black_corner);
+            tvDone.setTextColor(getResources().getColor(R.color.white));
+        }
         if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
             initData(trip);
         } else if (Constant.TRIP_STATUS_COMPLETE.equals(trip.getStatus())) {
@@ -154,7 +161,7 @@ public class TripSummaryCashActivity extends BaseMVPDialogActivity implements Tr
         onBackPressed();
     }
 
-    @OnClick(R.id.layout_check)
+    /*@OnClick(R.id.layout_check)
     public void onClickLayoutCheck() {
         if (!mCheckedCash) {
             mCheckedCash = true;
@@ -169,7 +176,7 @@ public class TripSummaryCashActivity extends BaseMVPDialogActivity implements Tr
             tvDone.setBackgroundResource(R.drawable.bg_grey_corner);
             tvDone.setTextColor(getResources().getColor(R.color.textColorSecondary));
         }
-    }
+    }*/
 
     @OnClick(R.id.tv_done)
     public void onClickDone() {
