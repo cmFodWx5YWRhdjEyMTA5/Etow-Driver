@@ -166,8 +166,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
                         + timePickup + "</font></b> <font color=#6D6E70>"
                         + getString(R.string.label_minute) + "</font>";
             } else {
-                int distance = GlobalFuntion.getDistanceFromLocation(GlobalFuntion.LATITUDE,
-                        GlobalFuntion.LATITUDE,
+                int distance = GlobalFuntion.getDistanceFromLocation(GlobalFuntion.LATITUDE, GlobalFuntion.LATITUDE,
                         Double.parseDouble(mViewMap.getTrip().getDropoff_latitude()),
                         Double.parseDouble(mViewMap.getTrip().getDropoff_longitude()));
                 int timeDropOff = 0;
@@ -252,6 +251,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
             } else {
                 GlobalFuntion.startActivity(this, TripSummaryCardActivity.class);
             }
+            finish();
         }
     }
 

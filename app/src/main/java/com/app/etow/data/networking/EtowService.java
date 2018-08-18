@@ -1,36 +1,36 @@
 package com.app.etow.data.networking;
 
-/*
- *  Copyright Ⓒ 2018. All rights reserved
- *  Author DangTin. Create on 2018/05/13
- */
+        /*
+         *  Copyright Ⓒ 2018. All rights reserved
+         *  Author DangTin. Create on 2018/05/13
+         */
 
-import com.app.etow.BuildConfig;
-import com.app.etow.constant.Constant;
-import com.app.etow.constant.KeyAPI;
-import com.app.etow.data.prefs.DataStoreManager;
-import com.app.etow.models.response.ApiResponse;
-import com.app.etow.models.response.ApiSuccess;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+        import com.app.etow.BuildConfig;
+        import com.app.etow.constant.Constant;
+        import com.app.etow.constant.KeyAPI;
+        import com.app.etow.data.prefs.DataStoreManager;
+        import com.app.etow.models.response.ApiResponse;
+        import com.app.etow.models.response.ApiSuccess;
+        import com.google.gson.ExclusionStrategy;
+        import com.google.gson.FieldAttributes;
+        import com.google.gson.Gson;
+        import com.google.gson.GsonBuilder;
 
-import java.util.concurrent.TimeUnit;
+        import java.util.concurrent.TimeUnit;
 
-import io.realm.annotations.Ignore;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import rx.Observable;
+        import io.realm.annotations.Ignore;
+        import okhttp3.OkHttpClient;
+        import okhttp3.Request;
+        import okhttp3.logging.HttpLoggingInterceptor;
+        import retrofit2.Retrofit;
+        import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+        import retrofit2.converter.gson.GsonConverterFactory;
+        import retrofit2.http.Field;
+        import retrofit2.http.FormUrlEncoded;
+        import retrofit2.http.GET;
+        import retrofit2.http.POST;
+        import retrofit2.http.PUT;
+        import rx.Observable;
 
 public interface EtowService {
 

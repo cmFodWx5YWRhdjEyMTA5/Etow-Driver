@@ -13,13 +13,17 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
@@ -150,9 +154,10 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
             tvPrice.setText(mTripIncoming.getPrice() + " " + getString(R.string.unit_price));
 
             long timeExpired = 10 * 60;
-            if (GlobalFuntion.mSetting != null) timeExpired = (Integer.parseInt(GlobalFuntion.mSetting.getTimeRequestSchedule())) * 60;
+            if (GlobalFuntion.mSetting != null)
+                timeExpired = (Integer.parseInt(GlobalFuntion.mSetting.getTimeRequestSchedule())) * 60;
             long timeCountDown = (timeExpired - (Long.parseLong(DateTimeUtils.getCurrentTimeStamp()) -
-                    Long.parseLong(DateTimeUtils.convertDateToTimeStamp(mTripIncoming.getCreated_at())))) * 1000;
+                    Long.parseLong(mTripIncoming.getPickup_date()))) * 1000;
             if (timeCountDown > 0) {
                 // Set Event
                 mCountDownTimer = new CountDownTimer(timeCountDown, 1000) {
@@ -168,6 +173,8 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
                     public void onFinish() {
                         cancel();
                         tvTimeCountdown.setText("00:00");
+                        presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_CANCEL,
+                                getString(R.string.no_driver_accepted));
                     }
 
                 }.start();
@@ -180,14 +187,22 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
         mTripIncoming = trip;
         if (Constant.TRIP_STATUS_NEW.equals(mTripIncoming.getStatus())) {
             initData();
-        } else if (Constant.TRIP_STATUS_CANCEL.equals(mTripIncoming.getStatus())) {
+        } else if (Constant.TRIP_STATUS_REJECT.equals(mTripIncoming.getStatus())) {
             DataStoreManager.setPrefIdTripProcess(0);
             GlobalFuntion.startActivity(this, MainActivity.class);
             finishAffinity();
+        } else if (Constant.TRIP_STATUS_CANCEL.equals(mTripIncoming.getStatus())) {
+            showDialogCanceled();
         } else if (Constant.TRIP_STATUS_ACCEPT.equals(mTripIncoming.getStatus())) {
-            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, mTripIncoming);
-            GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
-            finish();
+            if (DataStoreManager.getUser().getId() == Integer.parseInt(mTripIncoming.getDriver_id())) {
+                ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, mTripIncoming);
+                GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+                finish();
+            } else {
+                DataStoreManager.setPrefIdTripProcess(0);
+                GlobalFuntion.startActivity(this, MainActivity.class);
+                finishAffinity();
+            }
         }
     }
 
@@ -275,13 +290,34 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
                 if (rdgReasonReject.getCheckedRadioButtonId() == -1) {
                     showAlert(getString(R.string.specify_reason_rejecting));
                 } else {
-                    //Todo
+                    int radioButtonID = rdgReasonReject.getCheckedRadioButtonId();
+                    View radioButton = rdgReasonReject.findViewById(radioButtonID);
+                    int idx = rdgReasonReject.indexOfChild(radioButton);
+                    RadioButton r = (RadioButton) rdgReasonReject.getChildAt(idx);
+                    String selectedtext = r.getText().toString();
+
+                    presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_REJECT, selectedtext);
                     dialog.dismiss();
-                    finish();
                 }
             }
         });
 
         dialog.show();
+    }
+
+    private void showDialogCanceled() {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(this)
+                .content(getString(R.string.message_trip_have_been_canceled))
+                .positiveText(getString(R.string.action_ok))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        DataStoreManager.setPrefIdTripProcess(0);
+                        GlobalFuntion.startActivity(IncomingRequestActivity.this, MainActivity.class);
+                        finishAffinity();
+                    }
+                })
+                .cancelable(false)
+                .show();
     }
 }

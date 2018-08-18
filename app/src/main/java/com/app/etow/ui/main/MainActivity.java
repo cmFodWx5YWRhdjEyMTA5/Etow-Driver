@@ -298,6 +298,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())) {
             DataStoreManager.setPrefIdTripProcess(tripId);
             GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
+            finish();
         }
     }
 }

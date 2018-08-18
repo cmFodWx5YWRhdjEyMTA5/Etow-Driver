@@ -25,6 +25,7 @@ public class Trip implements Serializable{
     private String current_longitude;
     private String note;
     private String created_at;
+    private String driver_id;
 
     public Trip() {
     }
@@ -195,5 +196,13 @@ public class Trip implements Serializable{
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public String getDriver_id() {
+        return driver_id;
+    }
+
+    public void setDriver_id(String driver_id) {
+        this.driver_id = driver_id;
     }
 }
