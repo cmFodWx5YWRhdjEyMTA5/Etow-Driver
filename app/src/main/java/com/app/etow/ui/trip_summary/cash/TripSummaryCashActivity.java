@@ -5,10 +5,6 @@ package com.app.etow.ui.trip_summary.cash;
  *  Author DangTin. Create on 2018/05/13
  */
 
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -57,12 +53,6 @@ public class TripSummaryCashActivity extends BaseMVPDialogActivity implements Tr
 
     @BindView(R.id.tv_price)
     TextView tvPrice;
-
-    @BindView(R.id.img_payment_type)
-    ImageView imgPaymentType;
-
-    @BindView(R.id.tv_payment_type)
-    TextView tvPaymentType;
 
     @BindView(R.id.layout_check)
     RelativeLayout layoutCheck;
@@ -142,16 +132,6 @@ public class TripSummaryCashActivity extends BaseMVPDialogActivity implements Tr
             tvCustomerName.setText(trip.getUser().getFull_name());
             tvPickUp.setText(trip.getPick_up());
             tvDropOff.setText(trip.getDrop_off());
-            if (Constant.TYPE_PAYMENT_CASH.equalsIgnoreCase(trip.getPayment_type())) {
-                imgPaymentType.setImageResource(R.drawable.ic_cash_white);
-                tvPaymentType.setText(getString(R.string.cash));
-            } else {
-                Drawable myIcon = getResources().getDrawable(R.drawable.ic_card_black);
-                ColorFilter filter = new LightingColorFilter(Color.WHITE, Color.WHITE);
-                myIcon.setColorFilter(filter);
-                imgPaymentType.setImageDrawable(myIcon);
-                tvPaymentType.setText(getString(R.string.card));
-            }
             tvPrice.setText(trip.getPrice() + " " + getString(R.string.unit_price));
         }
     }

@@ -49,9 +49,9 @@
                             android:textSize="@dimen/text_size_small" />
 
                         <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                            android:id="@+id/tv_trip_no"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="00200230323"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_normal" />
                     </LinearLayout>
@@ -64,16 +64,16 @@
                         android:orientation="vertical">
 
                         <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                            android:id="@+id/tv_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="12:30 AM"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_small" />
 
                         <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                            android:id="@+id/tv_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Monday 19 Sep 2018"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_normal" />
 
@@ -94,9 +94,9 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:id="@+id/tv_customer_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Matica Marttin"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/text_size_normal" />
 
@@ -115,9 +115,9 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:id="@+id/tv_pick_up"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="123, First Time Street, Dubai, United Arap Emirated"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/text_size_normal" />
 
@@ -136,9 +136,9 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                        android:id="@+id/tv_drop_off"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="123, Second Time Street, Dubai, United Arap Emirated"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/text_size_normal" />
 
@@ -175,9 +175,9 @@
                                 android:textSize="@dimen/text_size_small" />
 
                             <com.app.etow.ui.widget.textview.TahomaRegularTextView
+                                android:id="@+id/tv_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="138.00 AED"
                                 android:textColor="@color/textColorPrimary"
                                 android:textSize="@dimen/text_size_xnormal" />
                         </LinearLayout>

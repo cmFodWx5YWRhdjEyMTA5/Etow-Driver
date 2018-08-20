@@ -18,8 +18,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.etow.R;
+import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.Trip;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
+import com.app.etow.ui.main.MainActivity;
+import com.app.etow.utils.DateTimeUtils;
 
 import javax.inject.Inject;
 
@@ -50,10 +55,29 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
     @BindView(R.id.tv_done)
     TextView tvDone;
 
-    private boolean mCheckedCash;
+    @BindView(R.id.tv_trip_no)
+    TextView tvTripNo;
 
-    //Fix code
-    boolean check = false;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+
+    @BindView(R.id.tv_customer_name)
+    TextView tvCustomerName;
+
+    @BindView(R.id.tv_pick_up)
+    TextView tvPickUp;
+
+    @BindView(R.id.tv_drop_off)
+    TextView tvDropOff;
+
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+
+    private boolean mCheckedActiveDone;
+    private Trip mTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +89,7 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
 
         tvTitleToolbar.setText(getString(R.string.trip_summary));
 
-        initUi();
+        presenter.getTripDetail(this, DataStoreManager.getPrefIdTripProcess());
     }
 
     @Override
@@ -94,54 +118,20 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
         GlobalFuntion.showMessageError(this, code);
     }
 
-    private void initUi() {
-        tvPaymentStatus.setText(getString(R.string.payment_processing));
-        tvPaymentStatus.setTextColor(getResources().getColor(R.color.orange));
-
-        //Fix code
-        tvPaymentStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!check) {
-                    check = true;
-                    tvPaymentStatus.setText(getString(R.string.payment_successful));
-                    tvPaymentStatus.setTextColor(getResources().getColor(R.color.button_green));
-                    tvDone.setVisibility(View.VISIBLE);
-                } else {
-                    tvPaymentStatus.setText(getString(R.string.payment_declined));
-                    tvPaymentStatus.setTextColor(getResources().getColor(R.color.button_red));
-                    layoutCash.setVisibility(View.VISIBLE);
-                    tvDone.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-    }
-
     @OnClick(R.id.img_back)
     public void onClickBack() {
         onBackPressed();
     }
 
-    @OnClick(R.id.layout_check)
-    public void onClickLayoutCheck() {
-        if (!mCheckedCash) {
-            mCheckedCash = true;
-            layoutCheck.setBackgroundResource(R.drawable.shape_circle_black);
-            imgCheck.setImageResource(R.drawable.ic_check_white);
-            tvDone.setBackgroundResource(R.drawable.bg_black_corner);
-            tvDone.setTextColor(getResources().getColor(R.color.white));
-        } else {
-            mCheckedCash = false;
-            layoutCheck.setBackgroundResource(R.drawable.shape_circle_grey);
-            imgCheck.setImageResource(R.drawable.ic_check_grey_dark);
-            tvDone.setBackgroundResource(R.drawable.bg_grey_corner);
-            tvDone.setTextColor(getResources().getColor(R.color.textColorSecondary));
-        }
-    }
-
     @OnClick(R.id.tv_done)
     public void onClickDone() {
-        if (mCheckedCash) showDialogConfirmCashReceived();
+        if (mCheckedActiveDone) {
+            if (Constant.TYPE_PAYMENT_CASH.equals(mTrip.getPayment_type())) {
+                showDialogConfirmCashReceived();
+            } else {
+                presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_COMPLETE, "");
+            }
+        }
     }
 
     public void showDialogConfirmCashReceived() {
@@ -168,10 +158,57 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
         tvYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_COMPLETE, "");
                 dialog.dismiss();
             }
         });
 
         dialog.show();
+    }
+
+    @Override
+    public void updateStatusTrip(Trip trip) {
+        mTrip = trip;
+        if (Constant.PAYMENT_STATUS_PAYMENT_SUCCESS.equals(trip.getPayment_status())) {
+            mCheckedActiveDone = true;
+            if (Constant.TYPE_PAYMENT_CASH.equals(trip.getPayment_type())) {
+                layoutCheck.setBackgroundResource(R.drawable.shape_circle_black);
+                imgCheck.setImageResource(R.drawable.ic_check_white);
+                tvDone.setBackgroundResource(R.drawable.bg_black_corner);
+                tvDone.setTextColor(getResources().getColor(R.color.white));
+            } else {
+                tvPaymentStatus.setText(getString(R.string.payment_successful));
+                tvPaymentStatus.setTextColor(getResources().getColor(R.color.button_green));
+                tvDone.setVisibility(View.VISIBLE);
+            }
+        } else if (Constant.PAYMENT_STATUS_PAYMENT_PENDING.equals(trip.getPayment_status())) {
+            tvPaymentStatus.setText(getString(R.string.payment_processing));
+            tvPaymentStatus.setTextColor(getResources().getColor(R.color.orange));
+        } else if (Constant.PAYMENT_STATUS_PAYMENT_FAIL.equals(trip.getPayment_status())) {
+            tvPaymentStatus.setText(getString(R.string.payment_declined));
+            tvPaymentStatus.setTextColor(getResources().getColor(R.color.button_red));
+            layoutCash.setVisibility(View.VISIBLE);
+            tvDone.setVisibility(View.VISIBLE);
+        }
+
+        if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
+            initData(trip);
+        } else if (Constant.TRIP_STATUS_COMPLETE.equals(trip.getStatus())) {
+            DataStoreManager.setPrefIdTripProcess(0);
+            GlobalFuntion.startActivity(this, MainActivity.class);
+            finishAffinity();
+        }
+    }
+
+    private void initData(Trip trip) {
+        if (trip != null) {
+            tvTripNo.setText(trip.getId() + "");
+            tvTime.setText(DateTimeUtils.convertTimeStampToFormatDate3(trip.getPickup_date()));
+            tvDate.setText(DateTimeUtils.convertTimeStampToFormatDate2(trip.getPickup_date()));
+            tvCustomerName.setText(trip.getUser().getFull_name());
+            tvPickUp.setText(trip.getPick_up());
+            tvDropOff.setText(trip.getDrop_off());
+            tvPrice.setText(trip.getPrice() + " " + getString(R.string.unit_price));
+        }
     }
 }
