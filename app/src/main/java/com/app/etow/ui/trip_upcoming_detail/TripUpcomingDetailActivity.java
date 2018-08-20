@@ -7,11 +7,15 @@ package com.app.etow.ui.trip_upcoming_detail;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.etow.R;
@@ -20,6 +24,8 @@ import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
+import com.app.etow.utils.DateTimeUtils;
+import com.app.etow.utils.Utils;
 
 import javax.inject.Inject;
 
@@ -35,6 +41,41 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
     @BindView(R.id.tv_title_toolbar)
     TextView tvTitleToolbar;
 
+    @BindView(R.id.tv_trip_no)
+    TextView tvTripNo;
+
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+
+    @BindView(R.id.tv_customer_name)
+    TextView tvCustomerName;
+
+    @BindView(R.id.tv_pick_up)
+    TextView tvPickUp;
+
+    @BindView(R.id.tv_drop_off)
+    TextView tvDropOff;
+
+    @BindView(R.id.img_vehicle_type)
+    ImageView imgVehicleType;
+
+    @BindView(R.id.tv_vehicle_type)
+    TextView tvVehicleType;
+
+    @BindView(R.id.img_payment_type)
+    ImageView imgPaymentType;
+
+    @BindView(R.id.tv_payment_type)
+    TextView tvPaymentType;
+
+    private Trip mTrip;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +85,15 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.upcoming_trips));
+        getDataIntent();
+        initUi();
+    }
+
+    private void getDataIntent() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mTrip = (Trip) bundle.get(Constant.OBJECT_TRIP);
+        }
     }
 
     @Override
@@ -72,6 +122,33 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
         GlobalFuntion.showMessageError(this, code);
     }
 
+    private void initUi() {
+        tvTripNo.setText(mTrip.getId() + "");
+        tvTime.setText(DateTimeUtils.convertTimeStampToFormatDate3(mTrip.getPickup_date()));
+        tvDate.setText(DateTimeUtils.convertTimeStampToFormatDate2(mTrip.getPickup_date()));
+        tvPrice.setText(mTrip.getPrice() + " " + getString(R.string.unit_price));
+        tvCustomerName.setText(mTrip.getUser().getFull_name());
+        tvPickUp.setText(mTrip.getPick_up());
+        tvDropOff.setText(mTrip.getDrop_off());
+        if (Constant.TYPE_VEHICLE_NORMAL.equalsIgnoreCase(mTrip.getVehicle_type())) {
+            imgVehicleType.setImageResource(R.drawable.ic_car_black);
+            tvVehicleType.setText(getString(R.string.type_vehicle_normal));
+        } else {
+            Drawable myIcon = getResources().getDrawable(R.drawable.ic_vehicle_flatbed_white);
+            ColorFilter filter = new LightingColorFilter(Color.BLACK, Color.BLACK);
+            myIcon.setColorFilter(filter);
+            imgVehicleType.setImageDrawable(myIcon);
+            tvVehicleType.setText(getString(R.string.type_vehicle_flatbed));
+        }
+        if (Constant.TYPE_PAYMENT_CASH.equalsIgnoreCase(mTrip.getPayment_type())) {
+            imgPaymentType.setImageResource(R.drawable.ic_cash_black);
+            tvPaymentType.setText(getString(R.string.cash));
+        } else {
+            imgPaymentType.setImageResource(R.drawable.ic_card_black);
+            tvPaymentType.setText(getString(R.string.card));
+        }
+    }
+
     @OnClick(R.id.img_back)
     public void onClickBack() {
         onBackPressed();
@@ -79,24 +156,31 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
 
     @OnClick(R.id.layout_call_customer)
     public void onClickCallCustomer() {
-        showDialogCallCustomer();
+        showDialogCallCustomer(mTrip.getUser().getPhone());
     }
 
     @OnClick(R.id.layout_view_map_pick_up)
     public void onClickViewMapPickUp() {
         ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
-                Constant.TYPE_PICK_UP, new Trip());
+                Constant.TYPE_PICK_UP, mTrip);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
     @OnClick(R.id.layout_view_map_drop_off)
     public void onClickViewMapDropOff() {
         ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
-                Constant.TYPE_DROP_OFF, new Trip());
+                Constant.TYPE_DROP_OFF, mTrip);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
-    public void showDialogCallCustomer() {
+    @OnClick(R.id.tv_arrived_at_pickup)
+    public void onClickArrivedAtPickup() {
+        ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
+                Constant.TYPE_DROP_OFF, mTrip);
+        GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+    }
+
+    public void showDialogCallCustomer(String phoneNumber) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layout_dialog_call_customer);
@@ -106,10 +190,21 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
         dialog.setCancelable(false);
 
         // Get view
+        final TextView tvPhoneNumber = dialog.findViewById(R.id.tv_phone_number);
         final TextView tvCancel = dialog.findViewById(R.id.tv_cancel);
         final TextView tvCall = dialog.findViewById(R.id.tv_call);
 
+        // Get data
+        tvPhoneNumber.setText(phoneNumber);
+
         // Get listener
+        tvCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.callPhoneNumber(TripUpcomingDetailActivity.this, phoneNumber);
+            }
+        });
+
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

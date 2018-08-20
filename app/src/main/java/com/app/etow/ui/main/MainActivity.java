@@ -295,7 +295,8 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
     @Override
     public void getTripIncoming(int tripId) {
-        if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())) {
+        if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())
+                && DataStoreManager.getPrefIdTripProcess() == 0) {
             DataStoreManager.setPrefIdTripProcess(tripId);
             GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
             finish();

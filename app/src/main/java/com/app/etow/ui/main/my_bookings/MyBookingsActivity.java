@@ -24,10 +24,7 @@ import com.app.etow.R;
 import com.app.etow.adapter.TripCompletedAdapter;
 import com.app.etow.adapter.TripUpcomingAdapter;
 import com.app.etow.constant.GlobalFuntion;
-import com.app.etow.models.Trip;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -79,11 +76,11 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
         tripCompletedAdapter = new TripCompletedAdapter(this, presenter.getListTripCompleted());
         tripCompletedAdapter.injectInto(rcvCompleted);
 
-        tripUpcomingAdapter = new TripUpcomingAdapter(this);
+        tripUpcomingAdapter = new TripUpcomingAdapter(this, presenter.getListTripUpcoming());
         tripUpcomingAdapter.injectInto(rcvUpcoming);
 
         presenter.getTripCompleted(this, tripCompletedAdapter);
-        presenter.getListTripUpcoming();
+        presenter.getTripUpcoming(this, tripUpcomingAdapter);
     }
 
     @Override
@@ -154,15 +151,6 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
             rcvCompleted.setVisibility(View.GONE);
             rcvUpcoming.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void loadListTripUpcoming(List<Trip> listTripUpcoming) {
-        listTripUpcoming.add(new Trip());
-        listTripUpcoming.add(new Trip());
-        listTripUpcoming.add(new Trip());
-
-        tripUpcomingAdapter.setListData(listTripUpcoming);
     }
 
     public void showDialogFilter() {

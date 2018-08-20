@@ -14,5 +14,4 @@ import java.util.List;
 
 interface MyBookingsMVPView extends BaseScreenMvpView {
 
-    void loadListTripUpcoming(List<Trip> listTripUpcoming);
 }

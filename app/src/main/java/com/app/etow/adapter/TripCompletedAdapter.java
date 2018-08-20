@@ -6,6 +6,7 @@ package com.app.etow.adapter;
  */
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -132,7 +133,9 @@ public class TripCompletedAdapter extends RecyclerView.Adapter<TripCompletedAdap
                 tvViewDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GlobalFuntion.startActivity(context, TripCompletedDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constant.OBJECT_TRIP, trip);
+                        GlobalFuntion.startActivity(context, TripCompletedDetailActivity.class, bundle);
                     }
                 });
             }

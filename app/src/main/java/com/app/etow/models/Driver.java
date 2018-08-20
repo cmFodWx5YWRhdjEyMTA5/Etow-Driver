@@ -12,6 +12,8 @@ public class Driver implements Serializable {
     private String phone;
     private String token;
     private String avatar;
+    private String name;
+    private String vehicle_number;
     private DriverInfor drivers;
 
     public int getId() {
@@ -60,6 +62,22 @@ public class Driver implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVehicle_number() {
+        return vehicle_number;
+    }
+
+    public void setVehicle_number(String vehicle_number) {
+        this.vehicle_number = vehicle_number;
     }
 
     public DriverInfor getDrivers() {

@@ -11,6 +11,7 @@ import android.content.Context;
 
 import com.app.etow.ETowApplication;
 import com.app.etow.adapter.TripCompletedAdapter;
+import com.app.etow.adapter.TripUpcomingAdapter;
 import com.app.etow.constant.Constant;
 import com.app.etow.data.NetworkManager;
 import com.app.etow.injection.PerActivity;
@@ -31,6 +32,7 @@ import retrofit2.Retrofit;
 public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
 
     ArrayList<Trip> listTripCompleted = new ArrayList<>();
+    ArrayList<Trip> listTripUpcoming = new ArrayList<>();
 
     @Inject
     public MyBookingsPresenter(Retrofit mRetrofit, NetworkManager networkManager) {
@@ -45,11 +47,6 @@ public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
     @Override
     public void destroyView() {
         super.destroyView();
-    }
-
-    public void getListTripUpcoming() {
-        List<Trip> list = new ArrayList<>();
-        getMvpView().loadListTripUpcoming(list);
     }
 
     public void getTripCompleted(Context context, TripCompletedAdapter tripCompletedAdapter) {
@@ -102,7 +99,62 @@ public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
                 });
     }
 
+    public void getTripUpcoming(Context context, TripUpcomingAdapter tripUpcomingAdapter) {
+        ETowApplication.get(context).getDatabaseReference().orderByChild("status_schedule")
+                .equalTo(Constant.SCHEDULE_TRIP_STATUS_ACCEPT)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        listTripUpcoming.add(trip);
+                        tripUpcomingAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        if (listTripUpcoming != null && listTripUpcoming.size() > 0) {
+                            for (int i = 0; i < listTripUpcoming.size(); i++) {
+                                if (trip.getId() == listTripUpcoming.get(i).getId()) {
+                                    listTripUpcoming.set(i, trip);
+                                    break;
+                                }
+                            }
+                        }
+                        tripUpcomingAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        if (listTripUpcoming != null && listTripUpcoming.size() > 0) {
+                            for (int i = 0; i < listTripUpcoming.size(); i++) {
+                                if (trip.getId() == listTripUpcoming.get(i).getId()) {
+                                    listTripUpcoming.remove(i);
+                                    break;
+                                }
+                            }
+                        }
+                        tripUpcomingAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
     public ArrayList<Trip> getListTripCompleted() {
         return listTripCompleted;
+    }
+
+    public ArrayList<Trip> getListTripUpcoming() {
+        return listTripUpcoming;
     }
 }

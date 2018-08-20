@@ -6,6 +6,7 @@ package com.app.etow.adapter;
  */
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,10 +17,12 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.adapter.base.BaseRecyclerViewAdapter;
 import com.app.etow.adapter.base.Releasable;
+import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.injection.ActivityContext;
 import com.app.etow.models.Trip;
 import com.app.etow.ui.trip_upcoming_detail.TripUpcomingDetailActivity;
+import com.app.etow.utils.DateTimeUtils;
 
 import java.util.List;
 
@@ -35,8 +38,9 @@ public class TripUpcomingAdapter extends RecyclerView.Adapter<TripUpcomingAdapte
     private RecyclerView mRecyclerView;
 
     @Inject
-    public TripUpcomingAdapter(@ActivityContext Context context) {
+    public TripUpcomingAdapter(@ActivityContext Context context, List<Trip> list) {
         this.context = context;
+        this.listTripUpcoming = list;
     }
 
     @Override
@@ -76,6 +80,24 @@ public class TripUpcomingAdapter extends RecyclerView.Adapter<TripUpcomingAdapte
 
     public static class TripUpcomingViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder<Trip> {
 
+        @BindView(R.id.tv_date)
+        TextView tvDate;
+
+        @BindView(R.id.tv_time)
+        TextView tvTime;
+
+        @BindView(R.id.tv_trip_no)
+        TextView tvTripNo;
+
+        @BindView(R.id.tv_trip_amount)
+        TextView tvTripAmount;
+
+        @BindView(R.id.tv_pick_up)
+        TextView tvPickUp;
+
+        @BindView(R.id.tv_drop_off)
+        TextView tvDropOff;
+
         @BindView(R.id.tv_view_details)
         TextView tvViewDetails;
 
@@ -91,10 +113,19 @@ public class TripUpcomingAdapter extends RecyclerView.Adapter<TripUpcomingAdapte
         @Override
         public void bindData(Context context, Trip trip, int position) {
             if (trip != null) {
+                tvDate.setText(DateTimeUtils.convertTimeStampToFormatDate2(trip.getPickup_date()));
+                tvTime.setText(DateTimeUtils.convertTimeStampToFormatDate3(trip.getPickup_date()));
+                tvTripNo.setText(trip.getId() + "");
+                tvTripAmount.setText(trip.getPrice() + " " + context.getString(R.string.unit_price));
+                tvPickUp.setText(trip.getPick_up());
+                tvDropOff.setText(trip.getDrop_off());
+
                 tvViewDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GlobalFuntion.startActivity(context, TripUpcomingDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constant.OBJECT_TRIP, trip);
+                        GlobalFuntion.startActivity(context, TripUpcomingDetailActivity.class, bundle);
                     }
                 });
             }

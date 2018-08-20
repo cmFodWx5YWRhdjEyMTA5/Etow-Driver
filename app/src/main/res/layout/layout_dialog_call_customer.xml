@@ -39,11 +39,11 @@
             android:textSize="@dimen/text_size_xnormal" />
 
         <com.app.etow.ui.widget.textview.TahomaRegularTextView
+            android:id="@+id/tv_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/define_dimen_20"
-            android:text="+8484 484 8467"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/text_size_normal" />
 

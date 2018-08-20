@@ -95,7 +95,8 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         mMapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_view_map));
         mMapFragment.getMapAsync(this);
 
-        presenter.getTripDetail(this, mViewMap.getTrip().getId());
+        DataStoreManager.setPrefIdTripProcess(mViewMap.getTrip().getId());
+        presenter.getTripDetail(this, DataStoreManager.getPrefIdTripProcess());
     }
 
     private void getDataIntent() {

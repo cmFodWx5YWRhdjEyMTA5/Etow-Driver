@@ -194,7 +194,12 @@ public class ScheduledTripDetailActivity extends BaseMVPDialogActivity implement
 
     @OnClick(R.id.tv_confirm)
     public void onClickConfirmTrip() {
-        // Todo Check truong hop, khi driver dang o man nay, nhung cron server chay da update trang
-        // Todo thai cua Trip la het gio, thi khi click confirm phai thong bao loi.
+        // Todo Check truong hop, khi driver dang o man nay, nhung cron server chay da update trang thai cua Trip la het gio, thi khi click confirm phai thong bao loi.
+        presenter.updateTrip(mTripSchedule.getId(), Constant.TRIP_STATUS_ACCEPT, "");
+    }
+
+    @Override
+    public void finishActivity() {
+        finish();
     }
 }
