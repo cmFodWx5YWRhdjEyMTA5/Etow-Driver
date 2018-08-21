@@ -32,6 +32,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_yes">Yes</string>
     <string name="action_no">No</string>
+    <string name="action_reload">Reload</string>
 
     // dialog
     <string name="waiting_message">Please wait...</string>
@@ -143,4 +144,5 @@
     <string name="msg_not_permission_trip">You are not permission with this trip</string>
     <string name="msg_token_missing">Token missing</string>
     <string name="msg_confirm_login_another_device">Your account login another device!</string>
+    <string name="msg_send_feedback_successfully">Send feedback successfully!</string>
 </resources>

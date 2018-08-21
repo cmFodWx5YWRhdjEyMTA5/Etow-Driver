@@ -53,7 +53,6 @@ public class FeedbackPresenter extends BasePresenter<FeedbackMVPView> {
                         public void onNext(ApiSuccess apiSuccess) {
                             if (apiSuccess != null) {
                                 if (Constant.SUCCESS.equalsIgnoreCase(apiSuccess.getStatus())) {
-                                    getMvpView().showAlert(apiSuccess.getMessage());
                                     getMvpView().getStatusFeedback();
                                 }
                             }

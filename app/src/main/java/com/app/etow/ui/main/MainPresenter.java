@@ -75,8 +75,8 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
     }
 
     public void getScheduleTrip(Context context) {
-        ETowApplication.get(context).getDatabaseReference().orderByChild("status_schedule")
-                .equalTo(Constant.SCHEDULE_TRIP_STATUS_NEW)
+        ETowApplication.get(context).getDatabaseReference().orderByChild("is_schedule")
+                .equalTo(Constant.IS_SCHEDULE)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {

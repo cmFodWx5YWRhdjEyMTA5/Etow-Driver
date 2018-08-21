@@ -112,7 +112,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
     protected void onResume() {
         super.onResume();
         LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        GlobalFuntion.getCurrentLocation(this, mLocationManager);
+        GlobalFuntion.getCurrentLocation(this, mLocationManager, true);
     }
 
     @Override

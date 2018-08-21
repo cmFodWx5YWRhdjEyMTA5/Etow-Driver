@@ -6,12 +6,16 @@ package com.app.etow.adapter;
  */
 
 import android.content.Context;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -104,6 +108,9 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
         @BindView(R.id.tv_status)
         TextView tvStatus;
 
+        @BindView(R.id.img_delete)
+        ImageView imgDelete;
+
         @BindView(R.id.layout_delete)
         LinearLayout layoutDelete;
 
@@ -119,19 +126,7 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
         @Override
         public void bindData(Context context, Trip trip, int position) {
             if (trip != null) {
-                if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
-                    layoutTitle.setBackgroundResource(R.color.background_trip_assigned);
-                    tvTitlePickUp.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
-                    tvPickUp.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
-                    tvTitleDropOff.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
-                    tvDropOff.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
-                    tvViewDetails.setBackgroundResource(R.drawable.bg_grey_corner_radius_6);
-                    tvViewDetails.setTextColor(context.getResources().getColor(R.color.background_trip_assigned));
-                    tvStatus.setBackgroundResource(R.drawable.bg_grey_corner_radius_6);
-                    tvStatus.setTextColor(context.getResources().getColor(R.color.background_trip_assigned));
-
-                    tvStatus.setText(context.getString(R.string.assigned));
-                } else if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())){
+                if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())) {
                     layoutTitle.setBackgroundResource(R.color.black);
                     tvTitlePickUp.setTextColor(context.getResources().getColor(R.color.textColorSecondary));
                     tvPickUp.setTextColor(context.getResources().getColor(R.color.textColorPrimary));
@@ -141,8 +136,8 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
                     tvViewDetails.setTextColor(context.getResources().getColor(R.color.white));
                     tvStatus.setBackgroundResource(R.drawable.bg_black_corner_radius_6);
                     tvStatus.setTextColor(context.getResources().getColor(R.color.white));
-
                     tvStatus.setText(context.getString(R.string.open));
+                    imgDelete.setImageResource(R.drawable.ic_delete_black);
                     tvViewDetails.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -151,6 +146,22 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
                             GlobalFuntion.startActivity(context, ScheduledTripDetailActivity.class, bundle);
                         }
                     });
+                } else {
+                    layoutTitle.setBackgroundResource(R.color.background_trip_assigned);
+                    tvTitlePickUp.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
+                    tvPickUp.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
+                    tvTitleDropOff.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
+                    tvDropOff.setTextColor(context.getResources().getColor(R.color.text_trip_assigned));
+                    tvViewDetails.setBackgroundResource(R.drawable.bg_grey_corner_radius_6);
+                    tvViewDetails.setTextColor(context.getResources().getColor(R.color.background_trip_assigned));
+                    tvStatus.setBackgroundResource(R.drawable.bg_grey_corner_radius_6);
+                    tvStatus.setTextColor(context.getResources().getColor(R.color.background_trip_assigned));
+                    tvStatus.setText(context.getString(R.string.assigned));
+                    Drawable myIcon = context.getResources().getDrawable(R.drawable.ic_delete_black);
+                    ColorFilter filter = new LightingColorFilter(context.getResources().getColor(R.color.background_trip_assigned),
+                            context.getResources().getColor(R.color.background_trip_assigned));
+                    myIcon.setColorFilter(filter);
+                    imgDelete.setImageDrawable(myIcon);
                 }
                 tvDate.setText(DateTimeUtils.convertTimeStampToFormatDate2(trip.getPickup_date()));
                 tvTime.setText(DateTimeUtils.convertTimeStampToFormatDate3(trip.getPickup_date()));
@@ -160,7 +171,9 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
                 layoutDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Todo update trip to reject
+                        if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())) {
+                            // Todo reject trip
+                        }
                     }
                 });
             }

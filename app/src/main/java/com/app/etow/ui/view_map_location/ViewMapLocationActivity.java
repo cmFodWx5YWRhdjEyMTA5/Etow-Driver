@@ -121,7 +121,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
     protected void onResume() {
         super.onResume();
         LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        GlobalFuntion.getCurrentLocation(this, mLocationManager);
+        GlobalFuntion.getCurrentLocation(this, mLocationManager, true);
     }
 
     private void initData() {

@@ -82,6 +82,7 @@ public class FeedbackActivity extends BaseMVPDialogActivity implements FeedbackM
     @OnClick(R.id.img_back)
     public void onClickBack() {
         onBackPressed();
+        GlobalFuntion.hideSoftKeyboard(this);
     }
 
     @OnClick(R.id.tv_send)
@@ -102,6 +103,7 @@ public class FeedbackActivity extends BaseMVPDialogActivity implements FeedbackM
 
     @Override
     public void getStatusFeedback() {
+        showAlert(getString(R.string.msg_send_feedback_successfully));
         edtComment.setText("");
     }
 }

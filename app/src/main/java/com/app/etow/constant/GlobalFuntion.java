@@ -173,7 +173,7 @@ public class GlobalFuntion {
                 .show();
     }
 
-    public static void getCurrentLocation(Activity activity, LocationManager locationManager) {
+    public static void getCurrentLocation(Activity activity, LocationManager locationManager, boolean showMessage) {
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -187,7 +187,8 @@ public class GlobalFuntion {
                 Log.e("Latitude current", LATITUDE + "");
                 Log.e("Longitude current", LONGITUDE + "");
             } else {
-                Toast.makeText(activity, activity.getString(R.string.unble_trace_location), Toast.LENGTH_SHORT).show();
+                if (showMessage)
+                    Toast.makeText(activity, activity.getString(R.string.unble_trace_location), Toast.LENGTH_SHORT).show();
             }
         }
     }
