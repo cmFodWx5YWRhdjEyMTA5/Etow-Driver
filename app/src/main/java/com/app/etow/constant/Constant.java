@@ -49,6 +49,10 @@ public interface Constant {
 
     String NORMAL_TRIP_STATUS_NEW = "1_0";
 
+    String FILTER_NONE = "0";
+    String FILTER_CASH = "1";
+    String FILTER_CARD = "2";
+
     // Key Intent
     String OBJECT_TRIP = "OBJECT_TRIP";
     String OBJECT_VIEW_MAP = "OBJECT_VIEW_MAP";

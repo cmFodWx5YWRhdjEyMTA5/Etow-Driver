@@ -41,51 +41,51 @@ public class ScheduledTripPresenter extends BasePresenter<ScheduledTripMVPView> 
     public void getTripSchedule(Context context, ScheduledTripAdapter scheduledTripAdapter) {
         ETowApplication.get(context).getDatabaseReference().orderByChild("is_schedule").equalTo(Constant.IS_SCHEDULE)
                 .addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Trip trip = dataSnapshot.getValue(Trip.class);
-                listTripSchedule.add(trip);
-                scheduledTripAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Trip trip = dataSnapshot.getValue(Trip.class);
-                if (listTripSchedule != null && listTripSchedule.size() > 0) {
-                    for (int i = 0; i < listTripSchedule.size(); i++) {
-                        if (trip.getId() == listTripSchedule.get(i).getId()) {
-                            listTripSchedule.set(i, trip);
-                            break;
-                        }
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        listTripSchedule.add(trip);
+                        scheduledTripAdapter.notifyDataSetChanged();
                     }
-                }
-                scheduledTripAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Trip trip = dataSnapshot.getValue(Trip.class);
-                if (listTripSchedule != null && listTripSchedule.size() > 0) {
-                    for (int i = 0; i < listTripSchedule.size(); i++) {
-                        if (trip.getId() == listTripSchedule.get(i).getId()) {
-                            listTripSchedule.remove(i);
-                            break;
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        if (listTripSchedule != null && listTripSchedule.size() > 0) {
+                            for (int i = 0; i < listTripSchedule.size(); i++) {
+                                if (trip.getId() == listTripSchedule.get(i).getId()) {
+                                    listTripSchedule.set(i, trip);
+                                    break;
+                                }
+                            }
                         }
+                        scheduledTripAdapter.notifyDataSetChanged();
                     }
-                }
-                scheduledTripAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        if (listTripSchedule != null && listTripSchedule.size() > 0) {
+                            for (int i = 0; i < listTripSchedule.size(); i++) {
+                                if (trip.getId() == listTripSchedule.get(i).getId()) {
+                                    listTripSchedule.remove(i);
+                                    break;
+                                }
+                            }
+                        }
+                        scheduledTripAdapter.notifyDataSetChanged();
+                    }
 
-            }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                    }
 
-            }
-        });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 
     public void getTripScheduleNew(Context context, ScheduledTripAdapter scheduledTripNewAdapter) {

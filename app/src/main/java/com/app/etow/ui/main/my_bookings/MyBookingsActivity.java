@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.adapter.TripCompletedAdapter;
 import com.app.etow.adapter.TripUpcomingAdapter;
+import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 
@@ -55,9 +56,8 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
     @BindView(R.id.rcv_upcoming)
     RecyclerView rcvUpcoming;
 
-    private boolean mIsCheckedFilter;
-
     private boolean mIsTabCompleted = true;
+    private String mFilterType = Constant.FILTER_NONE;
 
     private TripCompletedAdapter tripCompletedAdapter;
     private TripUpcomingAdapter tripUpcomingAdapter;
@@ -79,8 +79,8 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
         tripUpcomingAdapter = new TripUpcomingAdapter(this, presenter.getListTripUpcoming());
         tripUpcomingAdapter.injectInto(rcvUpcoming);
 
-        presenter.getTripCompleted(this, tripCompletedAdapter);
-        presenter.getTripUpcoming(this, tripUpcomingAdapter);
+        presenter.getTripCompleted(this, tripCompletedAdapter, Constant.FILTER_NONE);
+        presenter.getTripUpcoming(this, tripUpcomingAdapter, Constant.FILTER_NONE);
     }
 
     @Override
@@ -160,7 +160,7 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
         Window window = dialog.getWindow();
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
 
         // Get view
         final RadioGroup rdgOption = dialog.findViewById(R.id.rdg_option);
@@ -168,15 +168,48 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
         final RadioButton rdbCard = dialog.findViewById(R.id.rdb_card);
         final TextView tvClear = dialog.findViewById(R.id.tv_clear);
         final TextView tvDone = dialog.findViewById(R.id.tv_done);
+
+        if (Constant.FILTER_NONE.equals(mFilterType)) {
+            rdgOption.clearCheck();
+        } else if (Constant.FILTER_CASH.equals(mFilterType)) {
+            rdbCash.setChecked(true);
+            rdbCard.setChecked(false);
+        } else {
+            rdbCash.setChecked(false);
+            rdbCard.setChecked(true);
+        }
         rdgOption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == -1) {
-                    mIsCheckedFilter = false;
+                    mFilterType = Constant.FILTER_NONE;
                     tvClear.setTextColor(getResources().getColor(R.color.textColorSecondary));
                 } else {
-                    mIsCheckedFilter = true;
+                    if (checkedId == R.id.rdb_cash) {
+                        mFilterType = Constant.FILTER_CASH;
+                    } else {
+                        mFilterType = Constant.FILTER_CARD;
+                    }
                     tvClear.setTextColor(getResources().getColor(R.color.textColorPrimary));
+                }
+            }
+        });
+
+        tvDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                presenter.listTripCompleted.clear();
+                presenter.listTripUpcoming.clear();
+                if (rdgOption.getCheckedRadioButtonId() == -1) {
+                    presenter.getTripCompleted(MyBookingsActivity.this, tripCompletedAdapter, Constant.FILTER_NONE);
+                    presenter.getTripUpcoming(MyBookingsActivity.this, tripUpcomingAdapter, Constant.FILTER_NONE);
+                } else if (rdgOption.getCheckedRadioButtonId() == R.id.rdb_cash) {
+                    presenter.getTripCompleted(MyBookingsActivity.this, tripCompletedAdapter, Constant.FILTER_CASH);
+                    presenter.getTripUpcoming(MyBookingsActivity.this, tripUpcomingAdapter, Constant.FILTER_CASH);
+                } else if (rdgOption.getCheckedRadioButtonId() == R.id.rdb_card) {
+                    presenter.getTripCompleted(MyBookingsActivity.this, tripCompletedAdapter, Constant.FILTER_CARD);
+                    presenter.getTripUpcoming(MyBookingsActivity.this, tripUpcomingAdapter, Constant.FILTER_CARD);
                 }
             }
         });

@@ -168,16 +168,12 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
 
     @OnClick(R.id.layout_view_map_drop_off)
     public void onClickViewMapDropOff() {
-        ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
-                Constant.TYPE_DROP_OFF, mTrip);
-        GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+        presenter.updateTrip(mTrip.getId(), Constant.TRIP_STATUS_ARRIVED, "");
     }
 
     @OnClick(R.id.tv_arrived_at_pickup)
     public void onClickArrivedAtPickup() {
-        ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
-                Constant.TYPE_DROP_OFF, mTrip);
-        GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+        presenter.updateTrip(mTrip.getId(), Constant.TRIP_STATUS_ARRIVED, "");
     }
 
     public void showDialogCallCustomer(String phoneNumber) {
@@ -213,5 +209,15 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
         });
 
         dialog.show();
+    }
+
+    @Override
+    public void updateStatusTrip(Trip trip) {
+        if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
+            ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
+                    Constant.TYPE_DROP_OFF, mTrip);
+            GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+            finish();
+        }
     }
 }

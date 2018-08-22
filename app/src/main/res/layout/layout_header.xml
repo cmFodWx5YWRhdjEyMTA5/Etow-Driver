@@ -10,8 +10,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/define_dimen_10"
-    android:paddingTop="@dimen/define_dimen_10">
+    android:background="@color/white"
+    android:paddingBottom="@dimen/define_dimen_8"
+    android:paddingTop="@dimen/define_dimen_8">
 
     <ImageView
         android:id="@+id/img_menu"
@@ -31,7 +32,7 @@
 
     <RelativeLayout
         android:id="@+id/layout_notification"
-        android:layout_width="@dimen/define_dimen_45"
+        android:layout_width="@dimen/define_dimen_38"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
@@ -46,14 +47,14 @@
 
         <TextView
             android:id="@+id/tv_count_trip_schedule"
-            android:layout_width="@dimen/define_dimen_35"
-            android:layout_height="@dimen/define_dimen_35"
+            android:layout_width="@dimen/define_dimen_28"
+            android:layout_height="@dimen/define_dimen_28"
             android:background="@drawable/shape_circle_red"
             android:gravity="center"
             android:padding="@dimen/define_dimen_6"
             android:text="0"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_xsmall" />
+            android:textSize="@dimen/text_size_xxsmall" />
 
     </RelativeLayout>
 </RelativeLayout>
