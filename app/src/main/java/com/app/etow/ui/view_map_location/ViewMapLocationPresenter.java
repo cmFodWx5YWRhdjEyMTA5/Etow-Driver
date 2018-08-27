@@ -41,13 +41,15 @@ public class ViewMapLocationPresenter extends BasePresenter<ViewMapLocationMVPVi
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (getMvpView() != null && trip != null) getMvpView().updateStatusTrip(trip);
+                        if (getMvpView() != null && trip != null)
+                            getMvpView().updateStatusTrip(trip);
                     }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (getMvpView() != null && trip != null) getMvpView().updateStatusTrip(trip);
+                        if (getMvpView() != null && trip != null)
+                            getMvpView().updateStatusTrip(trip);
                     }
 
                     @Override
@@ -84,6 +86,32 @@ public class ViewMapLocationPresenter extends BasePresenter<ViewMapLocationMVPVi
                         @Override
                         public void onError(Throwable e) {
                             getMvpView().showProgressDialog(false);
+                            getMvpView().onErrorCallApi(getErrorFromHttp(e).getCode());
+                        }
+
+                        @Override
+                        public void onNext(ApiSuccess apiSuccess) {
+
+                        }
+                    });
+        }
+    }
+
+    public void updateLocationTrip(int tripId, double latitude, double longitude) {
+        if (!isConnectToInternet()) {
+            notifyNoNetwork();
+        } else {
+            mNetworkManager.updateLocationTrip(tripId, latitude, longitude)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ApiSuccess>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
                             getMvpView().onErrorCallApi(getErrorFromHttp(e).getCode());
                         }
 

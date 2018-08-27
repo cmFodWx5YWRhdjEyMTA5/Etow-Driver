@@ -8,10 +8,13 @@ package com.app.etow.utils;
 import com.app.etow.common.ParameterException;
 
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateTimeUtils {
 
@@ -87,6 +90,13 @@ public class DateTimeUtils {
         return result;
     }
 
+    public static String getCurrentTimeStampGTM() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss.SS");
+        fmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return fmt.format(timestamp);
+    }
+
     public static String getTimeCurrent() {
         int hours = new Time(System.currentTimeMillis()).getHours();
         int minutes = new Time(System.currentTimeMillis()).getMinutes();
@@ -148,6 +158,7 @@ public class DateTimeUtils {
         if (strDate != null) {
             try {
                 SimpleDateFormat format = new SimpleDateFormat(DEFAULT_FORMAT_DATE_4);
+                format.setTimeZone(TimeZone.getTimeZone("GMT"));
                 Date date = format.parse(strDate);
                 Long timestamp = date.getTime() / 1000;
                 result = String.valueOf(timestamp);

@@ -47,4 +47,8 @@ public class NetworkManager {
     public Observable<ApiResponse> getSetting() {
         return mEtowService.getSetting();
     }
+
+    public Observable<ApiSuccess> updateLocationTrip(int tripId, double latitude, double longitude) {
+        return mEtowService.updateLocationTrip(tripId, latitude, longitude);
+    }
 }

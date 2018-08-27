@@ -33,5 +33,5 @@
     <color name="background_main">#F5F5F6</color>
     <color name="background_trip_assigned">#A7A9AB</color>
     <color name="text_trip_assigned">#6D6E70</color>
-    <color name="colorRouteLine">#000000</color>
+    <color name="colorRouteLine">#A7A9AB</color>
 </resources>

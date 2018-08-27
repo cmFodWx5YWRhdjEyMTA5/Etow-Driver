@@ -88,11 +88,9 @@ dependencies {
     // Image circle
     implementation 'de.hdodenhof:circleimageview:2.0.0'
     // Google Map
-    // implementation 'com.google.android.gms:play-services-maps:9.4.0'
+    implementation 'com.google.android.gms:play-services-maps:9.6.1'
     // implementation 'com.google.android.gms:play-services-location:9.4.0'
     // Firebase
     implementation 'com.google.firebase:firebase-database:9.6.1'
-    // Draw google map
-    implementation 'com.github.ar-android:DrawRouteMaps:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

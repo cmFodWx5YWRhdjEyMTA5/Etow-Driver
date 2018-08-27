@@ -19,4 +19,6 @@ public class KeyAPI {
     public static final String KEY_TRIP_ID = "trip_id";
     public static final String KEY_STATUS = "status";
     public static final String KEY_NOTE = "note";
+    public static final String KEY_CURRENT_LATITUDE = "current_latitude";
+    public static final String KEY_CURRENT_LONGITUDE = "current_longitude";
 }

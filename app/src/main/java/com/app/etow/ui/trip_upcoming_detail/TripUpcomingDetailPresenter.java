@@ -94,4 +94,30 @@ public class TripUpcomingDetailPresenter extends BasePresenter<TripUpcomingDetai
                     });
         }
     }
+
+    public void updateLocationTrip(int type, int tripId, double latitude, double longitude) {
+        if (!isConnectToInternet()) {
+            notifyNoNetwork();
+        } else {
+            mNetworkManager.updateLocationTrip(tripId, latitude, longitude)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ApiSuccess>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            getMvpView().onErrorCallApi(getErrorFromHttp(e).getCode());
+                        }
+
+                        @Override
+                        public void onNext(ApiSuccess apiSuccess) {
+                            getMvpView().updateLocationSuccess(type);
+                        }
+                    });
+        }
+    }
 }

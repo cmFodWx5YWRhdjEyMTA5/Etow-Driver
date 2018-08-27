@@ -11,4 +11,6 @@ import com.app.etow.ui.base.BaseScreenMvpView;
 interface TripUpcomingDetailMVPView extends BaseScreenMvpView {
 
     void updateStatusTrip(Trip trip);
+
+    void updateLocationSuccess(int type);
 }

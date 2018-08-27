@@ -6,11 +6,13 @@ package com.app.etow.ui.trip_upcoming_detail;
  */
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -87,6 +89,7 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
         tvTitleToolbar.setText(getString(R.string.upcoming_trips));
         getDataIntent();
         initUi();
+        presenter.getTripDetail(this, mTrip.getId());
     }
 
     private void getDataIntent() {
@@ -104,6 +107,13 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
     @Override
     protected int addContextView() {
         return R.layout.activity_trip_upcoming_detail;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        GlobalFuntion.getCurrentLocation(this, mLocationManager);
     }
 
     @Override
@@ -161,19 +171,17 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
 
     @OnClick(R.id.layout_view_map_pick_up)
     public void onClickViewMapPickUp() {
-        ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
-                Constant.TYPE_PICK_UP, mTrip);
-        GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+        presenter.updateLocationTrip(Constant.TYPE_PICK_UP, mTrip.getId(), GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
     }
 
     @OnClick(R.id.layout_view_map_drop_off)
     public void onClickViewMapDropOff() {
-        presenter.updateTrip(mTrip.getId(), Constant.TRIP_STATUS_ARRIVED, "");
+        presenter.updateLocationTrip(Constant.TYPE_DROP_OFF, mTrip.getId(), GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
     }
 
     @OnClick(R.id.tv_arrived_at_pickup)
     public void onClickArrivedAtPickup() {
-        presenter.updateTrip(mTrip.getId(), Constant.TRIP_STATUS_ARRIVED, "");
+        presenter.updateLocationTrip(Constant.TYPE_DROP_OFF, mTrip.getId(), GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
     }
 
     public void showDialogCallCustomer(String phoneNumber) {
@@ -218,6 +226,18 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
                     Constant.TYPE_DROP_OFF, mTrip);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
             finish();
+        }
+    }
+
+    @Override
+    public void updateLocationSuccess(int type) {
+        if (Constant.TYPE_PICK_UP == type) {
+            ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
+                    Constant.TYPE_PICK_UP, mTrip);
+            GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+            finish();
+        } else if (Constant.TYPE_DROP_OFF == type) {
+            presenter.updateTrip(mTrip.getId(), Constant.TRIP_STATUS_ARRIVED, "");
         }
     }
 }

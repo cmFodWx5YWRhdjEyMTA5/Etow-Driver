@@ -21,14 +21,11 @@
         android:textSize="@dimen/text_size_xnormal"
         android:textStyle="bold" />
 
-    <com.app.etow.ui.widget.textview.TahomaRegularTextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcv_direction"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/define_dimen_10"
-        android:gravity="center"
-        android:text="200 mtr take left"
-        android:textColor="@color/textColorSecondary"
-        android:textSize="@dimen/text_size_normal" />
+        android:layout_marginTop="@dimen/define_dimen_10" />
 
     <com.app.etow.ui.widget.textview.TahomaRegularTextView
         android:id="@+id/tv_action_update"

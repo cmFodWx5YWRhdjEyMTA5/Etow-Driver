@@ -115,6 +115,11 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
     protected void onDestroy() {
         super.onDestroy();
         presenter.destroyView();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         if (mCountDownTimer != null) mCountDownTimer.cancel();
     }
 
@@ -167,12 +172,12 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
                         String textTime = String.format(Locale.getDefault(), "%02d:%02d",
                                 TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60,
                                 TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60);
-                        tvTimeCountdown.setText(textTime);
+                        if (tvTimeCountdown != null) tvTimeCountdown.setText(textTime);
                     }
 
                     public void onFinish() {
                         cancel();
-                        tvTimeCountdown.setText("00:00");
+                        if (tvTimeCountdown != null) tvTimeCountdown.setText("00:00");
                         presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_CANCEL,
                                 getString(R.string.no_driver_accepted));
                     }
@@ -206,6 +211,11 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
         }
     }
 
+    @Override
+    public void getStatusUpdateLocation() {
+        presenter.updateTrip(mTripIncoming.getId(), Constant.TRIP_STATUS_ACCEPT, "");
+    }
+
     @OnClick(R.id.layout_view_map_pick_up)
     public void onClickViewMapPickUp() {
         ViewMap viewMap = new ViewMap(getString(R.string.incoming_request), false,
@@ -227,7 +237,7 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
 
     @OnClick(R.id.tv_accept)
     public void onClickAccept() {
-        presenter.updateTrip(mTripIncoming.getId(), Constant.TRIP_STATUS_ACCEPT, "");
+        presenter.updateLocationTrip(mTripIncoming.getId(), GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
     }
 
     public void showDialogReject() {

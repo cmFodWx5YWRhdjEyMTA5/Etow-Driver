@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -35,6 +37,9 @@ import com.app.etow.models.Setting;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.view_map_location.ViewMapLocationActivity;
+
+import java.util.List;
+import java.util.Locale;
 
 public class GlobalFuntion {
 
@@ -173,7 +178,7 @@ public class GlobalFuntion {
                 .show();
     }
 
-    public static void getCurrentLocation(Activity activity, LocationManager locationManager, boolean showMessage) {
+    public static void getCurrentLocation(Activity activity, LocationManager locationManager) {
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -186,9 +191,6 @@ public class GlobalFuntion {
                 LONGITUDE = location.getLongitude();
                 Log.e("Latitude current", LATITUDE + "");
                 Log.e("Longitude current", LONGITUDE + "");
-            } else {
-                if (showMessage)
-                    Toast.makeText(activity, activity.getString(R.string.unble_trace_location), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -221,5 +223,29 @@ public class GlobalFuntion {
 
         int distance = (int) (pickUplocation.distanceTo(dropOfflocation) / 1000);
         return distance;
+    }
+
+    public static String getCompleteAddressString(Context context, double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strAdd = strReturnedAddress.toString();
+                Log.d("Current Address", strReturnedAddress.toString());
+            } else {
+                Log.d("Current Address", "No Address returned!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Current Address", "Canont get Address!");
+        }
+        return strAdd;
     }
 }

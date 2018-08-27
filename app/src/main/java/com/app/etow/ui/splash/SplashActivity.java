@@ -10,11 +10,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
@@ -90,30 +87,24 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
     }
 
     private void goToActivity() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int tripProcessId = DataStoreManager.getPrefIdTripProcess();
-                if (tripProcessId != 0) {
-                    presenter.getTripDetail(SplashActivity.this, tripProcessId);
-                } else {
-                    if (!DataStoreManager.getFirstInstallApp()) {
-                        DataStoreManager.setFirstInstallApp(true);
-                        DataStoreManager.removeUser();
+        int tripProcessId = DataStoreManager.getPrefIdTripProcess();
+        if (tripProcessId != 0) {
+            presenter.getTripDetail(SplashActivity.this, tripProcessId);
+        } else {
+            if (!DataStoreManager.getFirstInstallApp()) {
+                DataStoreManager.setFirstInstallApp(true);
+                DataStoreManager.removeUser();
 
-                        GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
-                    } else {
-                        if (DataStoreManager.getIsLogin()) {
-                            GlobalFuntion.startActivity(SplashActivity.this, MainActivity.class);
-                        } else {
-                            GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
-                        }
-                    }
-                    finish();
+                GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
+            } else {
+                if (DataStoreManager.getIsLogin()) {
+                    GlobalFuntion.startActivity(SplashActivity.this, MainActivity.class);
+                } else {
+                    GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
                 }
             }
-        }, 1000);
+            finish();
+        }
     }
 
     private void settingGPS() {
@@ -121,7 +112,7 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
         if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             showDialogSettingGps();
         } else if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            GlobalFuntion.getCurrentLocation(this, mLocationManager, false);
+            GlobalFuntion.getCurrentLocation(this, mLocationManager);
             goToActivity();
         }
     }

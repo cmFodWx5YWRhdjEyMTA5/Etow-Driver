@@ -100,4 +100,10 @@ public interface EtowService {
 
     @GET("trip/get-setting-time")
     Observable<ApiResponse> getSetting();
+
+    @FormUrlEncoded
+    @POST("trip/update-location")
+    Observable<ApiSuccess> updateLocationTrip(@Field(KeyAPI.KEY_TRIP_ID) int tripId,
+                                              @Field(KeyAPI.KEY_CURRENT_LATITUDE) double latitude,
+                                              @Field(KeyAPI.KEY_CURRENT_LONGITUDE) double longitude);
 }

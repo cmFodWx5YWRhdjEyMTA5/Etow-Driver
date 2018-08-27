@@ -8,22 +8,28 @@ package com.app.etow.ui.view_map_location;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
+import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ahmadrosid.lib.drawroutemap.DrawMarker;
-import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.app.etow.R;
+import com.app.etow.adapter.DirectionAdapter;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.direction.DirectionFinder;
+import com.app.etow.direction.DirectionFinderListener;
+import com.app.etow.direction.Route;
+import com.app.etow.direction.Step;
 import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
@@ -34,8 +40,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -44,7 +58,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ViewMapLocationActivity extends BaseMVPDialogActivity implements ViewMapLocationMVPView,
-        OnMapReadyCallback {
+        OnMapReadyCallback, DirectionFinderListener {
 
     @Inject
     ViewMapLocationPresenter presenter;
@@ -79,9 +93,20 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
     @BindView(R.id.tv_action_update)
     TextView tvActionUpdate;
 
+    @BindView(R.id.rcv_direction)
+    RecyclerView rcvDirection;
+
     private GoogleMap mMap;
     private ViewMap mViewMap;
     private boolean mIsTripGoing;
+    private DirectionAdapter directionAdapter;
+
+    private List<Marker> originMarkers = new ArrayList<>();
+    private List<Marker> destinationMarkers = new ArrayList<>();
+    private List<Polyline> polylinePaths = new ArrayList<>();
+
+    private ArrayList<LatLng> mListPoints = new ArrayList<LatLng>();
+    private Polyline mPolyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,15 +116,13 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         viewUnbind = ButterKnife.bind(this);
         presenter.initialView(this);
 
+        // Get data intent
         getDataIntent();
 
         // init map
         SupportMapFragment mMapFragment = new SupportMapFragment();
         mMapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_view_map));
         mMapFragment.getMapAsync(this);
-
-        DataStoreManager.setPrefIdTripProcess(mViewMap.getTrip().getId());
-        presenter.getTripDetail(this, DataStoreManager.getPrefIdTripProcess());
     }
 
     private void getDataIntent() {
@@ -124,7 +147,66 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
     protected void onResume() {
         super.onResume();
         LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        GlobalFuntion.getCurrentLocation(this, mLocationManager, true);
+        GlobalFuntion.getCurrentLocation(this, mLocationManager);
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.destroyView();
+        if (directionAdapter != null) directionAdapter.release();
+        super.onDestroy();
+    }
+
+    @Override
+    public void showNoNetworkAlert() {
+        showAlert(getString(R.string.error_not_connect_to_internet));
+    }
+
+    @Override
+    public void onErrorCallApi(int code) {
+        GlobalFuntion.showMessageError(this, code);
+    }
+
+    @OnClick(R.id.img_back)
+    public void onClickBack() {
+        onBackPressed();
+    }
+
+    @OnClick(R.id.tv_get_direction)
+    public void onClickGetDirection() {
+        if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
+            layoutGetDirection.setVisibility(View.GONE);
+            layoutDirectionLocation.setVisibility(View.VISIBLE);
+            tvTitleDirection.setText(getString(R.string.pick_up_location_2));
+            tvActionUpdate.setText(getString(R.string.arrived_for_pick_up));
+            getLocationChange();
+        } else {
+            mListPoints = new ArrayList<>();
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ON_GOING, "");
+        }
+    }
+
+    @OnClick(R.id.tv_action_update)
+    public void onClickActionUpdate() {
+        if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED, "");
+        } else {
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_JOURNEY_COMPLETED, "");
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
+        DataStoreManager.setPrefIdTripProcess(mViewMap.getTrip().getId());
+        presenter.getTripDetail(this, DataStoreManager.getPrefIdTripProcess());
+        initData();
     }
 
     private void initData() {
@@ -153,102 +235,49 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         if (mViewMap.isShowDistance()) {
             tvTimeToLocation.setVisibility(View.VISIBLE);
             tvGetDirection.setVisibility(View.VISIBLE);
-
-            String timeToLocation = "";
-            if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
-                int distance = GlobalFuntion.getDistanceFromLocation(GlobalFuntion.LATITUDE,
-                        GlobalFuntion.LATITUDE,
-                        Double.parseDouble(mViewMap.getTrip().getPickup_latitude()),
-                        Double.parseDouble(mViewMap.getTrip().getPickup_longitude()));
-                int timePickup = 0;
-                if (GlobalFuntion.mSetting != null) {
-                    timePickup = distance * Integer.parseInt(GlobalFuntion.mSetting.getTimeDistance());
-                }
-                if (timePickup < 1) timePickup = 1;
-                timeToLocation = "<font color=#6D6E70>" + getString(R.string.estimated_time_pick_up_location)
-                        + "</font> <b><font color=#121315>"
-                        + timePickup + "</font></b> <font color=#6D6E70>"
-                        + getString(R.string.label_minute) + "</font>";
-            } else {
-                int distance = GlobalFuntion.getDistanceFromLocation(GlobalFuntion.LATITUDE, GlobalFuntion.LATITUDE,
-                        Double.parseDouble(mViewMap.getTrip().getDropoff_latitude()),
-                        Double.parseDouble(mViewMap.getTrip().getDropoff_longitude()));
-                int timeDropOff = 0;
-                if (GlobalFuntion.mSetting != null) {
-                    timeDropOff = distance * Integer.parseInt(GlobalFuntion.mSetting.getTimeDistance());
-                }
-                if (timeDropOff < 1) timeDropOff = 1;
-                timeToLocation = "<font color=#6D6E70>" + getString(R.string.estimated_time_drop_off_location)
-                        + "</font> <b><font color=#121315>"
-                        + timeDropOff + "</font></b> <font color=#6D6E70>"
-                        + getString(R.string.label_minute) + "</font>";
-            }
-            tvTimeToLocation.setText(Html.fromHtml(timeToLocation));
+            presenter.updateLocationTrip(DataStoreManager.getPrefIdTripProcess(), GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
         } else {
             tvTimeToLocation.setVisibility(View.GONE);
             tvGetDirection.setVisibility(View.GONE);
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        presenter.destroyView();
-        super.onDestroy();
-    }
-
-    @Override
-    public void showNoNetworkAlert() {
-        showAlert(getString(R.string.error_not_connect_to_internet));
-    }
-
-    @Override
-    public void onErrorCallApi(int code) {
-        GlobalFuntion.showMessageError(this, code);
-    }
-
-    @OnClick(R.id.img_back)
-    public void onClickBack() {
-        onBackPressed();
-    }
-
-    @OnClick(R.id.tv_get_direction)
-    public void onClickGetDirection() {
+    private void initMapLocation() {
         if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
-            layoutGetDirection.setVisibility(View.GONE);
-            layoutDirectionLocation.setVisibility(View.VISIBLE);
-
-            tvTitleDirection.setText(getString(R.string.pick_up_location_2));
-            tvActionUpdate.setText(getString(R.string.arrived_for_pick_up));
+            String strCurrentLocation = GlobalFuntion.getCompleteAddressString(this, GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
+            String strPickUp = mViewMap.getTrip().getPick_up();
+            if (StringUtil.isEmpty(strCurrentLocation)) {
+                showAlert(getString(R.string.unble_trace_location));
+            } else {
+                sendRequestDirection(strCurrentLocation, strPickUp, true);
+            }
         } else {
-            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ON_GOING, "");
-        }
-    }
-
-    @OnClick(R.id.tv_action_update)
-    public void onClickActionUpdate() {
-        if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
-            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED, "");
-        } else {
-            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_JOURNEY_COMPLETED, "");
+            String strCurrentLocation = GlobalFuntion.getCompleteAddressString(this, GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
+            String strDropOff = mViewMap.getTrip().getDrop_off();
+            if (StringUtil.isEmpty(strCurrentLocation)) {
+                showAlert(getString(R.string.unble_trace_location));
+            } else {
+                sendRequestDirection(strCurrentLocation, strDropOff, false);
+            }
         }
     }
 
     @Override
     public void updateStatusTrip(Trip trip) {
         mViewMap.setTrip(trip);
-        if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
-            initData();
-        } else if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
+        initMapLocation();
+        if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
             layoutDirectionLocation.setVisibility(View.GONE);
             layoutGetDirection.setVisibility(View.VISIBLE);
             mViewMap.setTypeLocation(Constant.TYPE_DROP_OFF);
+            mMap.clear();
             initData();
         } else if (Constant.TRIP_STATUS_ON_GOING.equals(trip.getStatus())) {
             layoutGetDirection.setVisibility(View.GONE);
             layoutDirectionLocation.setVisibility(View.VISIBLE);
-
             tvTitleDirection.setText(getString(R.string.drop_off_location_2));
             tvActionUpdate.setText(getString(R.string.journey_completed));
+            getLocationChange();
         } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
             if (Constant.TYPE_PAYMENT_CASH.equals(trip.getPayment_type())) {
                 GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
@@ -259,41 +288,133 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         }
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LatLng origin = new LatLng(GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
-        LatLng destination = null;
-        if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
-            destination = new LatLng(Double.parseDouble(mViewMap.getTrip().getPickup_latitude()),
-                    Double.parseDouble(mViewMap.getTrip().getPickup_longitude()));
-        } else {
-            destination = new LatLng(Double.parseDouble(mViewMap.getTrip().getDropoff_latitude()),
-                    Double.parseDouble(mViewMap.getTrip().getDropoff_longitude()));
+    private void sendRequestDirection(String origin, String destination, boolean fixCode) {
+        try {
+            new DirectionFinder(this, origin, destination, fixCode).execute();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        DrawRouteMaps.getInstance(this)
-                .draw(origin, destination, mMap);
-        DrawMarker.getInstance(this).draw(mMap, origin, R.drawable.ic_location_black, "");
-        DrawMarker.getInstance(this).draw(mMap, destination, R.drawable.ic_location_black, "");
+    }
 
-        LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(origin)
-                .include(destination).build();
-        Point displaySize = new Point();
-        getWindowManager().getDefaultDisplay().getSize(displaySize);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+    @Override
+    public void onDirectionFinderStart() {
+        showProgressDialog(true);
+        if (originMarkers != null) {
+            for (Marker marker : originMarkers) {
+                marker.remove();
+            }
+        }
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (destinationMarkers != null) {
+            for (Marker marker : destinationMarkers) {
+                marker.remove();
+            }
+        }
+
+        if (polylinePaths != null) {
+            for (Polyline polyline : polylinePaths) {
+                polyline.remove();
+            }
+        }
+    }
+
+    @Override
+    public void onDirectionFinderSuccess(List<Route> routes) {
+        showProgressDialog(false);
+        polylinePaths = new ArrayList<>();
+        originMarkers = new ArrayList<>();
+        destinationMarkers = new ArrayList<>();
+
+        for (Route route : routes) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
+            // ((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
+            // ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
+            String timeToLocation = "";
+            if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
+                timeToLocation = "<font color=#6D6E70>" + getString(R.string.estimated_time_pick_up_location)
+                        + "</font> <b><font color=#121315>"
+                        + route.duration.text + "</font></b> <font color=#6D6E70></font>";
+            } else {
+                timeToLocation = "<font color=#6D6E70>" + getString(R.string.estimated_time_drop_off_location)
+                        + "</font> <b><font color=#121315>"
+                        + route.duration.text + "</font></b> <font color=#6D6E70></font>";
+            }
+            tvTimeToLocation.setText(Html.fromHtml(timeToLocation));
+
+            originMarkers.add(mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_black))
+                    .title(route.startAddress)
+                    .position(route.startLocation)));
+            destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_black))
+                    .title(route.endAddress)
+                    .position(route.endLocation)));
+
+            PolylineOptions polylineOptions = new PolylineOptions().
+                    geodesic(true).
+                    color(Color.BLACK).
+                    width(10);
+
+            for (int i = 0; i < route.points.size(); i++)
+                polylineOptions.add(route.points.get(i));
+
+            polylinePaths.add(mMap.addPolyline(polylineOptions));
+
+            setDirection(route.steps);
+        }
+    }
+
+    public void getLocationChange() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mMap.setMyLocationEnabled(true);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 0,
+                new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
+                        if (latitude > 0 && longitude > 0) {
+                            presenter.updateLocationTrip(DataStoreManager.getPrefIdTripProcess(), latitude, longitude);
+                            LatLng latLng = new LatLng(latitude, longitude);
+                            mListPoints.add(latLng);
+                            redrawLine();
+                        }
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                });
+    }
+
+    private void redrawLine() {
+        // googleMap.clear();  //clears all Markers and Polylines
+        PolylineOptions options = new PolylineOptions().width(10)
+                .color(getResources().getColor(R.color.colorRouteLine)).geodesic(true);
+        for (int i = 0; i < mListPoints.size(); i++) {
+            LatLng point = mListPoints.get(i);
+            options.add(point);
+        }
+        // addMarker(); //add Marker in current position
+        mPolyline = mMap.addPolyline(options); //add Polyline
+    }
+
+    private void setDirection(List<Step> steps) {
+        directionAdapter = new DirectionAdapter(this, steps);
+        directionAdapter.injectInto(rcvDirection);
+        rcvDirection.setAdapter(directionAdapter);
     }
 }

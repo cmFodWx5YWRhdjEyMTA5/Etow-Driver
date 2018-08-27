@@ -25,6 +25,7 @@
             android:layout_width="@dimen/define_dimen_120"
             android:layout_height="@dimen/define_dimen_120"
             android:layout_marginTop="@dimen/define_dimen_10"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_avatar_default" />
 
         <com.app.etow.ui.widget.textview.TahomaRegularTextView
