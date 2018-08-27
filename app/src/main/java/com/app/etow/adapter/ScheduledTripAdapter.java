@@ -6,17 +6,12 @@ package com.app.etow.adapter;
  */
 
 import android.content.Context;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -108,12 +103,6 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
         @BindView(R.id.tv_status)
         TextView tvStatus;
 
-        @BindView(R.id.img_delete)
-        ImageView imgDelete;
-
-        @BindView(R.id.layout_delete)
-        LinearLayout layoutDelete;
-
         public ScheduledTripViewHolder(View itemView) {
             super(itemView);
         }
@@ -137,7 +126,6 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
                     tvStatus.setBackgroundResource(R.drawable.bg_black_corner_radius_6);
                     tvStatus.setTextColor(context.getResources().getColor(R.color.white));
                     tvStatus.setText(context.getString(R.string.open));
-                    imgDelete.setImageResource(R.drawable.ic_delete_black);
                     tvViewDetails.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -157,25 +145,11 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
                     tvStatus.setBackgroundResource(R.drawable.bg_grey_corner_radius_6);
                     tvStatus.setTextColor(context.getResources().getColor(R.color.background_trip_assigned));
                     tvStatus.setText(context.getString(R.string.assigned));
-                    Drawable myIcon = context.getResources().getDrawable(R.drawable.ic_delete_black);
-                    ColorFilter filter = new LightingColorFilter(context.getResources().getColor(R.color.background_trip_assigned),
-                            context.getResources().getColor(R.color.background_trip_assigned));
-                    myIcon.setColorFilter(filter);
-                    imgDelete.setImageDrawable(myIcon);
                 }
                 tvDate.setText(DateTimeUtils.convertTimeStampToFormatDate2(trip.getPickup_date()));
                 tvTime.setText(DateTimeUtils.convertTimeStampToFormatDate3(trip.getPickup_date()));
                 tvPickUp.setText(trip.getPick_up());
                 tvDropOff.setText(trip.getDrop_off());
-
-                layoutDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())) {
-                            // Todo reject trip
-                        }
-                    }
-                });
             }
         }
     }

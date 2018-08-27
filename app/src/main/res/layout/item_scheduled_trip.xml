@@ -100,7 +100,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/layout_delete"
                 android:orientation="horizontal">
 
                 <com.app.etow.ui.widget.textview.TahomaRegularTextView
@@ -131,26 +130,6 @@
                     android:text="@string/open"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/bg_white_corner_border_grey_radius_8"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/define_dimen_6"
-                android:paddingEnd="@dimen/define_dimen_20"
-                android:paddingStart="@dimen/define_dimen_20"
-                android:paddingTop="@dimen/define_dimen_6">
-
-                <ImageView
-                    android:id="@+id/img_delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_delete_black" />
             </LinearLayout>
         </RelativeLayout>
 

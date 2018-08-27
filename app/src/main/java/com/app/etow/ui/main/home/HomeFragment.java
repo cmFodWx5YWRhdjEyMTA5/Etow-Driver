@@ -64,7 +64,6 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
         getActivityComponent().inject(this);
         viewUnbind = ButterKnife.bind(this, view);
         presenter.initialView(this);
-        ((MainActivity) getActivity()).showAndHiddenItemToolbar("", true);
 
         SupportMapFragment mMapFragment = new SupportMapFragment();
         mMapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragment_view_map));

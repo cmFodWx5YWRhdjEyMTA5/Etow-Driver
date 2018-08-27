@@ -290,7 +290,12 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
     @Override
     public void loadListTripSchedule(int count) {
-        tvCountTripSchedule.setText(count + "");
+        if (count > 0) {
+            layoutNotification.setVisibility(View.VISIBLE);
+            tvCountTripSchedule.setText(count + "");
+        } else {
+            layoutNotification.setVisibility(View.GONE);
+        }
     }
 
     @Override
