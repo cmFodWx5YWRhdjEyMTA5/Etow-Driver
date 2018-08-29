@@ -26,6 +26,7 @@ import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.data.prefs.DataStoreManager;
+import com.app.etow.models.Trip;
 import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.ui.incoming_request.IncomingRequestActivity;
@@ -299,10 +300,11 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
     }
 
     @Override
-    public void getTripIncoming(int tripId) {
+    public void getTripIncoming(Trip trip) {
         if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())
-                && DataStoreManager.getPrefIdTripProcess() == 0) {
-            DataStoreManager.setPrefIdTripProcess(tripId);
+                && DataStoreManager.getPrefIdTripProcess() == 0 &&
+                DataStoreManager.getUser().getDrivers().getVehicle_type().equals(trip.getVehicle_type())) {
+            DataStoreManager.setPrefIdTripProcess(trip.getId());
             GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
             finish();
         }

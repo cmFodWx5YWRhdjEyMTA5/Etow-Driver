@@ -5,6 +5,7 @@ package com.app.etow.ui.main;
  *  Author DangTin. Create on 2018/05/13
  */
 
+import com.app.etow.models.Trip;
 import com.app.etow.ui.base.BaseScreenMvpView;
 
 interface MainMVPView extends BaseScreenMvpView {
@@ -13,5 +14,5 @@ interface MainMVPView extends BaseScreenMvpView {
 
     void loadListTripSchedule(int count);
 
-    void getTripIncoming(int tripId);
+    void getTripIncoming(Trip trip);
 }

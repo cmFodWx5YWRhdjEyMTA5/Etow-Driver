@@ -23,17 +23,15 @@ import java.util.List;
 public class DirectionFinder {
     private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
     // private static final String GOOGLE_API_KEY = "AIzaSyDJe6KCQa2s9GmqRJ3YJsAWqb5hqR3u56Q";
-    private static final String GOOGLE_API_KEY = "AIzaSyDqf0tDbQ8wg8iAshXPfiR6ejWGKfy3Cis";
+    private static final String GOOGLE_API_KEY = "AIzaSyBXBMLWEGfclDhD_tzX-JsZE8581VwlkXE";
     private DirectionFinderListener listener;
     private String origin;
     private String destination;
-    private boolean fixCode;
 
-    public DirectionFinder(DirectionFinderListener listener, String origin, String destination, boolean fixCode) {
+    public DirectionFinder(DirectionFinderListener listener, String origin, String destination) {
         this.listener = listener;
         this.origin = origin;
         this.destination = destination;
-        this.fixCode = fixCode;
     }
 
     public void execute() throws UnsupportedEncodingException {
@@ -90,13 +88,7 @@ public class DirectionFinder {
 
         List<Route> routes = new ArrayList<Route>();
         //Todo fix code
-        JSONObject jsonData;
-        if (fixCode) {
-            jsonData = new JSONObject(Constant.JSON);
-        } else {
-            jsonData = new JSONObject(Constant.JSON2);
-        }
-
+        JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
         for (int i = 0; i < jsonRoutes.length(); i++) {
             JSONObject jsonRoute = jsonRoutes.getJSONObject(i);

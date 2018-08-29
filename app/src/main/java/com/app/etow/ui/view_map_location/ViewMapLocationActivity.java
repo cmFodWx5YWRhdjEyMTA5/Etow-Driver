@@ -249,7 +249,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
             if (StringUtil.isEmpty(strCurrentLocation)) {
                 showAlert(getString(R.string.unble_trace_location));
             } else {
-                sendRequestDirection(strCurrentLocation, strPickUp, true);
+                sendRequestDirection(strCurrentLocation, strPickUp);
             }
         } else {
             String strCurrentLocation = GlobalFuntion.getCompleteAddressString(this, GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
@@ -257,7 +257,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
             if (StringUtil.isEmpty(strCurrentLocation)) {
                 showAlert(getString(R.string.unble_trace_location));
             } else {
-                sendRequestDirection(strCurrentLocation, strDropOff, false);
+                sendRequestDirection(strCurrentLocation, strDropOff);
             }
         }
     }
@@ -288,9 +288,9 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         }
     }
 
-    private void sendRequestDirection(String origin, String destination, boolean fixCode) {
+    private void sendRequestDirection(String origin, String destination) {
         try {
-            new DirectionFinder(this, origin, destination, fixCode).execute();
+            new DirectionFinder(this, origin, destination).execute();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
