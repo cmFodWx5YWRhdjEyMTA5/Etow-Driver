@@ -87,7 +87,6 @@ public class DirectionFinder {
             return;
 
         List<Route> routes = new ArrayList<Route>();
-        //Todo fix code
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
         for (int i = 0; i < jsonRoutes.length(); i++) {

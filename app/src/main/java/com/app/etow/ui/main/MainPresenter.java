@@ -146,4 +146,30 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                     }
                 });
     }
+
+    public void updateLocationDriver(int driverId, double latitude, double longitude) {
+        if (!isConnectToInternet()) {
+            notifyNoNetwork();
+        } else {
+            mNetworkManager.updateLocationUser(driverId, latitude, longitude)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ApiSuccess>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            getMvpView().onErrorCallApi(getErrorFromHttp(e).getCode());
+                        }
+
+                        @Override
+                        public void onNext(ApiSuccess apiSuccess) {
+
+                        }
+                    });
+        }
+    }
 }

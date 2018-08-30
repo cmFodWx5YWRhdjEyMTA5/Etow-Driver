@@ -106,4 +106,16 @@ public interface EtowService {
     Observable<ApiSuccess> updateLocationTrip(@Field(KeyAPI.KEY_TRIP_ID) int tripId,
                                               @Field(KeyAPI.KEY_CURRENT_LATITUDE) double latitude,
                                               @Field(KeyAPI.KEY_CURRENT_LONGITUDE) double longitude);
+
+    @FormUrlEncoded
+    @POST("trip/update-payment-status")
+    Observable<ApiSuccess> updatePaymentStatus(@Field(KeyAPI.KEY_TRIP_ID) int tripId,
+                                               @Field(KeyAPI.KEY_PAYMENT_TYPE) String type,
+                                               @Field(KeyAPI.KEY_PAYMENT_STATUS) String status);
+
+    @FormUrlEncoded
+    @POST("user/update-location")
+    Observable<ApiSuccess> updateLocationUser(@Field(KeyAPI.KEY_USER_ID) int userId,
+                                              @Field(KeyAPI.KEY_CURRENT_LATITUDE) double latitude,
+                                              @Field(KeyAPI.KEY_CURRENT_LONGITUDE) double longitude);
 }
