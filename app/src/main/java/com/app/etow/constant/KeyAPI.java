@@ -24,4 +24,6 @@ public class KeyAPI {
     public static final String KEY_PAYMENT_STATUS = "payment_status";
     public static final String KEY_PAYMENT_TYPE = "payment_type";
     public static final String KEY_USER_ID = "user_id";
+    public static final String KEY_LATITUDE = "latitude";
+    public static final String KEY_LONGITUDE = "longitude";
 }

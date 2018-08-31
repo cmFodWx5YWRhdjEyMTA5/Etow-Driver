@@ -15,4 +15,6 @@ interface MainMVPView extends BaseScreenMvpView {
     void loadListTripSchedule(int count);
 
     void getTripIncoming(Trip trip);
+
+    void getTripDetail(Trip trip);
 }

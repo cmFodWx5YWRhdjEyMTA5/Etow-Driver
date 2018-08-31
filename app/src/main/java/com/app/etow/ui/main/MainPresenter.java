@@ -82,7 +82,8 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
                         listTripSchedule.add(trip);
-                        if (getMvpView() != null) getMvpView().loadListTripSchedule(listTripSchedule.size());
+                        if (getMvpView() != null)
+                            getMvpView().loadListTripSchedule(listTripSchedule.size());
                     }
 
                     @Override
@@ -101,7 +102,8 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                                 }
                             }
                         }
-                        if (getMvpView() != null) getMvpView().loadListTripSchedule(listTripSchedule.size());
+                        if (getMvpView() != null)
+                            getMvpView().loadListTripSchedule(listTripSchedule.size());
                     }
 
                     @Override
@@ -122,7 +124,8 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (getMvpView() != null && trip != null) getMvpView().getTripIncoming(trip);
+                        if (getMvpView() != null && trip != null)
+                            getMvpView().getTripIncoming(trip);
                     }
 
                     @Override
@@ -147,11 +150,11 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                 });
     }
 
-    public void updateLocationDriver(int driverId, double latitude, double longitude) {
+    public void updateLocationDriver(double latitude, double longitude) {
         if (!isConnectToInternet()) {
             notifyNoNetwork();
         } else {
-            mNetworkManager.updateLocationUser(driverId, latitude, longitude)
+            mNetworkManager.updateLocationUser(latitude, longitude)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<ApiSuccess>() {
@@ -171,5 +174,37 @@ public class MainPresenter extends BasePresenter<MainMVPView> {
                         }
                     });
         }
+    }
+
+    public void getTripDetail(Context context, int tripId) {
+        ETowApplication.get(context).getDatabaseReference().orderByChild("id").equalTo(tripId)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        if (getMvpView() != null && trip != null) getMvpView().getTripDetail(trip);
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Trip trip = dataSnapshot.getValue(Trip.class);
+                        if (getMvpView() != null && trip != null) getMvpView().getTripDetail(trip);
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

@@ -89,7 +89,12 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
     private void goToActivity() {
         int tripProcessId = DataStoreManager.getPrefIdTripProcess();
         if (tripProcessId != 0) {
-            presenter.getTripDetail(SplashActivity.this, tripProcessId);
+            if (DataStoreManager.getIsLogin()) {
+                presenter.getTripDetail(SplashActivity.this, tripProcessId);
+            } else {
+                GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
+                finish();
+            }
         } else {
             if (!DataStoreManager.getFirstInstallApp()) {
                 DataStoreManager.setFirstInstallApp(true);
@@ -103,7 +108,6 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
                     GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
                 }
             }
-            finish();
         }
     }
 
@@ -131,7 +135,7 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
     @Override
     public void getTripDetail(Trip trip) {
         if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())) {
-            GlobalFuntion.startActivity(SplashActivity.this, IncomingRequestActivity.class);
+            GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
         } else if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
             ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, trip);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);

@@ -56,7 +56,7 @@ public class NetworkManager {
         return mEtowService.updatePaymentStatus(tripId, type, status);
     }
 
-    public Observable<ApiSuccess> updateLocationUser(int userId, double latitude, double longitude) {
-        return mEtowService.updateLocationUser(userId, latitude, longitude);
+    public Observable<ApiSuccess> updateLocationUser(double latitude, double longitude) {
+        return mEtowService.updateLocationUser(latitude, longitude);
     }
 }

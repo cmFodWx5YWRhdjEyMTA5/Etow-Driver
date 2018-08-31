@@ -1,6 +1,7 @@
 package com.app.etow.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Trip implements Serializable{
 
@@ -26,6 +27,7 @@ public class Trip implements Serializable{
     private String note;
     private String created_at;
     private String driver_id;
+    private List<Reject> rejects;
 
     public Trip() {
     }
@@ -204,5 +206,13 @@ public class Trip implements Serializable{
 
     public void setDriver_id(String driver_id) {
         this.driver_id = driver_id;
+    }
+
+    public List<Reject> getRejects() {
+        return rejects;
+    }
+
+    public void setRejects(List<Reject> rejects) {
+        this.rejects = rejects;
     }
 }

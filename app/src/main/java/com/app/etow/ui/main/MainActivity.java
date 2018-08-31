@@ -31,6 +31,7 @@ import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
 import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.Trip;
+import com.app.etow.models.ViewMap;
 import com.app.etow.ui.auth.SignInActivity;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.ui.incoming_request.IncomingRequestActivity;
@@ -40,6 +41,9 @@ import com.app.etow.ui.main.my_account.MyAccountActivity;
 import com.app.etow.ui.main.my_bookings.MyBookingsActivity;
 import com.app.etow.ui.main.term_and_condition.TermAndConditionFragment;
 import com.app.etow.ui.scheduled_trip.ScheduledTripActivity;
+import com.app.etow.ui.trip_summary.card.TripSummaryCardActivity;
+import com.app.etow.ui.trip_summary.cash.TripSummaryCashActivity;
+import com.app.etow.ui.view_map_location.ViewMapLocationActivity;
 import com.app.etow.utils.Utils;
 
 import javax.inject.Inject;
@@ -97,11 +101,16 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         tvTitleToolbar.setText(getString(R.string.menu));
 
         presenter.getScheduleTrip(this);
-        presenter.getTripIncoming(this);
+        int tripProcessId = DataStoreManager.getPrefIdTripProcess();
+        if (tripProcessId != 0) {
+            presenter.getTripDetail(this, tripProcessId);
+        } else {
+            presenter.getTripIncoming(this);
+        }
 
         setListenerDrawer();
         replaceFragment(new HomeFragment(), HomeFragment.class.getName());
-        getLocationChange();
+        // getLocationChange();
     }
 
     @Override
@@ -120,7 +129,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         GlobalFuntion.getCurrentLocation(this, mLocationManager);
         // Update location driver
-        presenter.updateLocationDriver(DataStoreManager.getUser().getId(), GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
+        // presenter.updateLocationDriver(GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
     }
 
     @Override
@@ -180,7 +189,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        finish();
+                        finishAffinity();
                     }
                 })
                 .negativeText(getString(R.string.action_cancel))
@@ -311,13 +320,24 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())
                 && DataStoreManager.getPrefIdTripProcess() == 0 &&
                 DataStoreManager.getUser().getDrivers().getVehicle_type().equals(trip.getVehicle_type())) {
-            DataStoreManager.setPrefIdTripProcess(trip.getId());
-            GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
-            finish();
+            boolean isDriverRejected = false;
+            if (trip.getRejects() != null && trip.getRejects().size() > 0) {
+                for (int i = 0; i < trip.getRejects().size(); i++) {
+                    if (DataStoreManager.getUser().getId() == Integer.parseInt(trip.getRejects().get(i).getDriver_id())) {
+                        isDriverRejected = true;
+                        break;
+                    }
+                }
+            }
+            if (!isDriverRejected) {
+                DataStoreManager.setPrefIdTripProcess(trip.getId());
+                GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
+                finish();
+            }
         }
     }
 
-    public void getLocationChange() {
+    /*public void getLocationChange() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -331,7 +351,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                         double longitude = location.getLongitude();
                         if (latitude > 0 && longitude > 0) {
                             // Update location driver
-                            presenter.updateLocationDriver(DataStoreManager.getUser().getId(), latitude, longitude);
+                            presenter.updateLocationDriver(latitude, longitude);
                         }
                     }
 
@@ -350,5 +370,35 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
                     }
                 });
+    }*/
+
+    @Override
+    public void getTripDetail(Trip trip) {
+        if (DataStoreManager.getUser().getId() == Integer.parseInt(trip.getDriver_id())) {
+            if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())) {
+                GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
+            } else if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
+                ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, trip);
+                GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+            } else if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
+                ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
+                GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
+            } else if (Constant.TRIP_STATUS_ON_GOING.equals(trip.getStatus())) {
+                ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constant.OBJECT_VIEW_MAP, viewMap);
+                bundle.putBoolean(Constant.IS_TRIP_GOING, true);
+                GlobalFuntion.startActivity(this, ViewMapLocationActivity.class, bundle);
+            } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
+                if (Constant.TYPE_PAYMENT_CASH.equals(trip.getPayment_type())) {
+                    GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
+                } else {
+                    GlobalFuntion.startActivity(this, TripSummaryCardActivity.class);
+                }
+            }
+            finish();
+        } else {
+            presenter.getTripIncoming(this);
+        }
     }
 }

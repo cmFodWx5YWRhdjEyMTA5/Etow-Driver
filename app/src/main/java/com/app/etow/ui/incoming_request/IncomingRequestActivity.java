@@ -178,8 +178,8 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
                     public void onFinish() {
                         cancel();
                         if (tvTimeCountdown != null) tvTimeCountdown.setText("00:00");
-                        presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_CANCEL,
-                                getString(R.string.no_driver_accepted));
+                        /*presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_CANCEL,
+                                getString(R.string.no_driver_accepted));*/
                     }
 
                 }.start();
@@ -207,6 +207,16 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
                 DataStoreManager.setPrefIdTripProcess(0);
                 GlobalFuntion.startActivity(this, MainActivity.class);
                 finishAffinity();
+            }
+        }
+        if (trip.getRejects() != null && trip.getRejects().size() > 0) {
+            for (int i = 0; i < trip.getRejects().size(); i++) {
+                if (DataStoreManager.getUser().getId() == Integer.parseInt(trip.getRejects().get(i).getDriver_id())) {
+                    DataStoreManager.setPrefIdTripProcess(0);
+                    GlobalFuntion.startActivity(this, MainActivity.class);
+                    finishAffinity();
+                    break;
+                }
             }
         }
     }
