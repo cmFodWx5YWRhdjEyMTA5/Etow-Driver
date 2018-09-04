@@ -182,16 +182,16 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
             getLocationChange();
         } else {
             mListPoints = new ArrayList<>();
-            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ON_GOING, "");
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ON_GOING + "", "");
         }
     }
 
     @OnClick(R.id.tv_action_update)
     public void onClickActionUpdate() {
         if (Constant.TYPE_PICK_UP == mViewMap.getTypeLocation()) {
-            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED, "");
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_ARRIVED + "", "");
         } else {
-            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_JOURNEY_COMPLETED, "");
+            presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_JOURNEY_COMPLETED + "", "");
         }
     }
 
@@ -266,19 +266,19 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
     public void updateStatusTrip(Trip trip) {
         mViewMap.setTrip(trip);
         initMapLocation();
-        if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
+        if (Constant.TRIP_STATUS_ARRIVED == trip.getStatus()) {
             layoutDirectionLocation.setVisibility(View.GONE);
             layoutGetDirection.setVisibility(View.VISIBLE);
             mViewMap.setTypeLocation(Constant.TYPE_DROP_OFF);
             mMap.clear();
             initData();
-        } else if (Constant.TRIP_STATUS_ON_GOING.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_ON_GOING == trip.getStatus()) {
             layoutGetDirection.setVisibility(View.GONE);
             layoutDirectionLocation.setVisibility(View.VISIBLE);
             tvTitleDirection.setText(getString(R.string.drop_off_location_2));
             tvActionUpdate.setText(getString(R.string.journey_completed));
             getLocationChange();
-        } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED == trip.getStatus()) {
             if (Constant.TYPE_PAYMENT_CASH.equals(trip.getPayment_type())) {
                 GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
             } else {

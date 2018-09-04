@@ -129,7 +129,7 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
             if (Constant.TYPE_PAYMENT_CASH.equals(mTrip.getPayment_type())) {
                 showDialogConfirmCashReceived();
             } else {
-                presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_COMPLETE, "");
+                presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_COMPLETE + "", "");
             }
         }
     }
@@ -158,7 +158,7 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
         tvYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_COMPLETE, "");
+                presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_COMPLETE + "", "");
                 dialog.dismiss();
             }
         });
@@ -191,9 +191,9 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
             tvDone.setVisibility(View.VISIBLE);
         }
 
-        if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
+        if (Constant.TRIP_STATUS_JOURNEY_COMPLETED == trip.getStatus()) {
             initData(trip);
-        } else if (Constant.TRIP_STATUS_COMPLETE.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_COMPLETE == trip.getStatus()) {
             DataStoreManager.setPrefIdTripProcess(0);
             GlobalFuntion.startActivity(this, MainActivity.class);
             finishAffinity();

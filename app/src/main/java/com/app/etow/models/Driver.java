@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Driver implements Serializable {
 
-    private int id;
+    private double id;
     private String full_name;
     private String email;
     private String phone;
@@ -19,11 +19,11 @@ public class Driver implements Serializable {
     public Driver() {
     }
 
-    public int getId() {
+    public double getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(double id) {
         this.id = id;
     }
 

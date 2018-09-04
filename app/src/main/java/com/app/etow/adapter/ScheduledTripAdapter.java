@@ -115,7 +115,7 @@ public class ScheduledTripAdapter extends RecyclerView.Adapter<ScheduledTripAdap
         @Override
         public void bindData(Context context, Trip trip, int position) {
             if (trip != null) {
-                if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())) {
+                if (Constant.TRIP_STATUS_NEW == trip.getStatus()) {
                     layoutTitle.setBackgroundResource(R.color.black);
                     tvTitlePickUp.setTextColor(context.getResources().getColor(R.color.textColorSecondary));
                     tvPickUp.setTextColor(context.getResources().getColor(R.color.textColorPrimary));

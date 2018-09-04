@@ -89,7 +89,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.0.0'
     // Google Map
     implementation 'com.google.android.gms:play-services-maps:9.6.1'
-    // implementation 'com.google.android.gms:play-services-location:9.4.0'
     // Firebase
     implementation 'com.google.firebase:firebase-database:9.6.1'
 }

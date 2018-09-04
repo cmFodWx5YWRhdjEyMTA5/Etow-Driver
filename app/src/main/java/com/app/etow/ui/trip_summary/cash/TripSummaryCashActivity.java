@@ -115,9 +115,9 @@ public class TripSummaryCashActivity extends BaseMVPDialogActivity implements Tr
             tvDone.setBackgroundResource(R.drawable.bg_black_corner);
             tvDone.setTextColor(getResources().getColor(R.color.white));
         }
-        if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
+        if (Constant.TRIP_STATUS_JOURNEY_COMPLETED == trip.getStatus()) {
             initData(trip);
-        } else if (Constant.TRIP_STATUS_COMPLETE.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_COMPLETE == trip.getStatus()) {
             DataStoreManager.setPrefIdTripProcess(0);
             GlobalFuntion.startActivity(this, MainActivity.class);
             finishAffinity();
@@ -163,12 +163,12 @@ public class TripSummaryCashActivity extends BaseMVPDialogActivity implements Tr
     @OnClick(R.id.tv_done)
     public void onClickDone() {
         if (mCheckedCash) {
-            if (Constant.TRIP_STATUS_COMPLETE.equals(mTrip.getStatus())) {
+            if (Constant.TRIP_STATUS_COMPLETE == mTrip.getStatus()) {
                 DataStoreManager.setPrefIdTripProcess(0);
                 GlobalFuntion.startActivity(this, MainActivity.class);
                 finishAffinity();
             } else {
-                presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_COMPLETE, "");
+                presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_COMPLETE + "", "");
             }
         }
     }

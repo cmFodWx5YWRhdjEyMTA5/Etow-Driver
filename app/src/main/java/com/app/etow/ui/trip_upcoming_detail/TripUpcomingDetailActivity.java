@@ -221,7 +221,7 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
 
     @Override
     public void updateStatusTrip(Trip trip) {
-        if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
+        if (Constant.TRIP_STATUS_ARRIVED == trip.getStatus()) {
             ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
                     Constant.TYPE_DROP_OFF, mTrip);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
@@ -237,7 +237,7 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
             finish();
         } else if (Constant.TYPE_DROP_OFF == type) {
-            presenter.updateTrip(mTrip.getId(), Constant.TRIP_STATUS_ARRIVED, "");
+            presenter.updateTrip(mTrip.getId(), Constant.TRIP_STATUS_ARRIVED + "", "");
         }
     }
 }

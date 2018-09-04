@@ -134,21 +134,21 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
 
     @Override
     public void getTripDetail(Trip trip) {
-        if (Constant.TRIP_STATUS_NEW.equals(trip.getStatus())) {
+        if (Constant.TRIP_STATUS_NEW == trip.getStatus()) {
             GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
-        } else if (Constant.TRIP_STATUS_ACCEPT.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_ACCEPT == trip.getStatus()) {
             ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, trip);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
-        } else if (Constant.TRIP_STATUS_ARRIVED.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_ARRIVED == trip.getStatus()) {
             ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
-        } else if (Constant.TRIP_STATUS_ON_GOING.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_ON_GOING == trip.getStatus()) {
             ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constant.OBJECT_VIEW_MAP, viewMap);
             bundle.putBoolean(Constant.IS_TRIP_GOING, true);
             GlobalFuntion.startActivity(this, ViewMapLocationActivity.class, bundle);
-        } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED.equals(trip.getStatus())) {
+        } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED == trip.getStatus()) {
             if (Constant.TYPE_PAYMENT_CASH.equals(trip.getPayment_type())) {
                 GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
             } else {

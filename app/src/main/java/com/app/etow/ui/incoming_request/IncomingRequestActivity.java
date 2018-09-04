@@ -190,16 +190,16 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
     @Override
     public void getTripDetail(Trip trip) {
         mTripIncoming = trip;
-        if (Constant.TRIP_STATUS_NEW.equals(mTripIncoming.getStatus())) {
+        if (Constant.TRIP_STATUS_NEW == mTripIncoming.getStatus()) {
             initData();
-        } else if (Constant.TRIP_STATUS_REJECT.equals(mTripIncoming.getStatus())) {
+        } else if (Constant.TRIP_STATUS_REJECT == mTripIncoming.getStatus()) {
             DataStoreManager.setPrefIdTripProcess(0);
             GlobalFuntion.startActivity(this, MainActivity.class);
             finishAffinity();
-        } else if (Constant.TRIP_STATUS_CANCEL.equals(mTripIncoming.getStatus())) {
+        } else if (Constant.TRIP_STATUS_CANCEL == mTripIncoming.getStatus()) {
             showDialogCanceled();
-        } else if (Constant.TRIP_STATUS_ACCEPT.equals(mTripIncoming.getStatus())) {
-            if (DataStoreManager.getUser().getId() == Integer.parseInt(mTripIncoming.getDriver_id())) {
+        } else if (Constant.TRIP_STATUS_ACCEPT == mTripIncoming.getStatus()) {
+            if (DataStoreManager.getUser().getId() == mTripIncoming.getDriver_id()) {
                 ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, mTripIncoming);
                 GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
                 finish();
@@ -211,7 +211,7 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
         }
         if (trip.getRejects() != null && trip.getRejects().size() > 0) {
             for (int i = 0; i < trip.getRejects().size(); i++) {
-                if (DataStoreManager.getUser().getId() == Integer.parseInt(trip.getRejects().get(i).getDriver_id())) {
+                if (DataStoreManager.getUser().getId() == trip.getRejects().get(i).getDriver_id()) {
                     DataStoreManager.setPrefIdTripProcess(0);
                     GlobalFuntion.startActivity(this, MainActivity.class);
                     finishAffinity();
@@ -223,7 +223,7 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
 
     @Override
     public void getStatusUpdateLocation() {
-        presenter.updateTrip(mTripIncoming.getId(), Constant.TRIP_STATUS_ACCEPT, "");
+        presenter.updateTrip(mTripIncoming.getId(), Constant.TRIP_STATUS_ACCEPT + "", "");
     }
 
     @OnClick(R.id.layout_view_map_pick_up)
@@ -316,7 +316,7 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
                     RadioButton r = (RadioButton) rdgReasonReject.getChildAt(idx);
                     String selectedtext = r.getText().toString();
 
-                    presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_REJECT, selectedtext);
+                    presenter.updateTrip(DataStoreManager.getPrefIdTripProcess(), Constant.TRIP_STATUS_REJECT + "", selectedtext);
                     dialog.dismiss();
                 }
             }

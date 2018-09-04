@@ -50,12 +50,12 @@ public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
     }
 
     public void getTripCompleted(Context context, TripCompletedAdapter tripCompletedAdapter, String filter) {
-        ETowApplication.get(context).getDatabaseReference().orderByChild("driver_id").equalTo(DataStoreManager.getUser().getId() + "")
+        ETowApplication.get(context).getDatabaseReference().orderByChild("driver_id").equalTo(DataStoreManager.getUser().getId())
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (Constant.TRIP_STATUS_COMPLETE.equals(trip.getStatus())) {
+                        if (Constant.TRIP_STATUS_COMPLETE == trip.getStatus()) {
                             if (Constant.FILTER_CASH.equals(filter)) {
                                 if (Constant.TYPE_PAYMENT_CASH.equals(trip.getPayment_type()))
                                     listTripCompleted.add(trip);
@@ -72,7 +72,7 @@ public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         Trip trip = dataSnapshot.getValue(Trip.class);
-                        if (!Constant.TRIP_STATUS_COMPLETE.equals(trip.getStatus())) {
+                        if (Constant.TRIP_STATUS_COMPLETE != trip.getStatus()) {
                             if (listTripCompleted != null && listTripCompleted.size() > 0) {
                                 for (int i = 0; i < listTripCompleted.size(); i++) {
                                     if (trip.getId() == listTripCompleted.get(i).getId()) {
@@ -112,7 +112,7 @@ public class MyBookingsPresenter extends BasePresenter<MyBookingsMVPView> {
     }
 
     public void getTripUpcoming(Context context, TripUpcomingAdapter tripUpcomingAdapter, String filter) {
-        ETowApplication.get(context).getDatabaseReference().orderByChild("driver_id").equalTo(DataStoreManager.getUser().getId() + "")
+        ETowApplication.get(context).getDatabaseReference().orderByChild("driver_id").equalTo(DataStoreManager.getUser().getId())
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
