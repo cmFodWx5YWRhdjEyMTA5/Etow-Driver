@@ -110,7 +110,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
         setListenerDrawer();
         replaceFragment(new HomeFragment(), HomeFragment.class.getName());
-        // getLocationChange();
+        getLocationChange();
     }
 
     @Override
@@ -129,7 +129,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         GlobalFuntion.getCurrentLocation(this, mLocationManager);
         // Update location driver
-        // presenter.updateLocationDriver(GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
+        presenter.updateLocationDriver(GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
     }
 
     @Override
@@ -337,7 +337,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         }
     }
 
-    /*public void getLocationChange() {
+    public void getLocationChange() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -370,7 +370,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
                     }
                 });
-    }*/
+    }
 
     @Override
     public void getTripDetail(Trip trip) {

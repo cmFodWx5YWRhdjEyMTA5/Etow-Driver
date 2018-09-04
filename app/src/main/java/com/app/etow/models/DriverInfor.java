@@ -11,6 +11,9 @@ public class DriverInfor implements Serializable {
     private String company_name;
     private String is_online;
 
+    public DriverInfor() {
+    }
+
     public String getVehicle_type() {
         return vehicle_type;
     }

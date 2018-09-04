@@ -9,6 +9,9 @@ public class ViewMap implements Serializable {
     private int typeLocation;
     private Trip trip;
 
+    public ViewMap() {
+    }
+
     public ViewMap(String titleToolbar, boolean isShowDistance, int typeLocation, Trip trip) {
         this.titleToolbar = titleToolbar;
         this.isShowDistance = isShowDistance;

@@ -3,7 +3,7 @@ package com.app.etow.models;
 import java.io.Serializable;
 import java.util.List;
 
-public class Trip implements Serializable{
+public class Trip implements Serializable {
 
     private int id;
     private String pickup_date;
@@ -14,19 +14,18 @@ public class Trip implements Serializable{
     private String dropoff_latitude;
     private String dropoff_longitude;
     private String price;
-    private String status;
+    private int status;
     private String vehicle_type;
     private String payment_type;
     private String payment_status;
     private Driver driver;
     private User user;
-    private String is_schedule;
     private String status_schedule;
     private String current_latitude;
     private String current_longitude;
     private String note;
     private String created_at;
-    private String driver_id;
+    private int driver_id;
     private List<Reject> rejects;
 
     public Trip() {
@@ -104,11 +103,11 @@ public class Trip implements Serializable{
         this.price = price;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -152,14 +151,6 @@ public class Trip implements Serializable{
         this.user = user;
     }
 
-    public String getIs_schedule() {
-        return is_schedule;
-    }
-
-    public void setIs_schedule(String is_schedule) {
-        this.is_schedule = is_schedule;
-    }
-
     public String getStatus_schedule() {
         return status_schedule;
     }
@@ -200,11 +191,11 @@ public class Trip implements Serializable{
         this.created_at = created_at;
     }
 
-    public String getDriver_id() {
+    public int getDriver_id() {
         return driver_id;
     }
 
-    public void setDriver_id(String driver_id) {
+    public void setDriver_id(int driver_id) {
         this.driver_id = driver_id;
     }
 

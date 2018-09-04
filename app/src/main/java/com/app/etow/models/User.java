@@ -13,6 +13,9 @@ public class User implements Serializable {
     private String token;
     private String avatar;
 
+    public User() {
+    }
+
     public int getId() {
         return id;
     }

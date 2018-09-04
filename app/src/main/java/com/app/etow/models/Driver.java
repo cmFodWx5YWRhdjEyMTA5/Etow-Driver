@@ -16,6 +16,9 @@ public class Driver implements Serializable {
     private String vehicle_number;
     private DriverInfor drivers;
 
+    public Driver() {
+    }
+
     public int getId() {
         return id;
     }
