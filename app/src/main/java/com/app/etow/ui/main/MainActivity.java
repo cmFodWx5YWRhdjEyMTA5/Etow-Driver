@@ -317,8 +317,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
     @Override
     public void getTripIncoming(Trip trip) {
-        if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())
-                && DataStoreManager.getPrefIdTripProcess() == 0 &&
+        if (DataStoreManager.getPrefIdTripProcess() == 0 &&
                 DataStoreManager.getUser().getDrivers().getVehicle_type().equals(trip.getVehicle_type())) {
             boolean isDriverRejected = false;
             if (trip.getRejects() != null && trip.getRejects().size() > 0) {
@@ -330,9 +329,20 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                 }
             }
             if (!isDriverRejected) {
-                DataStoreManager.setPrefIdTripProcess(trip.getId());
-                GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
-                finish();
+                boolean driverAvailable = false;
+                if (trip.getDriver_available() != null && trip.getDriver_available().size() > 0) {
+                    for (int i = 0; i < trip.getDriver_available().size(); i++) {
+                        if (DataStoreManager.getUser().getId() == trip.getDriver_available().get(i).getId()) {
+                            driverAvailable = true;
+                            break;
+                        }
+                    }
+                }
+                if (driverAvailable) {
+                    DataStoreManager.setPrefIdTripProcess(trip.getId());
+                    GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
+                    finish();
+                }
             }
         }
     }
