@@ -110,7 +110,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
         setListenerDrawer();
         replaceFragment(new HomeFragment(), HomeFragment.class.getName());
-        getLocationChange();
+        // getLocationChange();
     }
 
     @Override
@@ -129,7 +129,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         GlobalFuntion.getCurrentLocation(this, mLocationManager);
         // Update location driver
-        presenter.updateLocationDriver(GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
+        // presenter.updateLocationDriver(GlobalFuntion.LATITUDE, GlobalFuntion.LONGITUDE);
     }
 
     @Override
@@ -317,7 +317,8 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
     @Override
     public void getTripIncoming(Trip trip) {
-        if (DataStoreManager.getPrefIdTripProcess() == 0 &&
+        if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())
+                && DataStoreManager.getPrefIdTripProcess() == 0 &&
                 DataStoreManager.getUser().getDrivers().getVehicle_type().equals(trip.getVehicle_type())) {
             boolean isDriverRejected = false;
             if (trip.getRejects() != null && trip.getRejects().size() > 0) {
@@ -329,25 +330,14 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                 }
             }
             if (!isDriverRejected) {
-                boolean driverAvailable = false;
-                if (trip.getDriver_available() != null && trip.getDriver_available().size() > 0) {
-                    for (int i = 0; i < trip.getDriver_available().size(); i++) {
-                        if (DataStoreManager.getUser().getId() == trip.getDriver_available().get(i).getId()) {
-                            driverAvailable = true;
-                            break;
-                        }
-                    }
-                }
-                if (driverAvailable) {
-                    DataStoreManager.setPrefIdTripProcess(trip.getId());
-                    GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
-                    finish();
-                }
+                DataStoreManager.setPrefIdTripProcess(trip.getId());
+                GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
+                finish();
             }
         }
     }
 
-    public void getLocationChange() {
+    /*public void getLocationChange() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -380,7 +370,7 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
 
                     }
                 });
-    }
+    }*/
 
     @Override
     public void getTripDetail(Trip trip) {

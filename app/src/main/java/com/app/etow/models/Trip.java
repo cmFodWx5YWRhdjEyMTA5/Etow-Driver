@@ -3,7 +3,7 @@ package com.app.etow.models;
 import java.io.Serializable;
 import java.util.List;
 
-public class Trip implements Serializable{
+public class Trip implements Serializable {
 
     private int id;
     private String pickup_date;
@@ -28,7 +28,6 @@ public class Trip implements Serializable{
     private String created_at;
     private String driver_id;
     private List<Reject> rejects;
-    private List<Driver> driver_available;
 
     public Trip() {
     }
@@ -215,13 +214,5 @@ public class Trip implements Serializable{
 
     public void setRejects(List<Reject> rejects) {
         this.rejects = rejects;
-    }
-
-    public List<Driver> getDriver_available() {
-        return driver_available;
-    }
-
-    public void setDriver_available(List<Driver> driver_available) {
-        this.driver_available = driver_available;
     }
 }

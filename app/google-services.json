@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "722475383505",
-    "firebase_url": "https://etow-c6f66.firebaseio.com",
-    "project_id": "etow-c6f66",
-    "storage_bucket": "etow-c6f66.appspot.com"
+    "project_number": "423588463869",
+    "firebase_url": "https://etow-9a319.firebaseio.com",
+    "project_id": "etow-9a319",
+    "storage_bucket": "etow-9a319.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:722475383505:android:6bf96cd28b95f043",
+        "mobilesdk_app_id": "1:423588463869:android:6bf96cd28b95f043",
         "android_client_info": {
           "package_name": "com.app.etow"
         }
       },
       "oauth_client": [
         {
-          "client_id": "722475383505-4la4t2gi40octf7pp1qjmrjlbs9oged9.apps.googleusercontent.com",
+          "client_id": "423588463869-t4aloflbheu3qkgjeb1ucd0bmqou87mp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.app.etow",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "722475383505-1gj0b8m8u519893eoodrjao3dbkqqc51.apps.googleusercontent.com",
+          "client_id": "423588463869-14bu9v480g86m3l9h2s81jo2r332091o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDqW-cry0Bovc2UdNFASMFCtl_xvq8t5Pk"
+          "current_key": "AIzaSyBb7ejg9h0hLphXlqOkI5Dv2O6HyRhdZrg"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "722475383505-1gj0b8m8u519893eoodrjao3dbkqqc51.apps.googleusercontent.com",
+              "client_id": "423588463869-14bu9v480g86m3l9h2s81jo2r332091o.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -52,28 +52,28 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:722475383505:android:ee9a9b21cea262af",
+        "mobilesdk_app_id": "1:423588463869:android:ee9a9b21cea262af",
         "android_client_info": {
           "package_name": "com.user.etow"
         }
       },
       "oauth_client": [
         {
-          "client_id": "722475383505-54r2mj5pecemvjdi4e95dvk1ag1cb59l.apps.googleusercontent.com",
+          "client_id": "423588463869-7rk6auq631bdlb3aoibg1adjk4raiet2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.user.etow",
-            "certificate_hash": "72b49b1b23c85306efba990337e7a4745ccb2a5e"
+            "certificate_hash": "598474e413616fc0ebb5471af8a6d886456c0b81"
           }
         },
         {
-          "client_id": "722475383505-1gj0b8m8u519893eoodrjao3dbkqqc51.apps.googleusercontent.com",
+          "client_id": "423588463869-14bu9v480g86m3l9h2s81jo2r332091o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDqW-cry0Bovc2UdNFASMFCtl_xvq8t5Pk"
+          "current_key": "AIzaSyBb7ejg9h0hLphXlqOkI5Dv2O6HyRhdZrg"
         }
       ],
       "services": {
@@ -84,7 +84,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "722475383505-1gj0b8m8u519893eoodrjao3dbkqqc51.apps.googleusercontent.com",
+              "client_id": "423588463869-14bu9v480g86m3l9h2s81jo2r332091o.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
