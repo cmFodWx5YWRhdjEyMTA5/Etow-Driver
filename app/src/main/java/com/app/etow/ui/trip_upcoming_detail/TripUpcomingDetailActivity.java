@@ -223,7 +223,7 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
     public void updateStatusTrip(Trip trip) {
         if (Constant.TRIP_STATUS_ARRIVED == trip.getStatus()) {
             ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
-                    Constant.TYPE_DROP_OFF, mTrip);
+                    Constant.TYPE_DROP_OFF, mTrip, true);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
             finish();
         }
@@ -233,7 +233,7 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
     public void updateLocationSuccess(int type) {
         if (Constant.TYPE_PICK_UP == type) {
             ViewMap viewMap = new ViewMap(getString(R.string.upcoming_trips), true,
-                    Constant.TYPE_PICK_UP, mTrip);
+                    Constant.TYPE_PICK_UP, mTrip, true);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
             finish();
         } else if (Constant.TYPE_DROP_OFF == type) {

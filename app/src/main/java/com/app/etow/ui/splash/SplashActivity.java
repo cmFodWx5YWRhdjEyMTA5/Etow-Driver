@@ -137,13 +137,13 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
         if (Constant.TRIP_STATUS_NEW == trip.getStatus()) {
             GlobalFuntion.startActivity(this, IncomingRequestActivity.class);
         } else if (Constant.TRIP_STATUS_ACCEPT == trip.getStatus()) {
-            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, trip);
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, trip, true);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
         } else if (Constant.TRIP_STATUS_ARRIVED == trip.getStatus()) {
-            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip, true);
             GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
         } else if (Constant.TRIP_STATUS_ON_GOING == trip.getStatus()) {
-            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip);
+            ViewMap viewMap = new ViewMap("", true, Constant.TYPE_DROP_OFF, trip, true);
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constant.OBJECT_VIEW_MAP, viewMap);
             bundle.putBoolean(Constant.IS_TRIP_GOING, true);

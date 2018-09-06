@@ -204,8 +204,10 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         }
         mMap.setMyLocationEnabled(true);
 
-        DataStoreManager.setPrefIdTripProcess(mViewMap.getTrip().getId());
-        presenter.getTripDetail(this, DataStoreManager.getPrefIdTripProcess());
+        if (mViewMap.isSaveTrip()) {
+            DataStoreManager.setPrefIdTripProcess(mViewMap.getTrip().getId());
+        }
+        presenter.getTripDetail(this, mViewMap.getTrip().getId());
         initData();
     }
 

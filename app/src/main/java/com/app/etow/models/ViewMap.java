@@ -8,15 +8,17 @@ public class ViewMap implements Serializable {
     private boolean isShowDistance;
     private int typeLocation;
     private Trip trip;
+    private boolean isSaveTrip;
 
     public ViewMap() {
     }
 
-    public ViewMap(String titleToolbar, boolean isShowDistance, int typeLocation, Trip trip) {
+    public ViewMap(String titleToolbar, boolean isShowDistance, int typeLocation, Trip trip, boolean isSaveTrip) {
         this.titleToolbar = titleToolbar;
         this.isShowDistance = isShowDistance;
         this.typeLocation = typeLocation;
         this.trip = trip;
+        this.isSaveTrip = isSaveTrip;
     }
 
     public String getTitleToolbar() {
@@ -49,5 +51,13 @@ public class ViewMap implements Serializable {
 
     public void setTrip(Trip trip) {
         this.trip = trip;
+    }
+
+    public boolean isSaveTrip() {
+        return isSaveTrip;
+    }
+
+    public void setSaveTrip(boolean saveTrip) {
+        isSaveTrip = saveTrip;
     }
 }

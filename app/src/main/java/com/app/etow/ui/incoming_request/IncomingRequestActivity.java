@@ -200,7 +200,7 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
             showDialogCanceled();
         } else if (Constant.TRIP_STATUS_ACCEPT == mTripIncoming.getStatus()) {
             if (DataStoreManager.getUser().getId() == mTripIncoming.getDriver_id()) {
-                ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, mTripIncoming);
+                ViewMap viewMap = new ViewMap("", true, Constant.TYPE_PICK_UP, mTripIncoming, true);
                 GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
                 finish();
             } else {
@@ -229,14 +229,14 @@ public class IncomingRequestActivity extends BaseMVPDialogActivity implements In
     @OnClick(R.id.layout_view_map_pick_up)
     public void onClickViewMapPickUp() {
         ViewMap viewMap = new ViewMap(getString(R.string.incoming_request), false,
-                Constant.TYPE_PICK_UP, mTripIncoming);
+                Constant.TYPE_PICK_UP, mTripIncoming, true);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
     @OnClick(R.id.layout_view_map_drop_off)
     public void onClickViewMapDropOff() {
         ViewMap viewMap = new ViewMap(getString(R.string.incoming_request), false,
-                Constant.TYPE_DROP_OFF, mTripIncoming);
+                Constant.TYPE_DROP_OFF, mTripIncoming, true);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 

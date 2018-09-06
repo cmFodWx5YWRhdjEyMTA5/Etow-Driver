@@ -181,14 +181,14 @@ public class ScheduledTripDetailActivity extends BaseMVPDialogActivity implement
     @OnClick(R.id.layout_view_map_pick_up)
     public void onClickLayoutViewMapPickup() {
         ViewMap viewMap = new ViewMap(getString(R.string.scheduled_trips), false,
-                Constant.TYPE_PICK_UP, mTripSchedule);
+                Constant.TYPE_PICK_UP, mTripSchedule, false);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
     @OnClick(R.id.layout_view_map_drop_off)
     public void onClickLayoutViewMapDropOff() {
         ViewMap viewMap = new ViewMap(getString(R.string.scheduled_trips), false,
-                Constant.TYPE_DROP_OFF, mTripSchedule);
+                Constant.TYPE_DROP_OFF, mTripSchedule, false);
         GlobalFuntion.goToViewMapLocationActivity(this, viewMap);
     }
 
