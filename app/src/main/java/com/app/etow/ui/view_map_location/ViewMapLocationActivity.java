@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -96,6 +97,9 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
     @BindView(R.id.rcv_direction)
     RecyclerView rcvDirection;
 
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+
     private GoogleMap mMap;
     private ViewMap mViewMap;
     private boolean mIsTripGoing;
@@ -118,6 +122,13 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
 
         // Get data intent
         getDataIntent();
+
+        // init button back
+        if (!DataStoreManager.getPrefLanguage()) {
+            imgBack.setImageResource(R.drawable.ic_back_black);
+        } else {
+            imgBack.setImageResource(R.drawable.ic_back_black_right);
+        }
 
         // init map
         SupportMapFragment mMapFragment = new SupportMapFragment();

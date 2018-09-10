@@ -53,6 +53,9 @@ public class MyAccountActivity extends BaseMVPDialogActivity implements MyAccoun
     @BindView(R.id.tv_email)
     TextView tvEmail;
 
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,11 @@ public class MyAccountActivity extends BaseMVPDialogActivity implements MyAccoun
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.my_account));
+        if (!DataStoreManager.getPrefLanguage()) {
+            imgBack.setImageResource(R.drawable.ic_back_black);
+        } else {
+            imgBack.setImageResource(R.drawable.ic_back_black_right);
+        }
         setUserInfor();
     }
 

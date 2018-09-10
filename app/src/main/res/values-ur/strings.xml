@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ * Copyright Ⓒ 2018. All rights reserved
+  ~ * Author DangTin. Create on 2018/05/13
+  -->
+
+<resources>
+    <string name="app_name">eTow Driver</string>
+    <string name="google_key_map">AIzaSyA1yRWyFM8hH1cWGxiHTFt0R25n_9YZqP4</string>
+    <string name="phone_number_call_us">01692229676</string>
+    <string name="feedback_email_us">info@etow.com</string>
+
+    // Navigation
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    // Menu
+    <string name="home">مہربانی</string>
+    <string name="my_account">تبدیل</string>
+    <string name="my_bookings">My bookings</string>
+    <string name="get_in_touch">Get in touch</string>
+    <string name="terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="logout">Logout</string>
+    <string name="urdu">Urdu</string>
+    <string name="menu">Menu</string>
+
+    // action
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_yes">Yes</string>
+    <string name="action_no">No</string>
+    <string name="action_reload">Reload</string>
+
+    // dialog
+    <string name="waiting_message">Please wait...</string>
+
+    // msg
+    <string name="error_not_connect_to_internet">You are not connect to internet</string>
+    <string name="msg_exit_app">Do you want to exit?</string>
+
+    <string name="close">Close</string>
+
+    // Auth screen
+    <string name="enter_driver_id">Enter Driver ID</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email_id">Enter email ID</string>
+    <string name="agree_terms_and_conditions">I agree the Terms &amp; Conditions</string>
+    <string name="sign_in">Sign in</string>
+
+    // Get in touch
+    <string name="call_us">Call us</string>
+    <string name="feedback">Feedback</string>
+    <string name="or">Or</string>
+    <string name="comments">Comments</string>
+    <string name="get_in_touch_with_us_on">Or get in touch with us on</string>
+    <string name="send">Send</string>
+
+    // My account
+    <string name="type_of_vehicle">Type of vehicle:</string>
+    <string name="label_email">Email:</string>
+    <string name="type_vehicle_normal">Normal</string>
+    <string name="type_vehicle_flatbed">Flatbed</string>
+
+    // My bookings
+    <string name="completed">Completed</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="trip_no">Trip no:</string>
+    <string name="trip_amount">Trip amount:</string>
+    <string name="pick_up_location">Pick up location:</string>
+    <string name="pick_up_location_2">Pick up location</string>
+    <string name="drop_off_location">Drop off location:</string>
+    <string name="drop_off_location_2">Drop off location</string>
+    <string name="cash">Cash</string>
+    <string name="view_details">View details</string>
+    <string name="clear">Clear</string>
+    <string name="done">Done</string>
+    <string name="card">Card</string>
+    <string name="filter_by">Filter by</string>
+    <string name="date_and_time">Date &amp; Time</string>
+    <string name="customer_name">Customer Name:</string>
+    <string name="type_of_recovery">Type of recovery:</string>
+    <string name="driver">Driver:</string>
+    <string name="vehicle_number">Vehicle number:</string>
+    <string name="payment_type">Payment type:</string>
+    <string name="completed_trips">Completed trips</string>
+    <string name="upcoming_trips">Upcoming trips</string>
+    <string name="estimated_price">Estimated price:</string>
+    <string name="view">View</string>
+    <string name="on_map">on map</string>
+    <string name="arrived_at_pickup_location">Arrived at pickup location</string>
+    <string name="call_custome">Call customer</string>
+    <string name="call">Call</string>
+    <string name="estimated_time_pick_up_location">Estimated time to pick up location</string>
+    <string name="estimated_time_drop_off_location">Estimated time to drop off location</string>
+    <string name="min">Min</string>
+    <string name="get_direction">Get Direction</string>
+    <string name="booking_date_and_time">Booking date &amp; time:</string>
+    <string name="reject">Reject</string>
+    <string name="accept">Accept</string>
+    <string name="incoming_request">Incoming request</string>
+    <string name="why_reject">Reject ?</string>
+    <string name="message_confirm_request">Are you sure you want to reject this trip request ?</string>
+    <string name="trip_rejected">Trip rejected</string>
+    <string name="specify_reason_rejecting">Please specify the reason for rejecting this trip</string>
+    <string name="reason_reject_1">The point of using Lorem Ipsum is that</string>
+    <string name="reason_reject_2">Customer is too far away</string>
+    <string name="reason_reject_3">Going to use a passage of Lorem Ipsum</string>
+    <string name="reason_reject_4">Vehicle not ready</string>
+    <string name="arrived_for_pick_up">Arrived for pick up</string>
+    <string name="journey_completed">Journey completed</string>
+    <string name="trip_summary">Trip Summary</string>
+    <string name="total_amount">Total amount:</string>
+    <string name="cash_received">Cash received ?</string>
+    <string name="cash_received_2">Cash received</string>
+    <string name="payment_processing">Payment processing</string>
+    <string name="payment_successful">Payment successful</string>
+    <string name="payment_declined">Payment declined</string>
+    <string name="message_confirm_collected_cash">Are you sure you collected the cash ?</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="scheduled_trips">Scheduled trips</string>
+    <string name="open">Open</string>
+    <string name="assigned">Assigned</string>
+    <string name="confirm">Confirm</string>
+    <string name="unit_price">AED</string>
+    <string name="unble_trace_location">Unble to trace your location</string>
+    <string name="message_turn_on_gps">Please turn on your GPS</string>
+    <string name="please_enter_comment">Please enter comments</string>
+    <string name="label_minute">Mins</string>
+    <string name="message_trip_have_been_canceled">This trip has been canceled.</string>
+    <string name="no_driver_accepted">No driver accepted</string>
+
+    // msg request api
+    <string name="msg_missing_params">Missing params.</string>
+    <string name="msg_email_existed">Email existed, please try again.</string>
+    <string name="msg__email_or_password_incorrect">Email or password incorrect.</string>
+    <string name="msg_password_missing">Password missing.</string>
+    <string name="msg_password_incorrect">Password incorrect.</string>
+    <string name="msg_email_does_not_exist">Email does not exist.</string>
+    <string name="msg_logout_failed">Failed to logout, please try again.</string>
+    <string name="msg_not_permission_trip">You are not permission with this trip</string>
+    <string name="msg_token_missing">Token missing</string>
+    <string name="msg_confirm_login_another_device">Your account login another device!</string>
+    <string name="msg_send_feedback_successfully">Send feedback successfully!</string>
+</resources>

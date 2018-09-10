@@ -11,4 +11,6 @@ import com.app.etow.ui.base.BaseScreenMvpView;
 interface SplashMVPView extends BaseScreenMvpView {
 
     void getTripDetail(Trip trip);
+
+    void getSettingAppSuccess();
 }

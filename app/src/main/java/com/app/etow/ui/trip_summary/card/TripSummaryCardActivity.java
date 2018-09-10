@@ -76,6 +76,9 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
     @BindView(R.id.tv_price)
     TextView tvPrice;
 
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+
     private boolean mCheckedActiveDone;
     private Trip mTrip;
 
@@ -88,6 +91,11 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.trip_summary));
+        if (!DataStoreManager.getPrefLanguage()) {
+            imgBack.setImageResource(R.drawable.ic_back_black);
+        } else {
+            imgBack.setImageResource(R.drawable.ic_back_black_right);
+        }
 
         presenter.getTripDetail(this, DataStoreManager.getPrefIdTripProcess());
     }

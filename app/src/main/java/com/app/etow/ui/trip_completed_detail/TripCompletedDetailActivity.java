@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.Trip;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.utils.DateTimeUtils;
@@ -70,6 +71,9 @@ public class TripCompletedDetailActivity extends BaseMVPDialogActivity implement
     @BindView(R.id.tv_payment_type)
     TextView tvPaymentType;
 
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+
     private Trip mTrip;
 
     @Override
@@ -81,6 +85,11 @@ public class TripCompletedDetailActivity extends BaseMVPDialogActivity implement
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.completed_trips));
+        if (!DataStoreManager.getPrefLanguage()) {
+            imgBack.setImageResource(R.drawable.ic_back_black);
+        } else {
+            imgBack.setImageResource(R.drawable.ic_back_black_right);
+        }
         getDataIntent();
 
         initUi();

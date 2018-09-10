@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.models.Trip;
 import com.app.etow.models.ViewMap;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
@@ -72,6 +73,9 @@ public class ScheduledTripDetailActivity extends BaseMVPDialogActivity implement
     @BindView(R.id.tv_time_countdown)
     TextView tvTimeCountdown;
 
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+
     private Trip mTripSchedule;
     private CountDownTimer mCountDownTimer;
 
@@ -84,6 +88,11 @@ public class ScheduledTripDetailActivity extends BaseMVPDialogActivity implement
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.scheduled_trips));
+        if (!DataStoreManager.getPrefLanguage()) {
+            imgBack.setImageResource(R.drawable.ic_back_black);
+        } else {
+            imgBack.setImageResource(R.drawable.ic_back_black_right);
+        }
 
         getDataIntent();
         if (mTripSchedule != null) initData();

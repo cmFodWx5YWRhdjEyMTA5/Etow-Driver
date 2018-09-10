@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.app.etow.R;
 import com.app.etow.adapter.ScheduledTripAdapter;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 
 import javax.inject.Inject;
@@ -39,6 +40,9 @@ public class ScheduledTripActivity extends BaseMVPDialogActivity implements Sche
     @BindView(R.id.rcv_scheduled_trip_new)
     RecyclerView rcvScheduledTripNew;
 
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+
     private ScheduledTripAdapter scheduledTripAdapter;
     private ScheduledTripAdapter scheduledTripNewAdapter;
 
@@ -51,6 +55,11 @@ public class ScheduledTripActivity extends BaseMVPDialogActivity implements Sche
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.scheduled_trips));
+        if (!DataStoreManager.getPrefLanguage()) {
+            imgBack.setImageResource(R.drawable.ic_back_black);
+        } else {
+            imgBack.setImageResource(R.drawable.ic_back_black_right);
+        }
         imgFilter.setVisibility(View.VISIBLE);
         imgFilter.setImageResource(R.drawable.ic_refresh_red);
 

@@ -10,10 +10,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,6 +38,8 @@ import com.app.etow.ui.trip_summary.cash.TripSummaryCashActivity;
 import com.app.etow.ui.view_map_location.ViewMapLocationActivity;
 import com.app.etow.utils.Utils;
 
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -52,10 +58,14 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
         getActivityComponent().inject(this);
         viewUnbind = ButterKnife.bind(this);
         presenter.initialView(this);
+        // init Language
+        if (!DataStoreManager.getPrefLanguage()) {
+            setLocale("en");
+        } else {
+            setLocale("ur");
+        }
         // init font text
         Utils.getTahomaRegularTypeFace(SplashActivity.this);
-        // request open gps
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         // Get setting app
         presenter.getSetting();
     }
@@ -86,52 +96,6 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
         GlobalFuntion.showMessageError(this, code);
     }
 
-    private void goToActivity() {
-        int tripProcessId = DataStoreManager.getPrefIdTripProcess();
-        if (tripProcessId != 0) {
-            if (DataStoreManager.getIsLogin()) {
-                presenter.getTripDetail(SplashActivity.this, tripProcessId);
-            } else {
-                GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
-                finish();
-            }
-        } else {
-            if (!DataStoreManager.getFirstInstallApp()) {
-                DataStoreManager.setFirstInstallApp(true);
-                DataStoreManager.removeUser();
-
-                GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
-            } else {
-                if (DataStoreManager.getIsLogin()) {
-                    GlobalFuntion.startActivity(SplashActivity.this, MainActivity.class);
-                } else {
-                    GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
-                }
-            }
-        }
-    }
-
-    private void settingGPS() {
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            showDialogSettingGps();
-        } else if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            GlobalFuntion.getCurrentLocation(this, mLocationManager);
-            goToActivity();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 1) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                settingGPS();
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            }
-        }
-    }
-
     @Override
     public void getTripDetail(Trip trip) {
         if (Constant.TRIP_STATUS_NEW == trip.getStatus()) {
@@ -156,6 +120,33 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
             }
         }
         finish();
+    }
+
+    @Override
+    public void getSettingAppSuccess() {
+        // request open gps
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                settingGPS();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        }
+    }
+
+    private void settingGPS() {
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            showDialogSettingGps();
+        } else if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            GlobalFuntion.getCurrentLocation(this, mLocationManager);
+            goToActivity();
+        }
     }
 
     public void showDialogSettingGps() {
@@ -197,5 +188,42 @@ public class SplashActivity extends BaseMVPDialogActivity implements SplashMVPVi
         });
         // show dialog
         dialog.show();
+    }
+
+    private void goToActivity() {
+        int tripProcessId = DataStoreManager.getPrefIdTripProcess();
+        if (tripProcessId != 0) {
+            if (DataStoreManager.getIsLogin()) {
+                presenter.getTripDetail(SplashActivity.this, tripProcessId);
+            } else {
+                GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
+                finish();
+            }
+        } else {
+            if (!DataStoreManager.getFirstInstallApp()) {
+                DataStoreManager.setFirstInstallApp(true);
+                DataStoreManager.removeUser();
+
+                GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
+            } else {
+                if (DataStoreManager.getIsLogin()) {
+                    GlobalFuntion.startActivity(SplashActivity.this, MainActivity.class);
+                } else {
+                    GlobalFuntion.startActivity(SplashActivity.this, SignInActivity.class);
+                }
+            }
+        }
+    }
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        if (Build.VERSION.SDK_INT >= 17) {
+            conf.setLayoutDirection(myLocale);
+        }
+        res.updateConfiguration(conf, dm);
     }
 }

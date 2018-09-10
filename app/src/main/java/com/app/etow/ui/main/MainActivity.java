@@ -41,6 +41,7 @@ import com.app.etow.ui.main.my_account.MyAccountActivity;
 import com.app.etow.ui.main.my_bookings.MyBookingsActivity;
 import com.app.etow.ui.main.term_and_condition.TermAndConditionFragment;
 import com.app.etow.ui.scheduled_trip.ScheduledTripActivity;
+import com.app.etow.ui.splash.SplashActivity;
 import com.app.etow.ui.trip_summary.card.TripSummaryCardActivity;
 import com.app.etow.ui.trip_summary.cash.TripSummaryCashActivity;
 import com.app.etow.ui.view_map_location.ViewMapLocationActivity;
@@ -85,7 +86,6 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
     @BindView(R.id.layout_notification)
     RelativeLayout layoutNotification;
 
-    boolean isLanguageEnlish = true;
     private int mCurrentFragment = FRAGMENT_HOME;
 
     @Override
@@ -99,6 +99,8 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         // set menu
         imgBack.setImageResource(R.drawable.ic_close_black);
         tvTitleToolbar.setText(getString(R.string.menu));
+        // setup layout language
+        initSetupLanguage();
 
         presenter.getScheduleTrip(this);
         int tripProcessId = DataStoreManager.getPrefIdTripProcess();
@@ -209,6 +211,20 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
         else layoutNotification.setVisibility(View.GONE);
     }
 
+    private void initSetupLanguage() {
+        if (!DataStoreManager.getPrefLanguage()) {
+            tvEnglish.setBackgroundResource(R.drawable.bg_black_corner_left_bottom);
+            tvUrdu.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
+            tvEnglish.setTextColor(getResources().getColor(R.color.white));
+            tvUrdu.setTextColor(getResources().getColor(R.color.textColorAccent));
+        } else {
+            tvEnglish.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
+            tvUrdu.setBackgroundResource(R.drawable.bg_black_corner_left_bottom);
+            tvEnglish.setTextColor(getResources().getColor(R.color.textColorAccent));
+            tvUrdu.setTextColor(getResources().getColor(R.color.white));
+        }
+    }
+
     @OnClick({R.id.img_back, R.id.img_menu, R.id.tv_menu_home, R.id.tv_menu_my_account,
             R.id.tv_menu_my_bookings, R.id.tv_menu_get_in_touch, R.id.tv_menu_term_and_condition,
             R.id.tv_logout, R.id.tv_language, R.id.tv_english, R.id.tv_urdu, R.id.layout_notification})
@@ -263,22 +279,18 @@ public class MainActivity extends BaseMVPDialogActivity implements MainMVPView {
                 break;
 
             case R.id.tv_english:
-                if (!isLanguageEnlish) {
-                    isLanguageEnlish = true;
-                    tvEnglish.setBackgroundResource(R.drawable.bg_black_corner_left_bottom);
-                    tvUrdu.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
-                    tvEnglish.setTextColor(getResources().getColor(R.color.white));
-                    tvUrdu.setTextColor(getResources().getColor(R.color.textColorAccent));
+                if (DataStoreManager.getPrefLanguage()) {
+                    DataStoreManager.setPrefLanguage(false);
+                    GlobalFuntion.startActivity(this, SplashActivity.class);
+                    finishAffinity();
                 }
                 break;
 
             case R.id.tv_urdu:
-                if (isLanguageEnlish) {
-                    isLanguageEnlish = false;
-                    tvEnglish.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
-                    tvUrdu.setBackgroundResource(R.drawable.bg_black_corner_right_bottom);
-                    tvEnglish.setTextColor(getResources().getColor(R.color.textColorAccent));
-                    tvUrdu.setTextColor(getResources().getColor(R.color.white));
+                if (!DataStoreManager.getPrefLanguage()) {
+                    DataStoreManager.setPrefLanguage(true);
+                    GlobalFuntion.startActivity(this, SplashActivity.class);
+                    finishAffinity();
                 }
                 break;
 

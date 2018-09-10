@@ -10,10 +10,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.etow.R;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 import com.app.etow.utils.StringUtil;
 
@@ -37,6 +39,9 @@ public class FeedbackActivity extends BaseMVPDialogActivity implements FeedbackM
     @BindView(R.id.tv_title_toolbar)
     TextView tvTitleToolbar;
 
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,11 @@ public class FeedbackActivity extends BaseMVPDialogActivity implements FeedbackM
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.get_in_touch));
+        if (!DataStoreManager.getPrefLanguage()) {
+            imgBack.setImageResource(R.drawable.ic_back_black);
+        } else {
+            imgBack.setImageResource(R.drawable.ic_back_black_right);
+        }
 
         String textMessage = "<font color=#9E9E9D>" + getString(R.string.get_in_touch_with_us_on)
                 + "</font> <b><font color=#121315>"

@@ -95,6 +95,7 @@ public class SplashPresenter extends BasePresenter<SplashMVPView> {
                                     Setting setting = apiResponse.getDataObject(Setting.class);
                                     if (setting != null) {
                                         GlobalFuntion.mSetting = setting;
+                                        getMvpView().getSettingAppSuccess();
                                     }
                                 }
                             }

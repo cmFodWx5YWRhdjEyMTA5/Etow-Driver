@@ -63,6 +63,9 @@ public class TripSummaryCashActivity extends BaseMVPDialogActivity implements Tr
     @BindView(R.id.tv_done)
     TextView tvDone;
 
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+
     private boolean mCheckedCash;
     private Trip mTrip;
 
@@ -75,6 +78,11 @@ public class TripSummaryCashActivity extends BaseMVPDialogActivity implements Tr
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.trip_summary));
+        if (!DataStoreManager.getPrefLanguage()) {
+            imgBack.setImageResource(R.drawable.ic_back_black);
+        } else {
+            imgBack.setImageResource(R.drawable.ic_back_black_right);
+        }
 
         presenter.getTripDetail(this, DataStoreManager.getPrefIdTripProcess());
     }

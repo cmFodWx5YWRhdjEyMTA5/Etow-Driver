@@ -25,6 +25,7 @@ import com.app.etow.adapter.TripCompletedAdapter;
 import com.app.etow.adapter.TripUpcomingAdapter;
 import com.app.etow.constant.Constant;
 import com.app.etow.constant.GlobalFuntion;
+import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.ui.base.BaseMVPDialogActivity;
 
 import javax.inject.Inject;
@@ -56,6 +57,9 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
     @BindView(R.id.rcv_upcoming)
     RecyclerView rcvUpcoming;
 
+    @BindView(R.id.img_back)
+    ImageView imgBack;
+
     private boolean mIsTabCompleted = true;
     private String mFilterType = Constant.FILTER_NONE;
 
@@ -71,6 +75,11 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
         presenter.initialView(this);
 
         tvTitleToolbar.setText(getString(R.string.my_bookings));
+        if (!DataStoreManager.getPrefLanguage()) {
+            imgBack.setImageResource(R.drawable.ic_back_black);
+        } else {
+            imgBack.setImageResource(R.drawable.ic_back_black_right);
+        }
         imgFilter.setVisibility(View.VISIBLE);
 
         tripCompletedAdapter = new TripCompletedAdapter(this, presenter.getListTripCompleted());
