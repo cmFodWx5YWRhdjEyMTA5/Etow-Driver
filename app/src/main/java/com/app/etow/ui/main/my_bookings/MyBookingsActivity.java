@@ -178,6 +178,14 @@ public class MyBookingsActivity extends BaseMVPDialogActivity implements MyBooki
         final TextView tvClear = dialog.findViewById(R.id.tv_clear);
         final TextView tvDone = dialog.findViewById(R.id.tv_done);
 
+        if (!DataStoreManager.getPrefLanguage()) {
+            tvClear.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
+            tvDone.setBackgroundResource(R.drawable.bg_black_corner_right_bottom);
+        } else {
+            tvClear.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
+            tvDone.setBackgroundResource(R.drawable.bg_black_corner_left_bottom);
+        }
+
         if (Constant.FILTER_NONE.equals(mFilterType)) {
             rdgOption.clearCheck();
         } else if (Constant.FILTER_CASH.equals(mFilterType)) {

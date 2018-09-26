@@ -155,6 +155,14 @@ public class TripSummaryCardActivity extends BaseMVPDialogActivity implements Tr
         final TextView tvNo = dialog.findViewById(R.id.tv_no);
         final TextView tvYes = dialog.findViewById(R.id.tv_yes);
 
+        if (!DataStoreManager.getPrefLanguage()) {
+            tvNo.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
+            tvYes.setBackgroundResource(R.drawable.bg_black_corner_right_bottom);
+        } else {
+            tvNo.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
+            tvYes.setBackgroundResource(R.drawable.bg_black_corner_left_bottom);
+        }
+
         // Get listener
         tvNo.setOnClickListener(new View.OnClickListener() {
             @Override

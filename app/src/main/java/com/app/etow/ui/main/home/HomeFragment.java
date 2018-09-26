@@ -134,13 +134,25 @@ public class HomeFragment extends BaseMVPFragmentWithDialog implements HomeMVPVi
     @Override
     public void loadStatusDriver() {
         if (Constant.IS_ONLINE.equalsIgnoreCase(DataStoreManager.getUser().getDrivers().getIs_online())) {
-            tvOnline.setBackgroundResource(R.drawable.bg_green_corner_left_bottom);
-            tvOffline.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
+            if (!DataStoreManager.getPrefLanguage()) {
+                tvOnline.setBackgroundResource(R.drawable.bg_green_corner_left_bottom);
+                tvOffline.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
+            } else {
+                tvOnline.setBackgroundResource(R.drawable.bg_green_corner_right_bottom);
+                tvOffline.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
+            }
+
             tvOnline.setTextColor(getResources().getColor(R.color.white));
             tvOffline.setTextColor(getResources().getColor(R.color.textColorAccent));
         } else {
-            tvOnline.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
-            tvOffline.setBackgroundResource(R.drawable.bg_red_corner_right_bottom);
+            if (!DataStoreManager.getPrefLanguage()) {
+                tvOnline.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
+                tvOffline.setBackgroundResource(R.drawable.bg_red_corner_right_bottom);
+            } else {
+                tvOnline.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
+                tvOffline.setBackgroundResource(R.drawable.bg_red_corner_left_bottom);
+            }
+
             tvOnline.setTextColor(getResources().getColor(R.color.textColorAccent));
             tvOffline.setTextColor(getResources().getColor(R.color.white));
         }

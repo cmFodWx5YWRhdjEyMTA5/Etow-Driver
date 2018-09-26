@@ -207,6 +207,14 @@ public class TripUpcomingDetailActivity extends BaseMVPDialogActivity implements
         final TextView tvCancel = dialog.findViewById(R.id.tv_cancel);
         final TextView tvCall = dialog.findViewById(R.id.tv_call);
 
+        if (!DataStoreManager.getPrefLanguage()) {
+            tvCancel.setBackgroundResource(R.drawable.bg_grey_corner_left_bottom);
+            tvCall.setBackgroundResource(R.drawable.bg_black_corner_right_bottom);
+        } else {
+            tvCancel.setBackgroundResource(R.drawable.bg_grey_corner_right_bottom);
+            tvCall.setBackgroundResource(R.drawable.bg_black_corner_left_bottom);
+        }
+
         // Get data
         tvPhoneNumber.setText(phoneNumber);
 
