@@ -12,9 +12,12 @@ import com.app.etow.data.prefs.DataStoreManager;
 import com.app.etow.injection.components.ApplicationComponent;
 import com.app.etow.injection.components.DaggerApplicationComponent;
 import com.app.etow.injection.modules.ApplicationModule;
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import io.fabric.sdk.android.Fabric;
 
 public class ETowApplication extends Application {
 
@@ -31,6 +34,7 @@ public class ETowApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         DataStoreManager.init(getApplicationContext());
         FirebaseApp.initializeApp(this);
         initFirebase();

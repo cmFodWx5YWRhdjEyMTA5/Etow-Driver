@@ -22,6 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--Crashlytics-->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="657830b5bc9bf96179e0d549bd012e4d34516c6a" />
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_key_map" />
