@@ -112,6 +112,8 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
     private ArrayList<LatLng> mListPoints = new ArrayList<LatLng>();
     private Polyline mPolyline;
 
+    private boolean mIsFirstGoing = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -290,7 +292,10 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
             layoutDirectionLocation.setVisibility(View.VISIBLE);
             tvTitleDirection.setText(getString(R.string.drop_off_location_2));
             tvActionUpdate.setText(getString(R.string.journey_completed));
-            getLocationChange();
+            if (mIsFirstGoing) {
+                getLocationChange();
+                mIsFirstGoing = false;
+            }
         } else if (Constant.TRIP_STATUS_JOURNEY_COMPLETED == trip.getStatus()) {
             if (Constant.TYPE_PAYMENT_CASH.equals(trip.getPayment_type())) {
                 GlobalFuntion.startActivity(this, TripSummaryCashActivity.class);
