@@ -36,12 +36,10 @@ public class IncomingRequestPresenter extends BasePresenter<IncomingRequestMVPVi
     }
 
     public void getTripDetail(Context context, int tripId) {
-        getMvpView().showProgressDialog(true);
         ETowApplication.get(context).getDatabaseReference().orderByChild("id").equalTo(tripId)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        getMvpView().showProgressDialog(false);
                         Trip trip = dataSnapshot.getValue(Trip.class);
                         if (getMvpView() != null && trip != null) getMvpView().getTripDetail(trip);
                     }

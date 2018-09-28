@@ -121,6 +121,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
         getActivityComponent().inject(this);
         viewUnbind = ButterKnife.bind(this);
         presenter.initialView(this);
+        tvTimeToLocation = findViewById(R.id.tv_time_to_location);
 
         // Get data intent
         getDataIntent();
@@ -357,7 +358,7 @@ public class ViewMapLocationActivity extends BaseMVPDialogActivity implements Vi
                         + "</font> <b><font color=#121315>"
                         + route.duration.text + "</font></b> <font color=#6D6E70></font>";
             }
-            tvTimeToLocation.setText(Html.fromHtml(timeToLocation));
+            if (null != tvTimeToLocation) tvTimeToLocation.setText(Html.fromHtml(timeToLocation));
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_black))
